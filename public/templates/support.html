@@ -5,19 +5,20 @@
 
 		<title>Roomies - Roommate Finding Program</title>
 		<!--Links/includes-->
-		<link rel="icon" href="./assets/icon.svg" type="image/x-icon">
+		<link rel="icon" href="C:\roomies\ROOMIES\public\static\assets\icon.png" type="image/x-icon">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
 
 		<link rel="stylesheet" href="C:\roomies\ROOMIES\public\static\styles\bootstrap.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <link rel="stylesheet" href="C:\roomies\ROOMIES\public\static\styles\style.css">
+        <link rel="stylesheet" href="C:\roomies\ROOMIES\public\static\styles\about.css">
 	</head>
 
 	<body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/">
-                <img src="./assets/icon.svg" src="site logo" height="50">
+                <img src="C:\roomies\ROOMIES\public\static\assets\icon.png" src="site logo" height="50">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavItems" aria-controls="mainNavItems" aria-label="Toggle main menu" aria-expanded="false" >
                 <i class="fa fa-bars"></i>
@@ -29,21 +30,18 @@
                             Home
                         </a> 
                         <a class="nav-item nav-link mx-lg-2 mx-1" href="./about.html">
-                            Why RoommateFinder?
-                        </a>
-                        <a class="nav-item nav-link mx-1" href="./profile.html">
-                            Profile
-                        </a>
-                        <a class="nav-item nav-link mx-1" href="./dashboard.html">
-                            Dashboard
+                            Why Roomies?
                         </a>
                         <a class="nav-item nav-link mx-1 active" href="./support.html">
                             Support
                         </a>
+                        <a class="nav-item nav-link mx-1" href="#" onclick="scrollToFooter()">
+                            Contact Us:
+                        </a>
                         <a class="mx-1 btn btn-outline-danger auth-only d-none" id="logoutBtn" href="#">
                             Log Out
                         </a>
-                        <a class="mx-1 btn btn-outline-purple no-auth" href="/#login">
+                        <a class="mx-1 btn btn-purple no-auth" href="/#login">
                             Log In
                         </a>
                     </div>
@@ -56,8 +54,7 @@
             <p class="h1 text-center">Roomies - Support</p>
 
 			<section class="text-center my-4" id="about">
-                Enter your name and contact below along with any bugs you found or questions and suggestions you may have about the website. We greatly value each response to help better our services
-                <p class="text-info mt-3">Name and contact fields required. The rest are optional and may be filled depending upon your situation. You may fill more than one of the optional fields.</p>
+                Where We Turn Roommate Hurdles into Home Sweet Home Solutions!
 			</section>
             <hr class="w-75">
             <section class="mt-3 mb-5" id="form">
@@ -69,43 +66,38 @@
                     <p class="text-danger text-center small m-0 p-0">Your responses will be private and only be shared with the creators of the website.</p>
                     <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">What is your name?</p>
-                            <p class="text-danger text-center small m-0 p-0">required</p>
+                            <p class="m-0 p-0">Your Name:</p>
                         </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="name">
+                        <input class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="name" maxlength="128">
                     </label>
                     <hr class="d-md-none d-block w-50 my-0">
                     <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">What is your preferred method of contact?</p>
-                            <p class="text-info text-center small m-0 p-0">Email, phone, Instagram, SnapChat, etc.</p>
-                            <p class="text-danger text-center small m-0 p-0">required</p>
+                            <p class="m-0 p-0">How can we reach you?</p>
+                            <p class="text-info text-center small m-0 p-0">Email, Phone</p>
                         </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="email">
+                        <input class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="email" maxlength="24">
                     </label>
                     <hr class="d-md-none d-block w-50 my-0">
                     <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Please describe the bug you encountered</p>
-                            <p class="text-success text-center small m-0 p-0">optional</p>
+                            <p class="m-0 p-0">Bug Title:</p>
                         </span>
-                        <textarea class="col mx-4 mx-sm-0 form-control d-inline" type="text" name="bug"></textarea>
+                        <textarea class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="bug" maxlength="128"></textarea>
                     </label>
                     <hr class="d-md-none d-block w-50 my-0">
                     <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Please ask us any questions about our website and services</p>
-                            <p class="text-success text-center small m-0 p-0">optional</p>
+                            <p class="m-0 p-0">Bug Details:</p>
                         </span>
-                        <textarea class="col mx-4 mx-sm-0 form-control d-inline" type="text" name="questions"></textarea>
+                        <textarea class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="questions" maxlength="1000"></textarea>
                     </label>
                     <hr class="d-md-none d-block w-50 my-0">
                     <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Please enter any suggestions you have for us</p>
-                            <p class="text-success text-center small m-0 p-0">optional</p>
+                            <p class="m-0 p-0">Attach a Screenshot:</p>
                         </span>
-                        <textarea class="col mx-4 mx-sm-0 form-control d-inline" type="text" name="suggestions"></textarea>
+                        <input class="col mx-4 mx-sm-0 form-control d-inline" type="file" id="image" name="image" accept="image/*" required></input>
                     </label>
 		    <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center" data-netlify-recaptcha="true">
@@ -116,13 +108,44 @@
                     <p class="mt-3 text-center w-100"><span id="resSub"></span></p>
                 </form>
             </section>
-			<footer class="footer pt-3 pb-1 px-3 my-0">
-                <p class="text-muted">
-                    Copyright (c) 2023.
-                </p>
-            </footer>
 		</main>
 
-
     </body>
+    <footer>
+		<div class="contact-info">
+			<p>Contact Us:</p>
+			<p>Contact No:+91 7977199113</p>
+			<p>Email: shreeraj.rane@somaiya.edu</p>
+            <p>Email: adwait.saha@somaiya.edu</p>
+		</div>
+		<div class="location">
+			<p>𖡡 KJ Somaiya College Of Engineering</p>
+			<iframe
+	width="70%"
+	height="150"
+	frameborder="0"
+	scrolling="no"
+	marginheight="0"
+	marginwidth="0"
+	src="https://maps.google.com/maps?q=19.0729122,72.897333&z=15&output=embed"
+></iframe>
+			
+		</div>
+	</footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"
+        integrity="sha384-GLhlTQ8iKHEo7RY/RykD/xTk9SJ0Dl/6ZI99VF5ceEAAbFpi6Rv4r+7L3UqFvuci"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="C:\roomies\ROOMIES\public\static\scripts\bootstrap.min.js"></script>
+
+    <script>
+        function scrollToFooter() {
+            var footer = document.querySelector('footer');
+            footer.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
 </html>

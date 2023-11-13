@@ -6,7 +6,7 @@
 
 		<title>Roomies - Roommate Finding Program</title>
 
-		<link rel="icon" href="{{ url_for('static', filename='assets/icon.svg') }}" type="image/x-icon">
+		<link rel="icon" href="C:\roomies\ROOMIES\public\static\assets\icon.png" type="image/x-icon">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
 
@@ -19,14 +19,14 @@
 
 	<body>
 		<main class="" id="main">
-            <img src="{{ url_for('static', filename='assets/splash.jpg') }}" class="img splash" alt="main background image"></img>
+            <img src="C:\roomies\ROOMIES\public\static\assets\splash.png" class="img splash" alt="main background image"></img>
 
             <section class="txt splash">
                 <p class="title" href="/">
-                    <img src="{{ url_for('static', filename='assets/icon.svg') }}" src="site logo" height="100">
+                    <img src="C:\roomies\ROOMIES\public\static\assets\icon.png" src="site logo" height="100">
                 </p>
                 <p class="title">Roomies - RoommateFinder</p>
-                <p class="subtitle">Welcome to the roommate finding program</p>
+                <p class="subtitle">Discover Your Perfect Roomie Match with Roomies: Where Finding Your Ideal Roommate Feels Like Coming Home!</p>
             </section>
 
             <section class="scroll splash">
@@ -53,9 +53,9 @@
                 <p class="d-none text-danger" id="warnMsg"></p>
             </section>
 
-            <nav class="navbar spnav navbar-expand-lg navbar-dark">
+            <nav class="navbar spnav navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">
-                    <img src="{{ url_for('static', filename='assets/icon.svg') }}" src="site logo" id="siteLogo" height="50">
+                    <img src="C:\roomies\ROOMIES\public\static\assets\icon.png" src="site logo" id="siteLogo" height="100">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavItems" aria-controls="mainNavItems" aria-label="Show or hide main menu" aria-expanded="false" >
                     <i class="fa fa-bars"></i>
@@ -67,21 +67,18 @@
                                 Home
                             </a> 
                             <a class="nav-item nav-link mx-lg-2 mx-1" href="./about.html">
-                                Why RoommateFinder?
-                            </a>
-                            <a class="nav-item nav-link mx-1" href="./profile.html">
-                                Profile
-                            </a>
-                            <a class="nav-item nav-link mx-1" href="./dashboard.html">
-                                Dashboard
+                                Why Roomies?
                             </a>
                             <a class="nav-item nav-link mx-1" href="./support.html">
                                 Support
                             </a>
+                            <a class="nav-item nav-link mx-1" href="./contactus.html">
+                                Contact Us
+                            </a>
                             <button class="mx-1 btn btn-outline-danger auth-only d-none logout-btn">
                                 Log Out
                             </button>
-                            <button class="mx-1 btn btn-outline-purple no-auth login-btn" href="#">
+                            <button class="mx-1 btn btn-purple no-auth login-btn" href="#">
                                 Log In
                             </button>
                         </div>
@@ -107,4 +104,5 @@
 
         
     </body>
+    
 </html>
