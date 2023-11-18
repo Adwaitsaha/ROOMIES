@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login and Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form method="post">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            
+            <div class="g-recaptcha" data-sitekey="your-recaptcha-site-key"></div>
+            <br>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        
+        <!-- Add this div to display an error message -->
+        {% if error %}
+        <div class="alert alert-danger mt-3">
+            {{ error }}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- <script>
+
+        // Add this function to handle login
+        function login() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Query Firestore to check if the username and password are valid
+            var userRef = db.collection('users').doc(username);
+            userRef.get().then((doc) => {
+                if (doc.exists && doc.data().password === password) {
+                    // Valid credentials, perform login actions
+                    window.location.href = "/dashboard";
+                } else {
+                    // Invalid credentials, handle accordingly (e.g., show an error message)
+                    document.getElementById('error').innerText = 'Invalid credentials';
+                }
+            });
+        }
+    </script> -->
+</body>
+</html>

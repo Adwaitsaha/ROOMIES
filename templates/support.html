@@ -9,9 +9,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
 
-		<link rel="stylesheet" href="./styles/bootstrap.min.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='/styles/style.css') }}">
+
+    
 	</head>
 
 	<body>
@@ -64,50 +66,36 @@
                 <p class="text-center">
                     <span id="resMsg"></span>
                 </p>
-                <form name="support" method="POST" action="/support.html#success" data-netlify="true" id="supportForm">
+                <form name="support" method="POST" id="supportForm" enctype="multipart/form-data">
+
                     <p class="h4 text-center mt-4 mb-1">Questions</p>
                     <p class="text-danger text-center small m-0 p-0">Your responses will be private and only be shared with the creators of the website.</p>
                     <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">What is your name?</p>
+                            <p class="m-0 p-0">Subject</p>
                             <p class="text-danger text-center small m-0 p-0">required</p>
                         </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="name">
+                        <input class="col mx-4 mx-sm-0 form-control d-inline" required type="text" id ="subject" name="subject">
                     </label>
                     <hr class="d-md-none d-block w-50 my-0">
                     <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">What is your preferred method of contact?</p>
-                            <p class="text-info text-center small m-0 p-0">Email, phone, Instagram, SnapChat, etc.</p>
+                            <p class="m-0 p-0">Text</p>
+                            <p class="text-info text-center small m-0 p-0">Please describe your probelm/query</p>
                             <p class="text-danger text-center small m-0 p-0">required</p>
                         </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="email">
+                        <textarea class="col mx-4 mx-sm-0 form-control d-inline" type="text" id="textQuery" name="textQuery"></textarea>
                     </label>
                     <hr class="d-md-none d-block w-50 my-0">
-                    <label class="row custom-form-row">
+                    <label class="row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Please describe the bug you encountered</p>
-                            <p class="text-success text-center small m-0 p-0">optional</p>
+                            <p class="m-0 p-0">Image</p>
+                            <p class="text-info text-center small m-0 p-0">Optional: Attach an image</p>
                         </span>
-                        <textarea class="col mx-4 mx-sm-0 form-control d-inline" type="text" name="bug"></textarea>
+                        <input class="col mx-4 mx-sm-0 form-control d-inline" type="file" accept="image/*" id="image" name="image">
                     </label>
                     <hr class="d-md-none d-block w-50 my-0">
-                    <label class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Please ask us any questions about our website and services</p>
-                            <p class="text-success text-center small m-0 p-0">optional</p>
-                        </span>
-                        <textarea class="col mx-4 mx-sm-0 form-control d-inline" type="text" name="questions"></textarea>
-                    </label>
-                    <hr class="d-md-none d-block w-50 my-0">
-                    <label class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Please enter any suggestions you have for us</p>
-                            <p class="text-success text-center small m-0 p-0">optional</p>
-                        </span>
-                        <textarea class="col mx-4 mx-sm-0 form-control d-inline" type="text" name="suggestions"></textarea>
-                    </label>
-		    <label class="row custom-form-row">
+		            <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center" data-netlify-recaptcha="true">
                         </span>
                     </label>
@@ -122,14 +110,9 @@
                 </p>
             </footer>
 		</main>
+         
 
-        <!-- JavaScript Scripts -->
-        <!-- <script type="text/javascript" src="/scripts/gotrue.js"></script>
-        <script type="text/javascript" src="/scripts/main.js"></script>
-		<script type="text/javascript" src="/scripts/support.js"></script>
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous" async defer></script>
-         -->
+        
 
     </body>
 </html>

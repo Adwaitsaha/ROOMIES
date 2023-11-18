@@ -6,24 +6,24 @@
 
 		<title>Roomies - Roommate Finding Program</title>
 
-		<link rel="icon" href="{{ url_for('static', filename='assets/icon.svg') }}" type="image/x-icon">
+		<link rel="icon" href="{{ url_for('static', filename='/assets/icon.svg') }}" type="image/x-icon">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
 
-		<link rel="stylesheet" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='/styles/index.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='/styles/style.css') }}">
 
 	</head>
 
 	<body>
 		<main class="" id="main">
-            <img src="{{ url_for('static', filename='assets/splash.jpg') }}" class="img splash" alt="main background image"></img>
+            <img src="{{ url_for('static', filename='/assets/splash.jpg') }}" class="img splash" alt="main background image"></img>
 
             <section class="txt splash">
                 <p class="title" href="/">
-                    <img src="{{ url_for('static', filename='assets/icon.svg') }}" src="site logo" height="100">
+                    <img src="{{ url_for('static', filename='/assets/icon.svg') }}" src="site logo" height="100">
                 </p>
                 <p class="title">Roomies - RoommateFinder</p>
                 <p class="subtitle">Welcome to the roommate finding program</p>
@@ -37,7 +37,7 @@
                         <button class="btn btn-lg btn-purple px-5 mx-2 mb-2 login-btn" id="login-btn">
                             Log In
                         </button>
-                        <button class="btn btn-lg btn-purple px-5 mx-2 mb-2" id="signupBtn">
+                        <button class="btn btn-lg btn-purple px-5 mx-2 mb-2" id="signup-btn">
                             Sign Up
                         </button>
                     </span>
@@ -75,7 +75,7 @@
                             <a class="nav-item nav-link mx-1" href="./dashboard.html">
                                 Dashboard
                             </a>
-                            <a class="nav-item nav-link mx-1" href="./support.html">
+                            <a class="nav-item nav-link mx-1" id="support-btn">
                                 Support
                             </a>
                             <button class="mx-1 btn btn-outline-danger auth-only d-none logout-btn">
@@ -103,6 +103,11 @@
     document.getElementById('signup-btn').addEventListener('click', function() {
         window.location.href = '/index2';  // Redirect to index2.html on signup button click
     });
+    
+    document.getElementById('support-btn').addEventListener('click', function() {
+        window.location.href = '/support';  // Redirect to index2.html on login button click
+    });
+        
 </script>
 
         
