@@ -160,4 +160,5 @@ cython_debug/
 #.idea/
 
 # Ignore Firebase config file
-/common/roomies-166f5-firebase-adminsdk-h1537-a0ab5ed914.json
+/common/*.json
+
