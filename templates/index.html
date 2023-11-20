@@ -6,7 +6,7 @@
 
 		<title>Roomies - Roommate Finding Program</title>
 
-		<link rel="icon" href="{{ url_for('static', filename='/assets/icon.svg') }}" type="image/x-icon">
+		<link rel="icon" href="{{ url_for('static', filename='/assets/icon.png') }}" type="image/x-icon">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
 
@@ -19,11 +19,11 @@
 
 	<body>
 		<main class="" id="main">
-            <img src="{{ url_for('static', filename='/assets/splash.jpg') }}" class="img splash" alt="main background image"></img>
+            <img src="{{ url_for('static', filename='/assets/splash.png') }}" class="img splash" alt="main background image"></img>
 
             <section class="txt splash">
                 <p class="title" href="/">
-                    <img src="{{ url_for('static', filename='/assets/icon.svg') }}" src="site logo" height="100">
+                    <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="100">
                 </p>
                 <p class="title">Roomies - RoommateFinder</p>
                 <p class="subtitle">Welcome to the roommate finding program</p>
@@ -55,7 +55,7 @@
 
             <nav class="navbar spnav navbar-expand-lg navbar-dark">
                 <a class="navbar-brand" href="#">
-                    <img src="{{ url_for('static', filename='assets/icon.svg') }}" src="site logo" id="siteLogo" height="50">
+                    <img src="{{ url_for('static', filename='assets/icon.png') }}" src="site logo" id="siteLogo" height="100">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavItems" aria-controls="mainNavItems" aria-label="Show or hide main menu" aria-expanded="false" >
                     <i class="fa fa-bars"></i>
@@ -78,6 +78,9 @@
                             <a class="nav-item nav-link mx-1" id="support-btn">
                                 Support
                             </a>
+                            <a class="nav-item nav-link mx-1" href="./contactus.html">
+                                Contact Us
+                            </a>
                             <button class="mx-1 btn btn-outline-danger auth-only d-none logout-btn">
                                 Log Out
                             </button>
@@ -88,7 +91,7 @@
                     </div>
                 </div>
             </nav>
-            <footer class="footer pt-3 pb-1 px-3 my-0">
+            <footer class="footer pt-3 pb-1 px-3 my-0" style="text-align: center;">
                 <p>
                     Copyright (c) 2023.
                 </p>		

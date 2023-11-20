@@ -5,108 +5,219 @@ Path:
 	/about.html
 -->
 
-
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta name="robots" content="noindex">
+  <head>
+    <meta name="robots" content="noindex" />
 
-		<title>UW RoommateFinder - Unofficial UW Roommate Finding Program</title>
-		<!--Links/includes-->
-		<link rel="icon" href="./assets/icon.svg" type="image/x-icon">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta charset="UTF-8">
+    <title>UW RoommateFinder - Unofficial UW Roommate Finding Program</title>
+    <!--Links/includes-->
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='/assets/icon.png') }}"
+      type="image/x-icon"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
 
-		<link rel="stylesheet" href="/styles/bootstrap.min.css">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-		<link rel="stylesheet" href="/styles/style.css">
-	</head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/style.css') }}"
+    />
+  </head>
 
-	<body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">
-				<img src="/assets/icon.svg" src="site logo" height="50">
-			</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavItems" aria-controls="mainNavItems" aria-label="Toggle main menu" aria-expanded="false" >
-                <i class="fa fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
-                <div class="ml-auto navbar-nav nav">
-                    <div class="ml-auto navbar-nav nav">
-						<a class="nav-item nav-link mx-1" href="/">
-							Home
-						</a> 
-						<a class="nav-item nav-link mx-lg-2 mx-1 active" href="/templates/about.html">
-							Why RoommateFinder?
-						</a>
-						<a class="nav-item nav-link mx-1" href="/templates/profile.html">
-							Profile
-						</a>
-						<a class="nav-item nav-link mx-1" href="/templates/dashboard.html">
-							Dashboard
-						</a>
-						<a class="nav-item nav-link mx-1" href="/templates/support">
-							Support
-						</a>
-						<a class="mx-1 btn btn-outline-danger auth-only d-none" id="logoutBtn" href="#">
-							Log Out
-						</a>
-						<a class="mx-1 btn btn-outline-purple no-auth" href="/#login">
-							Log In
-						</a>
-					</div>
-                </div>
-            </div>
-        </nav>
-        
-		<main class="container">
-            
-            <p class="h1 text-center">About RoommateFinder</p>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="/">
+        <img
+          src="{{ url_for('static', filename='/assets/icon.png') }}"
+          src="site logo"
+          height="50"
+        />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#mainNavItems"
+        aria-controls="mainNavItems"
+        aria-label="Toggle main menu"
+        aria-expanded="false"
+      >
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
+        <div class="ml-auto navbar-nav nav">
+          <div class="ml-auto navbar-nav nav">
+            <a class="nav-item nav-link mx-1" href="/"> Home </a>
+            <a
+              class="nav-item nav-link mx-lg-2 mx-1 active"
+              href="/templates/about.html"
+            >
+              Why RoommateFinder?
+            </a>
+            <a class="nav-item nav-link mx-1" href="/templates/profile.html">
+              Profile
+            </a>
+            <a class="nav-item nav-link mx-1" href="/templates/dashboard.html">
+              Dashboard
+            </a>
+            <a class="nav-item nav-link mx-1" href="/templates/support">
+              Support
+            </a>
+            <a
+              class="mx-1 btn btn-outline-danger auth-only d-none"
+              id="logoutBtn"
+              href="#"
+            >
+              Log Out
+            </a>
+            <a class="mx-1 btn btn-outline-purple no-auth" href="/#login">
+              Log In
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
 
-			<section class="text-center my-4" id="about">
-                Created by Alex Mous, Pedro Amarante, Nahush Shrivatsa and Palak Mehta, UW RoommateFinder is a project designed to help incoming students to the University of Washington find roommates who have similar preferences and interests.
-				 Please contact any one of us through GitHub! Our usernames are <a href="https://github.com/alex-mous" rel="noopener nofollow">@alex-mous</a>,
-				  <a href="https://github.com/pedrodeoliamarante" target="_blank" rel="noopener nofollow">@pedrodeoliamarante</a>, 
-				  <a href="https://github.com/nahushvatsa" target="_blank" rel="noopener nofollow">@nahushvatsa</a> 
-				  and <a href="https://github.com/pmehta124" target="_blank" rel="noopener nofollow">@pmehta124</a>!
-			</section>
+    <main class="container">
+      <p class="h1 text-center">About Roomies</p>
 
-			<footer class="footer pt-3 pb-1 px-3 my-0">
-                <p class="text-muted">
-                    Copyright (c) 2021. Created with ❤️ and 🍵 by Alex Mous. <a href="https://github.com/alex-mous/UW-RoommateFinder" rel="noopener nofollow" target="_blank">View the source code on GitHub!</a>
-                </p>		
-            </footer>
-		</main>
+      <section>
+        <h2>Our Vision</h2>
+        <p>
+          At ROOMIES, we envision a future where finding the perfect roommate is
+          not only effortless but also enhances your living experience. Our goal
+          is to revolutionize the roommate-finding landscape by incorporating
+          modern technologies and innovative features into our platform.
+        </p>
+      </section>
 
+      <section>
+        <h2>Key Features of ROOMIES</h2>
+        <div class="feature-container">
+          <div class="feature-image">
+            <img
+              src="{{ url_for('static', filename='/assets/recoalgo.png') }}"
+              alt="Recommendation Algorithm Image"
+            />
+          </div>
+          <div class="feature-content">
+            <h2>Advanced Recommendation Algorithm</h2>
+            <p>
+              Our platform utilizes cutting-edge machine learning-based
+              recommendation algorithms. By meticulously analyzing user
+              profiles, preferences, and lifestyle factors, we provide highly
+              accurate roommate suggestions.
+            </p>
+          </div>
+        </div>
 
-		<!--Schema for Google-->
-		<script type="application/ld+json">
-			{
-			  "@context": "https://schema.org",
-			  "@type": "Organization",
-			  "url": "URL",
-			  "logo": "URL/assets/logo.png"
-			}
-		</script>
+        <div class="feature-container">
+          <div class="feature-image">
+            <img
+              src="{{ url_for('static', filename='/assets/privacy.jpg') }}"
+              alt="Privacy and Security Image"
+            />
+          </div>
+          <div class="feature-content">
+            <h2>Enhanced Privacy and Security</h2>
+            <p>
+              Your safety and privacy are our top priorities. ROOMIES implements
+              robust security measures, including CAPTCHA during login to
+              prevent unauthorized access. We employ face detection technology
+              for profile pictures to avoid catfishing, and our in-app messaging
+              platform ensures seamless communication with potential roommates
+              without revealing personal contact details.
+            </p>
+          </div>
+        </div>
 
-		<script type="application/ld+json">
-			{
-			  "@context": "https://schema.org",
-			  "@type": "BreadcrumbList",
-			  "itemListElement": [{
-				"@type": "ListItem",
-				"position": 1,
-				"name": "Home",
-				"item": "URL"
-			  }]
-			}
-		</script>
+        <div class="feature-container">
+          <div class="feature-image">
+            <img
+              src="{{ url_for('static', filename='/assets/ui.jpg') }}"
+              alt="User-Friendly Interface Image"
+            />
+          </div>
+          <div class="feature-content">
+            <h2>User-Friendly Interface</h2>
+            <p>
+              Understanding the importance of a smooth user experience, ROOMIES
+              boasts an intuitive and responsive interface. Whether you're
+              creating or managing your profile, our website ensures a seamless
+              experience across various devices. The roommate-matching process
+              is designed to be straightforward and efficient.
+            </p>
+          </div>
+        </div>
 
-		<!-- JavaScript Scripts -->
-		<!-- <script type="text/javascript" src="/scripts/gotrue.js"></script>
-		<script type="text/javascript" src="/scripts/main.js"></script>
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous" async defer></script> -->
-		
-	</body>
+        <div class="feature-container">
+          <div class="feature-image">
+            <img
+              src="{{ url_for('static', filename='/assets/feedback.jpg') }}"
+              alt="Feedback and Continuous Improvement Image"
+            />
+          </div>
+          <div class="feature-content">
+            <h2>Feedback and Continuous Improvement</h2>
+            <p>
+              We are dedicated to continuous enhancement. Actively collecting
+              user feedback, we use valuable insights to refine our
+              recommendation algorithms and elevate the overall user experience.
+              Our commitment is to adapt and improve continually, catering to
+              the evolving needs of our users.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+  <footer>
+    <div class="contact-info">
+      <p>Contact Us:</p>
+      <p>Contact No:+91 7977199113</p>
+      <p>Email: shreeraj.rane@somaiya.edu</p>
+    </div>
+    <div class="location">
+      <p>𖡡 KJ Somaiya College Of Engineering</p>
+      <iframe
+        width="70%"
+        height="150"
+        frameborder="0"
+        scrolling="no"
+        marginheight="0"
+        marginwidth="0"
+        src="https://maps.google.com/maps?q=19.0729122,72.897333&z=15&output=embed"
+      ></iframe>
+    </div>
+  </footer>
+  <script
+    src="https://code.jquery.com/jquery-3.6.4.slim.min.js"
+    integrity="sha384-GLhlTQ8iKHEo7RY/RykD/xTk9SJ0Dl/6ZI99VF5ceEAAbFpi6Rv4r+7L3UqFvuci"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"
+  ></script>
+  <!-- <script src="C:\roomies\ROOMIES\public\static\scripts\bootstrap.min.js"></script> -->
+
+  <script>
+    function scrollToFooter() {
+      var footer = document.querySelector("footer");
+      footer.scrollIntoView({ behavior: "smooth" });
+    }
+  </script>
 </html>
