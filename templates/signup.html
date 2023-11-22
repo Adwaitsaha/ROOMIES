@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login and Registration</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title> Registration</title>
 
 </head>
 <body>
     <div class="container">
-        <h2>Login</h2>
-        <form method="post" action="/welcome">
+        <h2>Signup</h2>
+        <form method="post" action="/signup1">
             <div class="form-group">
                 <label for="username">Email:</label>
                 <input type="text" class="form-control" id="mail" name="mail" required>
@@ -18,10 +16,13 @@
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
+            
+            <div class="g-recaptcha" data-sitekey="your-recaptcha-site-key"></div>
             <br>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-primary">Sign up</button>
         </form>
         
+        <!-- Add this div to display an error message -->
         {% if error %}
         <div class="alert alert-danger mt-3">
             {{ error }}

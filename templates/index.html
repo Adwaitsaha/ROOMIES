@@ -42,7 +42,7 @@
                         </button>
                     </span>
                     <span class="auth-only d-none">
-                        <a class="btn btn-lg btn-purple px-5 mx-2 mb-2" href="/templates/dashboard">
+                        <a class="btn btn-lg btn-purple px-5 mx-2 mb-2" >
                             Dashboard
                         </a>
                         <button class="btn btn-lg btn-danger px-5 mx-2 logout-btn mb-2">
@@ -72,7 +72,7 @@
                             <a class="nav-item nav-link mx-1" href="./profile.html">
                                 Profile
                             </a>
-                            <a class="nav-item nav-link mx-1" href="./dashboard.html">
+                            <a class="nav-item nav-link mx-1" id="dash-btn">
                                 Dashboard
                             </a>
                             <a class="nav-item nav-link mx-1" id="support-btn">
@@ -100,17 +100,21 @@
         <!-- Add these script tags at the end of the body section in index.html -->
 <script>
     document.getElementById('login-btn').addEventListener('click', function() {
-        window.location.href = '/index2';  // Redirect to index2.html on login button click
+        window.location.href = '/login';  // Redirect to index2.html on login button click
     });
 
     document.getElementById('signup-btn').addEventListener('click', function() {
-        window.location.href = '/index2';  // Redirect to index2.html on signup button click
+        window.location.href = '/signup';  
     });
     
     document.getElementById('support-btn').addEventListener('click', function() {
         window.location.href = '/support';  // Redirect to index2.html on login button click
     });
-        
+    
+    document.getElementById('dash-btn').addEventListener('click', function() {
+        window.location.href = '/dashboard';  
+    });
+
 </script>
 
         
