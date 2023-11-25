@@ -1,3 +1,39 @@
+
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+section {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+h2 {
+    color: #FF385C;
+}
+
+.feature-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.feature-image {
+    flex: 1;
+    max-width: 200px;
+    margin-right: 20px;
+}
+
+.feature-content {
+    flex: 2;
+}
+
+
 /*Main Content*/
 
 .custom-form-row {
@@ -70,11 +106,8 @@ footer {
         color: #c3bfbb !important;
     }
 
-    .btn{
-        color:  #ffffff !important;
-    }
-    body, .splash-nav-item a {
-        color:  #bdbdbd !important;
+    body, .btn, .splash-nav-item a {
+        color:  #d9d5d0 !important;
     }
 }
 

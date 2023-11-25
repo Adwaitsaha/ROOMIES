@@ -18,34 +18,30 @@
 	<body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/">
-                <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="50">
+                <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="80">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavItems" aria-controls="mainNavItems" aria-label="Toggle main menu" aria-expanded="false" >
                 <i class="fa fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
                 <div class="ml-auto navbar-nav nav">
-                    <a class="nav-item nav-link mx-1" href="/">
-                        Home
-                    </a> 
-                    <a class="nav-item nav-link mx-lg-2 mx-1" href="/templates/about.html">
+                    
+                    <a class="nav-item nav-link mx-lg-2 mx-1" id="finder" href="/whyroommatefinder">
                         Why RoommateFinder?
                     </a>
-                    <a class="nav-item nav-link mx-1" href="/templates/profile.html">
+                    <a class="nav-item nav-link mx-1" href="/profile">
                         Profile
                     </a>
-                    <a class="nav-item nav-link mx-1 active">
+                    <a class="nav-item nav-link mx-1 active" href="/dashboard">
                         Dashboard
                     </a>
-                    <a class="nav-item nav-link mx-1" href="/templates/support.html">
+                    <a class="nav-item nav-link mx-1" id="support-btn" href="/support">
                         Support
                     </a>
-                    <a class="mx-1 btn btn-outline-danger auth-only d-none" id="logoutBtn" href="#">
+                    <a class="mx-1 btn btn-outline-danger auth-only" id="logoutBtn" href="/logout">
                         Log Out
                     </a>
-                    <a class="mx-1 btn btn-outline-purple no-auth" href="/#login">
-                        Log In
-                    </a>
+                
                 </div>
             </div>
         </nav>
@@ -59,7 +55,7 @@
 
                 <p class="text-center"><i class="fa fa-info-circle mr-2"></i><span class="text-info" id="mainMsg">No new notifications</span></p>
 
-                <p class="text-center">If your <a href="./profile.html">profile</a> is complete and you have logged out and logged back in since last updating it, you'll see all of your matches listed below.</p>
+                <p class="text-center">If your <a href="#">profile</a> is complete and you have logged out and logged back in since last updating it, you'll see all of your matches listed below.</p>
                 
             
 	        </section>
@@ -92,204 +88,17 @@
                     </tbody>
                 </table>
 			</section>
-            <section class="text-center my-4 d-none" id="userview">
-                <p class="h2 text-center">Viewing User Profile</p>
-                <p class="text-info text-center small my-2 p-0">This data is purely read-only, so if you make any changes on this page they will not be saved.</p>
-                <button class="btn btn-purple w-100">Return to matches</button>
-                <hr class="d-md-none d-block w-75 my-0">
-                <p class="h4 text-center mt-4 mb-1">Match Listing</p>
-                    <p class="text-danger text-center small m-0 p-0">This information will be shown to other matches</p>
-                    <label class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Name</p>
-                        </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" disabled type="text" name="name">
-                    </label>
-                    <hr class="d-md-none d-block w-50 my-0">
-                    <label class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Contact Methods</p>
-                        </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" disabled type="text" name="email">
-                    </label>
-                    <hr class="d-md-none d-block w-50 my-0">
-                    <label class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">User Bio</p>
-                        </span>
-                        <textarea class="col mx-4 mx-sm-0 w-0 form-control d-inline" id="bioText"  name="bio"></textarea>
-                    </label>
-                <p class="h4 text-center mt-4 mb-1">Basic Demographics</p>
-    
-                <label class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <p class="m-0 p-0">Prefers Same Location</p>
-                    </span>
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="countrymatch" value="y">
-                                Yes
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="countrymatch" value="n">
-                                No
-                            </label>
-                        </div>
-                    </span>
-                </label>
-                <hr class="d-md-none d-block w-50 my-0">
-                <label class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <p class="m-0 p-0">Gender</p>
-                    </span>
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="Gender" value="1">
-                                Male
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="Gender" value="0.5">
-                                Female
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="Gender" value="0">
-                                Others
-                            </label>
-                        </div>
-                    </span>
-                </label>
-                <hr class="d-md-none d-block w-50 my-0">
-                <label class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <p class="m-0 p-0">Habits</p>
-                    </span>
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="habits" value="1">
-                                None
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="habits" value="0.5">
-                                Smoker
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="habits" value="0">
-                                Drinker
-                            </label>
-                        </div>
-                    </span>
-                </label>
-                <hr class="d-md-none d-block w-50 my-0">
-                <label class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <p class="m-0 p-0">What is your Food Preferance?</p>
-                    </span>
-                    <select class="col mx-4 mx-sm-0 form-control"  name="food">
-                        <option  selected value> -- select -- </option>
-                        <option value="1">Vegetarian</option>
-                        <option value="0">Non Vegetarian</option>
-                     </select>
-                </label>
-                <hr class="d-md-none d-block w-50 my-0">
-                <label class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <p class="m-0 p-0">What is your Profession?</p>
-                    </span>
-                    <select class="col mx-4 mx-sm-0 form-control"  name="profession">
-                        <option  selected value> -- select -- </option>
-                        <option value="Student">Student</option>
-                        <option value="WP">Working Professional</option>
-                        <option value="unemployed">Unemployed</option>
-                    </select>
-                </label>
-                <hr class="d-md-none d-block w-50 my-0">
-                <label class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        Religion?
-                    </span>
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="religion" value="1">
-                                Particular
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="religion" value="0">
-                                Not-Particular
-                            </label>
-                        </div>
-                    </span>
-                </label>
-                <hr class="d-md-none d-block w-50 my-0">
-                <label class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        Sleep Schedule
-                    </span>
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="sleepschedule" value="NightO">
-                                Nightowl
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="sleepschedule" value="EarlyB">
-                                Earlybird
-                            </label>
-                        </div>
-                    </span>
-                </label>
-                <hr class="d-md-none d-block w-50 my-0">
-                <label class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        Cleanliness Habits
-                    </span>
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="cleanlinessH" value="f">
-                                Freak
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="cleanlinessH" value="m">
-                                Messy
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio"  name="cleanlinessH" value="b">
-                                In-Between
-                            </label>
-                        </div>
-                    </span>
-                </label>
-			</section>
-            <hr class="w-75">
-
-			<footer class="footer pt-3 pb-1 px-3 my-0">
-                <p class="text-muted">
-                    Copyright (c) 2023. 
-                </p>		
-            </footer>
+            
 		</main>
+        <script>
+        document.getElementById('finder').addEventListener('click', function() {
+            window.location.href = '/whyroommatefinder'; 
+        });
+
+        document.getElementById('support-btn').addEventListener('click', function() {
+            window.location.href = '/support'; 
+        });
+    </script>
 		
 	</body>
 </html>

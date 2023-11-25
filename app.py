@@ -2,6 +2,8 @@ import firebase_admin
 from firebase_admin import credentials, firestore, storage, auth
 from flask import Flask, render_template, request, redirect, url_for,session
 import pyrebase
+import requests
+from functools import wraps
 
 app = Flask(__name__)
 app.secret_key = 'roomies' 
@@ -33,37 +35,97 @@ def index():
 def about():
     return render_template('about.html')
 
-# @app.route('/dashboard')
-# def dashboard():
-#     # Perform actions specific to the dashboard, if any
-#     return render_template('dashboard.html')
+def verify_recaptcha(token):
+    api_url = 'https://www.google.com/recaptcha/api/siteverify'
+    
+    response = requests.post(api_url, {
+        'secret': "6LctPhkpAAAAAOqyWBd3GhSZj9wQ56m6qg5DFluc",
+        'response': token
+    })
+
+    # Parse the response
+    result = response.json()
+    return result['success']
+
+
+@app.route('/whyroommatefinder')
+def whyroommatefinder():
+    return render_template('about.html')
 
 @app.route('/signup')
 def signup():
-    # Perform actions specific to the dashboard, if any
     return render_template('signup.html')
 
 @app.route('/login')
 def login():
-    # Perform actions specific to the dashboard, if any
     return render_template('index2.html')
+
+
+@app.route('/facedetection')
+def facedetection():
+    return render_template('facedetect.html')
+
+@app.route('/preferences', methods=['GET', 'POST'])
+def preferences():
+    if request.method == 'POST':
+        fname = request.form.get('fname')
+        lname = request.form.get('lname')
+        age = request.form.get('age')
+        bio = request.form.get('bio')
+        location = request.form.get('location')
+        gender = request.form.get('Gender')
+        habits = request.form.get('habits')
+        food_preference = request.form.get('food')
+        profession = request.form.get('profession')
+        religion = request.form.get('religion')
+        sleep_schedule = request.form.get('sleepschedule')
+        cleanliness_habits = request.form.get('cleanlinessH')
+
+        db.collection('RoommatePreferences').document(fname).set({
+            'First Name': fname,
+            'Last Name': lname,
+            'Bio': bio,
+            'Age':age,
+            'Location': location,
+            'Gender': gender,
+            'Habits': habits,
+            'FoodPreference': food_preference,
+            'Profession': profession,
+            'Religion': religion,
+            'SleepSchedule': sleep_schedule,
+            'CleanlinessHabits': cleanliness_habits
+        })
+
+        # Redirect to a success page or perform other actions
+        return redirect(url_for('dashboard'))
+
+    return render_template('preferences.html')
+
 
 @app.route('/signup1', methods=['GET', 'POST'])
 def signup1():
+    username = request.form.get('username')
     email = request.form.get('mail')
     password = request.form.get('password')
-
+    phone_number = request.form.get('phone')
     try:
         user = auth.create_user_with_email_and_password(
             email=email,
             password=password
         )
+
+        db.collection('Users').document(username).set({
+            'Name': username,
+            'Email':email,
+            'Phone Number': phone_number
+        })
+        
         print('Successfully created new user:')
         print(user)
-        return redirect(url_for('login'))
+        return redirect(url_for('facedetection'))
     except Exception as e:
         print('Error creating user:', e)
-        return render_template('signup.html', error='Error creating user')
+        return render_template('signup.html', error=e)
 
 
 @app.route('/welcome', methods=['GET', 'POST'])
@@ -80,16 +142,33 @@ def welcome():
         except Exception as e:
             print('Error fetching user data or invalid credentials:', e)
             return render_template('index2.html', error='Invalid credentials')
+        
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/dashboard')
+@login_required
 def dashboard():
-    # Check if the user is logged in
     if 'user' in session:
         user_email = session['user']
-        # You can use user_email to fetch user-specific data from Firestore
         return render_template('dashboard.html', user_email=user_email)
     else:
         return redirect(url_for('index'))
+    
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html')    
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('index'))
 
 @app.route('/support', methods=['GET', 'POST'])
 def support():
@@ -101,8 +180,7 @@ def support():
         image = request.files['image'] if 'image' in request.files else None
 
         if image:
-            # Upload the image to Firestore Storage
-            image_blob = bucket.blob('images/' + image.filename)
+            image_blob = bucket.blob('QueryImages/' + image.filename)
             image_blob.upload_from_string(
                 image.read(),
                 content_type=image.content_type

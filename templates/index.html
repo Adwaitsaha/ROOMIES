@@ -23,15 +23,15 @@
 
             <section class="txt splash">
                 <p class="title" href="/">
-                    <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="100">
+                    <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="150">
                 </p>
-                <p class="title">Roomies - RoommateFinder</p>
-                <p class="subtitle">Welcome to the roommate finding program</p>
+                <p class="title" style="color: white;">Roomies - RoommateFinder</p>
+                <p class="subtitle" style="color: white;">Welcome to the roommate finding program</p>
             </section>
 
             <section class="scroll splash">
-                <p class="mb-2 no-auth">Login or sign up to get started</p>
-                <p class="mb-3 auth-only d-none">Go to your Dashboard to update your profile or see current matches</p>
+                <p class="mb-2 no-auth" style="color: white;">Login or Sign Up to get started</p>
+                <p class="mb-3 auth-only" style="color: white;">Get your matches quickly!</p>
                 <span>
                     <span class="no-auth">
                         <button class="btn btn-lg btn-purple px-5 mx-2 mb-2 login-btn" id="login-btn">
@@ -66,36 +66,29 @@
                             <a class="nav-item nav-link mx-1 active" href="/">
                                 Home
                             </a> 
-                            <a class="nav-item nav-link mx-lg-2 mx-1" href="./about.html">
+                            <a class="nav-item nav-link mx-lg-2 mx-1" id="finder" href="/whyroommatefinder">
                                 Why RoommateFinder?
                             </a>
-                            <a class="nav-item nav-link mx-1" href="./profile.html">
-                                Profile
-                            </a>
-                            <a class="nav-item nav-link mx-1" id="dash-btn">
-                                Dashboard
-                            </a>
-                            <a class="nav-item nav-link mx-1" id="support-btn">
+                        
+                            <a class="nav-item nav-link mx-1" id="support-btn" href="/support">
                                 Support
                             </a>
-                            <a class="nav-item nav-link mx-1" href="./contactus.html">
+                            <a class="nav-item nav-link mx-1" href="/support" onclick="scrollToFooter()">
                                 Contact Us
                             </a>
-                            <button class="mx-1 btn btn-outline-danger auth-only d-none logout-btn">
-                                Log Out
-                            </button>
-                            <button class="mx-1 btn btn-outline-purple no-auth login-btn" href="#">
+                          
+                            <button class="mx-1 btn btn-outline-purple no-auth login-btn" id='log-in' href="/login">
                                 Log In
                             </button>
                         </div>
                     </div>
                 </div>
             </nav>
-            <footer class="footer pt-3 pb-1 px-3 my-0" style="text-align: center;">
-                <p>
+            <!-- <footer class="footer" style="text-align: center;">
+                <p style="text-align: center;">
                     Copyright (c) 2023.
                 </p>		
-            </footer>
+            </footer> -->
         </main>
         <!-- Add these script tags at the end of the body section in index.html -->
 <script>
@@ -108,11 +101,15 @@
     });
     
     document.getElementById('support-btn').addEventListener('click', function() {
-        window.location.href = '/support';  // Redirect to index2.html on login button click
+        window.location.href = '/support';  
     });
-    
-    document.getElementById('dash-btn').addEventListener('click', function() {
-        window.location.href = '/dashboard';  
+
+    document.getElementById('log-in').addEventListener('click', function() {
+        window.location.href = '/login';  
+    });
+
+    document.getElementById('finder').addEventListener('click', function() {
+        window.location.href = '/whyroommatefinder';  
     });
 
 </script>

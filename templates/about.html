@@ -10,7 +10,7 @@ Path:
   <head>
     <meta name="robots" content="noindex" />
 
-    <title>UW RoommateFinder - Unofficial UW Roommate Finding Program</title>
+    <title>Roomies</title>
     <!--Links/includes-->
     <link
       rel="icon"
@@ -34,6 +34,10 @@ Path:
       rel="stylesheet"
       href="{{ url_for('static', filename='/styles/style.css') }}"
     />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/about.css') }}"
+    />
   </head>
 
   <body>
@@ -42,7 +46,7 @@ Path:
         <img
           src="{{ url_for('static', filename='/assets/icon.png') }}"
           src="site logo"
-          height="50"
+          height="80"
         />
       </a>
       <button
@@ -62,20 +66,25 @@ Path:
             <a class="nav-item nav-link mx-1" href="/"> Home </a>
             <a
               class="nav-item nav-link mx-lg-2 mx-1 active"
-              href="/templates/about.html"
+              href="/whyroommatefinder"
             >
               Why RoommateFinder?
             </a>
-            <a class="nav-item nav-link mx-1" href="/templates/profile.html">
+            <!-- <a class="nav-item nav-link mx-1" href="/templates/profile.html">
               Profile
-            </a>
-            <a class="nav-item nav-link mx-1" href="/templates/dashboard.html">
+            </a> -->
+            <!-- <a class="nav-item nav-link mx-1" href="/templates/dashboard.html">
               Dashboard
-            </a>
-            <a class="nav-item nav-link mx-1" href="/templates/support">
-              Support
-            </a>
+            </a> -->
+            <a class="nav-item nav-link mx-1" href="/support"> Support </a>
             <a
+              class="nav-item nav-link mx-1"
+              href="/support"
+              onclick="scrollToFooter()"
+            >
+              Contact Us
+            </a>
+            <!-- <a
               class="mx-1 btn btn-outline-danger auth-only d-none"
               id="logoutBtn"
               href="#"
@@ -84,12 +93,12 @@ Path:
             </a>
             <a class="mx-1 btn btn-outline-purple no-auth" href="/#login">
               Log In
-            </a>
+            </a> -->
           </div>
         </div>
       </div>
     </nav>
-
+    <br>
     <main class="container">
       <p class="h1 text-center">About Roomies</p>
 
