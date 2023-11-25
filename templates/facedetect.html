@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Image Capture</title>
+    <style>
+        video {
+            width: 100%;
+            max-width: 600px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        canvas {
+            display: none;
+        }
+        #capturedImage {
+            display: none;
+            max-width: 100%;
+            margin-top: 10px;
+        }
+        .container {
+            text-align: center;
+        }
+        .next-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Live Image Capture</h2>
+        <video id="video" autoplay></video>
+        <button onclick="capture()">Capture Image</button>
+        <canvas id="canvas"></canvas>
+        <img id="capturedImage" alt="Captured Image">
+        <form action="/preferences">
+            <button id="nextBtn" disabled>Next</button>
+        </form>
+        
+    </div>
+
+    <script>
+        // Add your script here
+        let nextBtn = document.getElementById('nextBtn');
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                var video = document.getElementById('video');
+                video.srcObject = stream;
+            })
+            .catch(function (error) {
+                console.error('Error accessing camera:', error);
+            });
+
+        function capture() {
+            var video = document.getElementById('video');
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            var capturedImage = document.getElementById('capturedImage');
+
+            // Set canvas dimensions to match the video
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            // Draw video frame onto the canvas
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Show the captured image
+            capturedImage.src = canvas.toDataURL('image/png');
+            capturedImage.style.display = 'block';
+
+            // Enable the "Next" button
+            nextBtn.disabled = false;
+        }
+
+        function redirectToNextPage() {
+            // Add your logic for navigating to the next page
+            window.location.href = 'your_next_page.html';
+        }
+    </script>
+</body>
+</html>
