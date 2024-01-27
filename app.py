@@ -6,7 +6,6 @@ import requests
 from functools import wraps 
 from google.cloud.firestore_v1.base_query import FieldFilter
 
-
 app = Flask(__name__)
 app.secret_key = 'roomies' 
 cred = credentials.Certificate("common/roomies-166f5-firebase-adminsdk-h1537-a0ab5ed914.json")
@@ -36,9 +35,6 @@ def get_user_preferences(email):
 
     # Return an empty dictionary or None if no matching document is found
     return {}
-
-
-
 
 @app.route('/')
 def index():
@@ -72,6 +68,12 @@ def signup():
 @app.route('/login')
 def login():
     return render_template('index2.html')
+
+
+
+@app.route('/facedetection')
+def facedetection():
+    return render_template('facedetect.html')
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
@@ -159,6 +161,7 @@ def signup1():
         print('Successfully created new user:')
         print(user)
         return redirect(url_for('preferences'))
+
     except Exception as e:
         print('Error creating user:', e)
         return render_template('signup.html', error=e)
@@ -175,6 +178,7 @@ def welcome():
             session['user'] = user['email']
             print('Successfully fetched user data', user)
             return redirect(url_for('dashboard'))
+          
         except Exception as e:
             print('Error fetching user data or invalid credentials:', e)
             return render_template('index2.html', error='Invalid credentials')
@@ -192,7 +196,6 @@ def login_required(f):
 def dashboard():
     if 'user' in session:
         user_email = session['user']
-        print(user_email)
         return render_template('dashboard.html', user_email=user_email)
     else:
         return redirect(url_for('index'))
