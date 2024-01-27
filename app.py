@@ -3,7 +3,8 @@ from firebase_admin import credentials, firestore, storage, auth
 from flask import Flask, render_template, request, redirect, url_for,session
 import pyrebase
 import requests
-from functools import wraps
+from functools import wraps 
+from google.cloud.firestore_v1.base_query import FieldFilter
 
 app = Flask(__name__)
 app.secret_key = 'roomies' 
@@ -26,6 +27,14 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 storage = firebase.storage
 auth = firebase.auth()  
 
+def get_user_preferences(email):
+    user_ref = db.collection('Users')
+    doc_ref = user_ref.where(filter=FieldFilter('Email','==',email)).limit(1).stream()
+    for doc in doc_ref:
+        return doc.to_dict()
+
+    # Return an empty dictionary or None if no matching document is found
+    return {}
 
 @app.route('/')
 def index():
@@ -61,9 +70,11 @@ def login():
     return render_template('index2.html')
 
 
+
 @app.route('/facedetection')
 def facedetection():
     return render_template('facedetect.html')
+
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
@@ -81,20 +92,47 @@ def preferences():
         sleep_schedule = request.form.get('sleepschedule')
         cleanliness_habits = request.form.get('cleanlinessH')
 
-        db.collection('RoommatePreferences').document(fname).set({
-            'First Name': fname,
-            'Last Name': lname,
-            'Bio': bio,
-            'Age':age,
-            'Location': location,
-            'Gender': gender,
-            'Habits': habits,
-            'FoodPreference': food_preference,
-            'Profession': profession,
-            'Religion': religion,
-            'SleepSchedule': sleep_schedule,
-            'CleanlinessHabits': cleanliness_habits
+        user_info = session.get('user_info', {})
+        user_info.update({
+            'fname': fname,
+            'lname': lname,
+            'age': age,
+            'bio': bio,
+            'location': location,
+            'gender': gender,
+            'habits': habits,
+            'food_preference': food_preference,
+            'profession': profession,
+            'religion': religion,
+            'sleep_schedule': sleep_schedule,
+            'cleanliness_habits': cleanliness_habits
         })
+
+        db.collection('Users').document(user_info['username']).set({
+            'Username': user_info['username'],
+            'Email': user_info['email'],
+            'Phone Number': user_info['phone_number']
+        })
+
+        db.collection('RoommatePreferences').document(user_info['username']).set({
+            'Username': user_info['username'],
+            'First Name': user_info['fname'],
+            'Last Name': user_info['lname'],
+            'Age': user_info['age'],
+            'Bio': user_info['bio'],
+            'Location': user_info['location'],
+            'Gender': user_info['gender'],
+            'Habits': user_info['habits'],
+            'Food_preference': user_info['food_preference'],
+            'Profession': user_info['profession'],
+            'Religion': user_info['religion'],
+            'Sleep Schedule': user_info['sleep_schedule'],
+            'Cleanliness Habits': user_info['cleanliness_habits']
+
+        })
+
+        # Clear the session data after storing in Firestore
+        session.pop('user_info', None)
 
         # Redirect to a success page or perform other actions
         return redirect(url_for('dashboard'))
@@ -114,15 +152,16 @@ def signup1():
             password=password
         )
 
-        db.collection('Users').document(username).set({
-            'Name': username,
-            'Email':email,
-            'Phone Number': phone_number
-        })
+        session['user_info'] = {
+            'username': username,
+            'email': email,
+            'phone_number': phone_number
+        }
         
         print('Successfully created new user:')
         print(user)
-        return redirect(url_for('facedetection'))
+        return redirect(url_for('preferences'))
+
     except Exception as e:
         print('Error creating user:', e)
         return render_template('signup.html', error=e)
@@ -136,9 +175,10 @@ def welcome():
 
         try:
             user = auth.sign_in_with_email_and_password(email,password)
-            session['user'] = email
-            print('Successfully fetched user data:', user['localId'])
+            session['user'] = user['email']
+            print('Successfully fetched user data', user)
             return redirect(url_for('dashboard'))
+          
         except Exception as e:
             print('Error fetching user data or invalid credentials:', e)
             return render_template('index2.html', error='Invalid credentials')
@@ -163,7 +203,29 @@ def dashboard():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html')    
+    user_email = session.get('user')
+    user_preferences = get_user_preferences(user_email)  
+
+    return render_template('profile.html', user_preferences = user_preferences)    
+
+@app.route('/delete_account', methods=['POST'])
+def delete_account():
+    try:
+        # Verify the user is authenticated
+        user_id = session.get('user')  
+        if not user_id:
+            return redirect(url_for('login'))
+
+        # Delete the user account using the UID
+        auth.delete_user_account(user_id)
+
+        # Clear the session and redirect to the index page after successful deletion
+        session.pop('user', None)
+        return redirect(url_for('index'))
+
+    except Exception as e:
+        print('Error deleting user account:', e)
+        return redirect(url_for('profile'))
 
 @app.route('/logout')
 def logout():
