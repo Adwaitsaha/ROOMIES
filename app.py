@@ -63,8 +63,8 @@ def generate_otp():
     return otp
 
 def send_otp_email(email, otp):
-    msg = Message('Email Verification OTP for Roomies',sender='roomiesaps@gmail.com', recipients=[email])
-    msg.body = f'Your OTP for email verification is: {otp}'
+    msg = Message('Email Verification OTP for ROOMIES',sender='roomiesaps@gmail.com', recipients=[email])
+    msg.body = f'Hi,\nThank you for choosing ROOMIES. Use the following OTP to complete your Sign Up procedures.\nOTP is valid for 5 minutes.\n\nOTP: {otp}\n\nRegards,\nROOMIES Team\n\nNote: Please do not respond to this email.'
     mail.send(msg)
     print("sent")
 
