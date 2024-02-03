@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facedetect</title>
+</head>
+<body>
+    <div>
+        <video id="video" width="640" height="480" autoplay></video>
+        <button id="capture-btn">Capture Image</button>
+        <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+    </div>
+    <form action="/preferences">
+        <button id="nextBtn" disabled>Next</button>
+    </form>
+
+    <script>
+        let nextBtn = document.getElementById('nextBtn');
+        // Access the webcam
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                var video = document.getElementById('video');
+                video.srcObject = stream;
+            })
+            .catch(function (err) {
+                console.error('Error accessing the webcam: ', err);
+            });
+        
+        // Function to capture an image
+        document.getElementById('capture-btn').addEventListener('click', function () {
+            var video = document.getElementById('video');
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            // Draw the current frame from the video onto the canvas
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            // Convert the canvas image to data URL
+            var imageDataURL = canvas.toDataURL('image/jpeg');
+            // Send the image data to the server (Flask route)
+            sendDataToServer(imageDataURL);
+            nextBtn.disabled = false;
+        });
+
+        // Function to send the captured image data to the server
+        function sendDataToServer(imageDataURL) {
+            // Send the data via AJAX to the Flask route
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/facedetect', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    alert(xhr.responseText);
+                }
+            };
+            xhr.send('image_data=' + encodeURIComponent(imageDataURL));
+        }
+    </script>
+</body>
+</html>

@@ -7,6 +7,9 @@ from functools import wraps
 from google.cloud.firestore_v1.base_query import FieldFilter
 from flask_mail import Message, Mail
 import random
+import cv2
+import base64
+import numpy as np
 
 app = Flask(__name__)
 app.secret_key = 'roomies' 
@@ -35,11 +38,12 @@ app.config.update(dict(
     MAIL_PORT = 587,
     MAIL_USE_TLS = True,
     MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'adwaitsaha10@gmail.com',
-    MAIL_PASSWORD = 'kjir epjy mkoi htzc',
+    MAIL_USERNAME = 'roomiesaps@gmail.com',
+    MAIL_PASSWORD = 'irsr gxzz vquh bejg',
 ))
 
 mail = Mail(app)
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 def get_user_preferences(email):
     user_preferences = {}
@@ -59,7 +63,7 @@ def generate_otp():
     return otp
 
 def send_otp_email(email, otp):
-    msg = Message('Email Verification OTP for Roomies',sender='adwaitsaha10@gmail.com', recipients=[email])
+    msg = Message('Email Verification OTP for Roomies',sender='roomiesaps@gmail.com', recipients=[email])
     msg.body = f'Your OTP for email verification is: {otp}'
     mail.send(msg)
     print("sent")
@@ -96,9 +100,26 @@ def signup():
 def login():
     return render_template('index2.html')
 
-@app.route('/facedetection')
-def facedetection():
-    return render_template('facedetect.html')
+@app.route('/facedetect', methods=['GET','POST'])
+def facedetect():
+    if request.method == 'POST':
+        # Decode the base64 encoded image data sent from the client-side
+        image_data = request.form['image_data'].split(",")[1]
+        # Convert the base64 image data to bytes
+        image_bytes = bytes(image_data, 'utf-8')
+        # Decode the bytes to an image array
+        nparr = np.frombuffer(base64.b64decode(image_bytes), np.uint8)
+        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        # Convert the image to grayscale (required for face detection)
+        gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        # Perform face detection
+        faces = face_cascade.detectMultiScale(gray_image, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+        if len(faces) > 0:
+            print("success!")
+            return redirect(url_for('preferences'))
+        else:
+            return "No human user detected. Make sure your face is clearly visible and you are in a well lit place. \nPlease capture another image."
+    return render_template('facedetect1.html')
 
 @app.route('/signup1', methods=['GET', 'POST'])
 def signup1():
@@ -146,7 +167,7 @@ def verify_email():
         if entered_otp == session_otp:
             # OTP matched, proceed with signup
             session.pop('user_info')['otp']
-            return redirect(url_for('preferences'))
+            return redirect(url_for('facedetect'))
         else:
             # Incorrect OTP, display error message
             return render_template('verify_email.html', error='Incorrect OTP. Please try again.')
