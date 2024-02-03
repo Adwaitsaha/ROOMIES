@@ -21,12 +21,13 @@ Path:
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 		<link rel="stylesheet" href="{{ url_for('static', filename='/styles/profile.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='/styles/style.css') }}">
+        
 	</head>
 
 	<body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/">
-                <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="50">
+                <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="80">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavItems" aria-controls="mainNavItems" aria-label="Toggle main menu" aria-expanded="false" >
                 <i class="fa fa-bars"></i>
@@ -60,18 +61,64 @@ Path:
             <hr class="w-75">
             <section class="mt-3 mb-5" id="form">
 
-                <h2>User Preferences:</h2>
-            <ul>
-                <li>User Name: {{ user_preferences['Username'] }}</li>
-                
+            <h2>User Preferences:</h2>
+
+            <ul style="text-align: justify;">
+                <li>
+                    <div style="display: flex;">
+                        <p class="text-danger">Username:</p>&nbsp;<span id="Username" contenteditable="false">{{ user_preferences['Username'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex;">
+                        <p class="text-danger">Age:</p>&nbsp; <span id="Age" contenteditable="false">{{ user_preferences['Age'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;">
+                        <p class="text-danger">Bio:</p>&nbsp;<span id="Bio" contenteditable="false">{{ user_preferences['Bio'] }}</span>
+                    </div>
+                </li>                
+                <li>
+                    <div style="display: flex;"><p class="text-danger">Gender:</p>&nbsp;<span id="Gender" contenteditable="false">{{ user_preferences['Gender'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;"><p class="text-danger">Profession:</p>&nbsp;<span id="Profession" contenteditable="false">{{ user_preferences['Profession'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;"><p class="text-danger">Religion:</p>&nbsp;<span id="Religion" contenteditable="false">{{ user_preferences['Religion'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;"><p class="text-danger">Habits:</p>&nbsp;<span id="Habits" contenteditable="false">{{ user_preferences['Habits'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;"><p class="text-danger">Food Preference:</p>&nbsp;<span id="Food Preference" contenteditable="false">{{ user_preferences['Food Preference'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;"><p class="text-danger">Sleep Schedule:</p>&nbsp;<span id="Sleep Schedule" contenteditable="false">{{ user_preferences['Sleep Schedule'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;"><p class="text-danger">Pet Friendliness:</p>&nbsp;<span id="Pet Friendliness" contenteditable="false">{{ user_preferences['Pet Friendliness'] }}</span>
+                    </div>
+                </li>
             </ul>
+            <button class="btn btn-outline-danger" onclick="toggleEditMode()">Edit Preferences</button>&nbsp;&nbsp;&nbsp;
+            <button id="saveChangesBtn" class="btn btn-outline-danger" onclick="saveChanges()" style="display: none;">Save Changes</button>
+            <br><br>
+            <p>*To edit your personality preference, please reach out to us via <a href="/support">support</a>.</p>
                 <br><br><br>
               
-                <form id="deleteForm" action="{{ url_for('delete_account') }}" method="post">
-                    <p class="h3 text-center mt-4 mb-3">Delete Account</p>
-                    <p>Found a roommate or tired of being listed?</p>
-                    <button type="submit" class="btn btn-outline-danger" id="deleteBtn">Delete my account</button>
-                </form>
+            <form id="deleteForm" action="{{ url_for('delete_account') }}" method="post" style="text-align: center;">
+                <p class="h3 text-center mt-4 mb-3">Delete Account</p>
+                <p>Found a roommate or tired of being listed?</p>
+                <button type="submit" class="btn btn-outline-danger" id="deleteBtn">Delete my account</button>
+            </form>
 
 		</main>
         <script>
@@ -81,6 +128,63 @@ Path:
                 }
             });
         </script>
+        <script>
+            function toggleEditMode() {
+                var spans = document.querySelectorAll('span[contenteditable]');
+                spans.forEach(function(span) {
+                    span.contentEditable = 'true';
+                });
+                document.getElementById('saveChangesBtn').style.display = 'inline-block';
+            }
+    
+            function saveChanges() {
+                var spans = document.querySelectorAll('span[contenteditable]');
+                spans.forEach(function(span) {
+                    span.contentEditable = 'false';
+                });
+                document.getElementById('saveChangesBtn').style.display = 'none';
+    
+                // Collect the updated preference values
+                var updatedPreferences = {};
+                spans.forEach(function(span) {
+                    updatedPreferences[span.id] = span.innerText;
+                });
+    
+                // Send an AJAX request to save the changes to the database
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/update_preferences', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        console.log('Changes saved successfully.');
+                    }
+                };
+                xhr.send(JSON.stringify(updatedPreferences));
+            }
+        </script>
+        <!-- <script>
+            function editPreference(field) {
+            
+                var value = document.getElementById(field).innerText;
+            
+                var newValue = prompt('Enter new value:', value);
+                if (newValue !== null) {
+               
+                    document.getElementById(field).innerText = newValue;
+                
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/update_preference', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        
+                            console.log(xhr.responseText);
+                        }
+                    };
+                    xhr.send('field=' + encodeURIComponent(field) + '&newValue=' + encodeURIComponent(newValue));
+                }
+            }
+        </script> -->
 
 
 	</body>

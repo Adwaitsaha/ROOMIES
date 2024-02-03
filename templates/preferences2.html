@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preferences</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+		<link rel="stylesheet" href="{{ url_for('static', filename='/styles/dashboard.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='/styles/style.css') }}">
+        
+</head>
+<body>
+    <form action="" method="post">
+        <section class="text-center my-4 preference" id="userview" style="margin-right: 10%;">
+            <p class="h2 text-center">Let's get to know you a little bit more!</p>
+            <hr class="d-md-none d-block w-75 my-0">
+                <p class="text-danger text-center small m-0 p-0">This information will be shown to other matches</p>
+            <label class="row custom-form-row">
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    <p class="m-0 p-0">How adventurous are you when it comes to trying new activities?</p>
+                </span>
+                <select class="col mx-4 mx-sm-0 form-control"  name="Activity" required>
+                    <option  selected value> -- select -- </option>
+                    <option value="Very Adventurous">Very Adventurous</option>
+                    <option value="Somewhat Adventurous">Somewhat Adventurous</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Not Very Adventurous">Not Very Adventurous</option>
+                    <option value="Not Adventurous at All">Not Adventurous at All</option>
+                 </select>
+            </label>
+            <hr class="d-md-none d-block w-50 my-0">
+            <label class="row custom-form-row">
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    <p class="m-0 p-0">How organized and detail-oriented are you in your daily life?</p>
+                </span>
+                <select class="col mx-4 mx-sm-0 form-control"  name="organized" required>
+                    <option  selected value> -- select -- </option>
+                    <option value="Extremely Organized">Extremely Organized</option>
+                    <option value="Moderately Organized">Moderately Organized</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Somewhat Disorganized">Somewhat Disorganized</option>
+                    <option value="Very Disorganized">Very Disorganized</option>
+                 </select>
+            </label>
+            <hr class="d-md-none d-block w-50 my-0">
+            <label class="row custom-form-row">
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    <p class="m-0 p-0">How do you typically feel in social settings with new people?</p>
+                </span>
+                <select class="col mx-4 mx-sm-0 form-control"  name="social" required>
+                    <option  selected value> -- select -- </option>
+                    <option value="Very Outgoing">Very Outgoing</option>
+                    <option value="Somewhat Outgoing">Somewhat Outgoing</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Somewhat Introverted">Somewhat Introverted</option>
+                    <option value="Very Introverted">Very Introverted</option>
+                 </select>
+            </label>
+            <hr class="d-md-none d-block w-50 my-0">
+            <label class="row custom-form-row">
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    <p class="m-0 p-0">How willing are you to compromise and find solutions in conflicts?</p>
+                </span>
+                <select class="col mx-4 mx-sm-0 form-control"  name="conflict" required>
+                    <option  selected value> -- select -- </option>
+                    <option value="Always Willing">Always Willing</option>
+                    <option value="Usually Willing">Usually Willing</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Sometimes Unwilling">Sometimes Unwilling</option>
+                    <option value="Always Unwilling">Always Unwilling</option>
+                 </select>
+            </label>
+            <hr class="d-md-none d-block w-50 my-0">
+            <label class="row custom-form-row">
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    <How class="m-0 p-0">How well do you handle stress and unexpected challenges?</p>
+                </span>
+                <select class="col mx-4 mx-sm-0 form-control"  name="stress" required>
+                    <option  selected value> -- select -- </option>
+                    <option value="Very Well">Very Well</option>
+                    <option value="Moderately Well">Moderately Well</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Not Very Well">Not Very Well</option>
+                    <option value="Not Well at All">Not Well at All</option>
+                 </select>
+            </label>
+            <hr class="d-md-none d-block w-50 my-0">
+            <label class="row custom-form-row">
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    <How class="m-0 p-0">How interested are you in exploring different cultures and ideas?</p>
+                </span>
+                <select class="col mx-4 mx-sm-0 form-control"  name="cultures" required>
+                    <option  selected value> -- select -- </option>
+                    <option value="Extremely Interested">Extremely Interested</option>
+                    <option value="Very Interested">Very Interested</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Somewhat Interested">Somewhat Interested</option>
+                    <option value="Not Interested at All">Not Interested at All</option>
+                 </select>
+            </label>
+            <hr class="d-md-none d-block w-50 my-0">
+            <label class="row custom-form-row">
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    <How class="m-0 p-0">How proactive are you in planning and organizing your future?</p>
+                </span>
+                <select class="col mx-4 mx-sm-0 form-control"  name="future" required>
+                    <option  selected value> -- select -- </option>
+                    <option value="Extremely Proactive">Extremely Proactive</option>
+                    <option value="Moderately Proactive">Moderately Proactive</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Somewhat Proactive">Somewhat Proactive</option>
+                    <option value="Not Proactive at All">Not Proactive at All</option>
+                 </select>
+            </label>
+            <hr class="d-md-none d-block w-50 my-0">
+            <label class="row custom-form-row">
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    <How class="m-0 p-0">How often do you seek out social gatherings or events?</p>
+                </span>
+                <select class="col mx-4 mx-sm-0 form-control"  name="gatherings" required>
+                    <option  selected value> -- select -- </option>
+                    <option value="Always">Always</option>
+                    <option value="Often">Often</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Rarely">Rarely</option>
+                    <option value="Never">Never</option>
+                 </select>
+            </label>
+            <hr class="d-md-none d-block w-50 my-0">
+            <label class="row custom-form-row">
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    <How class="m-0 p-0">How patient are you when dealing with others' mistakes or shortcomings?</p>
+                </span>
+                <select class="col mx-4 mx-sm-0 form-control"  name="patient" required>
+                    <option  selected value> -- select -- </option>
+                    <option value="Very Patient">Very Patient</option>
+                    <option value="Patient">Patient</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Impatient">Impatient</option>
+                    <option value="Very Impatient">Very Impatient</option>
+                 </select>
+            </label>
+            <hr class="d-md-none d-block w-50 my-0">
+            <label class="row custom-form-row">
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    <How class="m-0 p-0">How frequently do you experience mood swings or emotional ups and downs?</p>
+                </span>
+                <select class="col mx-4 mx-sm-0 form-control"  name="mood" required>
+                    <option  selected value> -- select -- </option>
+                    <option value="Rarely or Never">Rarely or Never</option>
+                    <option value="Occasionally">Occasionally</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Frequently">Frequently</option>
+                    <option value="Very Frequently">Very Frequently</option>
+                 </select>
+            </label>
+            <div class="row custom-form-row">
+                <button class="btn btn-purple mx-auto" type="submit">Finish</button>
+            </div>
+        </section>
+    </form>
+    
+</body>
+</html>
