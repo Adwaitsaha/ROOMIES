@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login and Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/style.css') }}"
+    />
+
+    
+</head>
+<body style="background-color: #141618;">
+    <div class="container">
+        <h2 style="text-align: center;">Login</h2>
+        <form method="post" action="/welcome">
+            <div class="form-group">
+            <label for="username" class="row custom-form-row">
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    <p class="m-0 p-0">Email</p>
+                </span>
+                <input class="col mx-4 mx-sm-0 form-control d-inline" required type="email" id="mail" name="mail" maxlength="50">
+            </label>
+            </div>
+            <div class="form-group">
+                <label for="password" class="row custom-form-row">
+                    <span class="col-md col-12 mb-1 py-2 text-center">
+                        <p class="m-0 p-0">Password</p>
+                    </span>
+                    <input class="col mx-4 mx-sm-0 form-control d-inline" required type="password" id="password" name="password">
+                </label>
+            </div>
+            
+            <br>
+            <button type="submit" class="btn btn-purple w-100 mt-3">Log In</button>
+        </form>
+        
+        {% if error %}
+        <div class="alert alert-danger mt-3">
+            {{ error }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
