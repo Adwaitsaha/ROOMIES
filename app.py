@@ -11,6 +11,7 @@ import cv2
 import base64
 import numpy as np
 
+
 app = Flask(__name__)
 app.secret_key = 'roomies' 
 cred = credentials.Certificate("common/roomies-166f5-firebase-adminsdk-h1537-a0ab5ed914.json")
@@ -68,6 +69,13 @@ def send_otp_email(email, otp):
     mail.send(msg)
     print("sent")
 
+def upload_image_to_firebase(image, name):
+    filename = 'dpimage_' + name + '.jpg'
+    blob = bucket.blob('Profile Photo/'+filename)
+    # Convert the OpenCV image to bytes
+    _, image_data = cv2.imencode('.jpg', image)
+    blob.upload_from_string(image_data.tobytes(), content_type='image/jpeg')
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -75,6 +83,10 @@ def index():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
 
 def verify_recaptcha(token):
     api_url = 'https://www.google.com/recaptcha/api/siteverify'
@@ -114,8 +126,10 @@ def facedetect():
         gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         # Perform face detection
         faces = face_cascade.detectMultiScale(gray_image, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+        session_username = session.get('user_info').get('username')
         if len(faces) > 0:
             print("success!")
+            upload_image_to_firebase(image,session_username)
             return redirect(url_for('preferences'))
         else:
             return "No human user detected. Make sure your face is clearly visible and you are in a well lit place. \nPlease capture another image."
@@ -130,6 +144,7 @@ def signup1():
     password = request.form.get('password')
     phone_number = request.form.get('phone')
     age = request.form.get('age')
+    gender = request.form.get('Gender')
     try:
         user = auth.create_user_with_email_and_password(
             email=email,
@@ -141,13 +156,14 @@ def signup1():
         session['user_info'] = {
             'username': username,
             'email': email,
+            'gender': gender,
             'phone_number': phone_number,
             'fname': fname,
             'lname': lname,
             'age': age,
             'otp': otp
         }
-        
+        print(session['user_info'])
         send_otp_email(email, otp)
 
         print('Successfully created new user:', user)
@@ -162,11 +178,13 @@ def verify_email():
     if request.method == 'POST':
         # Verify the OTP entered by the user
         entered_otp = request.form.get('otp')
+   
         session_otp = session.get('user_info').get('otp')
         
         if entered_otp == session_otp:
             # OTP matched, proceed with signup
-            session.pop('user_info')['otp']
+            # session.pop('user_info')['otp']
+           
             return redirect(url_for('facedetect'))
         else:
             # Incorrect OTP, display error message
@@ -176,10 +194,14 @@ def verify_email():
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
+    fname =  session.get('user_info', {}).get('fname')
+    lname =  session.get('user_info', {}).get('lname')
+    gender = session.get('user_info', {}).get('gender')
+    age = session.get('user_info', {}).get('age')
+
     if request.method == 'POST':
         bio = request.form.get('bio')
         location = request.form.get('location')
-        gender = request.form.get('Gender')
         habits = request.form.get('habits')
         food_preference = request.form.get('food')
         profession = request.form.get('profession')
@@ -192,7 +214,6 @@ def preferences():
         user_info.update({
             'bio': bio,
             'location': location,
-            'gender': gender,
             'habits': habits,
             'food_preference': food_preference,
             'profession': profession,
@@ -203,10 +224,11 @@ def preferences():
         })
         
         session['user_info'] = user_info
+        
 
         return redirect(url_for('preferences2'))
 
-    return render_template('preferences.html')
+    return render_template('preferences.html', gender = gender, lname = lname, fname = fname, age = age)
 
 @app.route('/preferences2', methods=['GET', 'POST'])
 def preferences2():
@@ -236,6 +258,7 @@ def preferences2():
             'mood': mood,
         })
         session['user_info'] = user_info
+        print(user_info)
 
         db.collection('Users').document(user_info['username']).set({
             'Username': user_info['username'],
@@ -243,6 +266,7 @@ def preferences2():
             'Last Name': user_info['lname'],
             'Age': user_info['age'],
             'Email': user_info['email'],
+            'Gender': user_info['gender'],
             'Phone Number': user_info['phone_number']
         })
 
@@ -250,7 +274,6 @@ def preferences2():
             'Username': user_info['username'],
             'Bio': user_info['bio'],
             'Accomodation Location': user_info['location'],
-            'Gender': user_info['gender'],
             'Habits': user_info['habits'],
             'Food Preference': user_info['food_preference'],
             'Profession': user_info['profession'],

@@ -4,17 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Facedetect</title>
+    <link rel="icon" href="{{ url_for('static', filename='/assets/icon.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/style.css') }}">
 </head>
-<body>
-    <div>
-        <video id="video" width="640" height="480" autoplay></video>
-        <button id="capture-btn">Capture Image</button>
-        <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
-    </div>
-    <form action="/preferences">
-        <button id="nextBtn" disabled>Next</button>
-    </form>
+<body style="background-image: linear-gradient(rgba(0, 0, 0, 0.7),
+rgba(0, 0, 0, 0.7)), url('static/assets/splash.png'); display: flex; justify-content: center; align-items: center;">
 
+    <div style="text-align: center;">
+        <video id="video" width="640" height="480" autoplay></video>
+        <button id="capture-btn" style="display: block; margin: 0 auto;">Capture Image</button>
+        <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+        <form action="/preferences" style="margin-top: 20px;">
+            <button id="nextBtn" disabled style="margin: 0 auto;">Next</button>
+        </form>
+    </div>
+    
     <script>
         let nextBtn = document.getElementById('nextBtn');
         // Access the webcam
@@ -56,4 +62,5 @@
         }
     </script>
 </body>
+
 </html>
