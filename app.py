@@ -82,6 +82,7 @@ def upload_image_to_firebase(image, name):
     _, image_data = cv2.imencode('.jpg', image)
     blob.upload_from_string(image_data.tobytes(), content_type='image/jpeg')
 
+
 def verify_recaptcha(token):
     api_url = 'https://www.google.com/recaptcha/api/siteverify'
     
@@ -202,7 +203,9 @@ def verify_email():
         else:
             return render_template('verify_email.html', error='Incorrect OTP. Please try again.')
 
+
     return render_template('verify_email.html')
+
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
@@ -239,6 +242,7 @@ def preferences():
         
 
         return redirect(url_for('preferences2'))
+
 
     return render_template('preferences.html', gender = gender, lname = lname, fname = fname, age = age)
 
@@ -282,6 +286,7 @@ def preferences2():
             'PhoneNumber': user_info['phone_number']
         })
 
+
         db.collection('RoommatePreferences').document(user_info['username']).set({
             'Username': user_info['username'],
             'Bio': user_info['bio'],
@@ -311,6 +316,7 @@ def preferences2():
         return redirect(url_for('dashboard'))
     
     return render_template('preferences2.html')
+
 
 
 @app.route('/welcome', methods=['GET', 'POST'])
@@ -361,6 +367,7 @@ def dashboard():
 @app.route('/profile')
 @login_required
 def profile():
+
     user_info = session.get('user')
 
     if user_info:
@@ -398,6 +405,7 @@ def delete_account():
         db.collection('Users').document(username).delete()
         db.collection('RoommatePreferences').document(username).delete()
         auth.delete_user_account(id_token)
+
 
         session.pop('user', None)
         return redirect(url_for('index'))
