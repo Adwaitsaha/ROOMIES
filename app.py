@@ -46,6 +46,12 @@ app.config.update(dict(
 mail = Mail(app)
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
+def username_exists(username):
+    print("triggered")
+    user_ref = db.collection('Users').document(username)
+    user_doc = user_ref.get()
+    return user_doc.exists
+
 def get_user_preferences(email):
     user_preferences = {}
     user_ref = db.collection('RoommatePreferences')
@@ -76,6 +82,18 @@ def upload_image_to_firebase(image, name):
     _, image_data = cv2.imencode('.jpg', image)
     blob.upload_from_string(image_data.tobytes(), content_type='image/jpeg')
 
+def verify_recaptcha(token):
+    api_url = 'https://www.google.com/recaptcha/api/siteverify'
+    
+    response = requests.post(api_url, {
+        'secret': "6LctPhkpAAAAAOqyWBd3GhSZj9wQ56m6qg5DFluc",
+        'response': token
+    })
+
+    result = response.json()
+    return result['success']
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -87,17 +105,6 @@ def about():
 @app.route('/terms')
 def terms():
     return render_template('terms.html')
-
-def verify_recaptcha(token):
-    api_url = 'https://www.google.com/recaptcha/api/siteverify'
-    
-    response = requests.post(api_url, {
-        'secret': "6LctPhkpAAAAAOqyWBd3GhSZj9wQ56m6qg5DFluc",
-        'response': token
-    })
-
-    result = response.json()
-    return result['success']
 
 
 @app.route('/whyroommatefinder')
@@ -134,6 +141,14 @@ def facedetect():
         else:
             return "No human user detected. Make sure your face is clearly visible and you are in a well lit place. \nPlease capture another image."
     return render_template('facedetect1.html')
+
+@app.route('/check_username', methods=['POST'])
+def check_username():
+    username = request.json.get('username')
+    if username_exists(username):
+        return jsonify({'available': False})
+    else:
+        return jsonify({'available': True})
 
 @app.route('/signup1', methods=['GET', 'POST'])
 def signup1():
@@ -176,7 +191,6 @@ def signup1():
 @app.route('/verify_email', methods=['GET', 'POST'])
 def verify_email():
     if request.method == 'POST':
-        # Verify the OTP entered by the user
         entered_otp = request.form.get('otp')
    
         session_otp = session.get('user_info').get('otp')
@@ -184,10 +198,8 @@ def verify_email():
         if entered_otp == session_otp:
             # OTP matched, proceed with signup
             # session.pop('user_info')['otp']
-           
             return redirect(url_for('facedetect'))
         else:
-            # Incorrect OTP, display error message
             return render_template('verify_email.html', error='Incorrect OTP. Please try again.')
 
     return render_template('verify_email.html')
@@ -262,35 +274,35 @@ def preferences2():
 
         db.collection('Users').document(user_info['username']).set({
             'Username': user_info['username'],
-            'First Name': user_info['fname'],
-            'Last Name': user_info['lname'],
-            'Age': user_info['age'],
+            'FirstName': user_info['fname'],
+            'LastName': user_info['lname'],
+            'Age': int(user_info['age']),
             'Email': user_info['email'],
             'Gender': user_info['gender'],
-            'Phone Number': user_info['phone_number']
+            'PhoneNumber': user_info['phone_number']
         })
 
         db.collection('RoommatePreferences').document(user_info['username']).set({
             'Username': user_info['username'],
             'Bio': user_info['bio'],
-            'Accomodation Location': user_info['location'],
+            'Location': user_info['location'],
             'Habits': user_info['habits'],
-            'Food Preference': user_info['food_preference'],
+            'FoodPreference': user_info['food_preference'],
             'Profession': user_info['profession'],
             'Religion': user_info['religion'],
-            'Sleep Schedule': user_info['sleep_schedule'],
-            'Cleanliness Habits': user_info['cleanliness_habits'],
-            'Pet Friendliness': user_info['pet_friendly'],
-            'Activity': user_info['pet_friendly'],
+            'SleepSchedule': user_info['sleep_schedule'],
+            'CleanlinessHabits': user_info['cleanliness_habits'],
+            'PetFriendliness': user_info['pet_friendly'],
+            'Adventurous': user_info['pet_friendly'],
             'Organized': user_info['organized'],
             'Social': user_info['social'],
-            'Conflict': user_info['conflict'],
+            'Compromise': user_info['conflict'],
             'Stress': user_info['stress'],
-            'Cultures': user_info['cultures'],
-            'Future': user_info['future'],
-            'Gatherings': user_info['gatherings'],
+            'Exploring': user_info['cultures'],
+            'Proactive': user_info['future'],
+            'Seekout': user_info['gatherings'],
             'Patient': user_info['patient'],
-            'Mood Swings': user_info['mood'],
+            'Emotional': user_info['mood'],
             'Email': user_info['email'],
         })
 
@@ -320,7 +332,6 @@ def welcome():
                 'idToken': user['idToken'],
                 'username':doc.id
                 }
-
 
             return redirect(url_for('dashboard'))
           
@@ -377,17 +388,17 @@ def update_preferences():
 @app.route('/delete_account', methods=['POST'])
 def delete_account():
     try:
-        # Verify the user is authenticated
         user_info = session.get('user')  
         if user_info:
             id_token = user_info.get('idToken')
+            username = user_info.get('username')
         else:
             return redirect(url_for('login'))
-
-        # Delete the user account using the UID
+        
+        db.collection('Users').document(username).delete()
+        db.collection('RoommatePreferences').document(username).delete()
         auth.delete_user_account(id_token)
 
-        # Clear the session and redirect to the index page after successful deletion
         session.pop('user', None)
         return redirect(url_for('index'))
 
