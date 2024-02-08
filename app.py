@@ -1,5 +1,7 @@
-import firebase_admin
-from firebase_admin import credentials, firestore, storage, auth
+from common.firebase import db, bucket, firebase_web_config
+from common.email_creds import email, password
+from common.captchaKey import key
+from firebase_admin import auth, firestore
 from flask import Flask, jsonify, render_template, request, redirect, url_for,session
 import pyrebase
 import requests
@@ -14,22 +16,7 @@ import numpy as np
 
 app = Flask(__name__)
 app.secret_key = 'roomies' 
-cred = credentials.Certificate("common/roomies-166f5-firebase-adminsdk-h1537-a0ab5ed914.json")
-firebase_admin.initialize_app(cred, {'storageBucket': 'roomies-166f5.appspot.com'})
-db = firestore.client()
-bucket = storage.bucket()
-firebaseConfig = {
-    'apiKey': "AIzaSyAp1yMhDs5N5RmPW4rhVlUJ7VtTVfWvty8",
-    'authDomain': "roomies-166f5.firebaseapp.com",
-    'projectId': "roomies-166f5",
-    'storageBucket': "roomies-166f5.appspot.com",
-    'messagingSenderId': "1069795528716",
-    'appId': "1:1069795528716:web:8e5a61abe0510933cb9e29",
-    'measurementId': "G-5DH42NYCQ4",
-    'databaseURL': "https://roomies-166f5-default-rtdb.asia-southeast1.firebasedatabase.app"
-  }
-
-firebase = pyrebase.initialize_app(firebaseConfig)
+firebase = pyrebase.initialize_app(firebase_web_config)
 storage = firebase.storage
 auth = firebase.auth()  
 
@@ -39,8 +26,8 @@ app.config.update(dict(
     MAIL_PORT = 587,
     MAIL_USE_TLS = True,
     MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'roomiesaps@gmail.com',
-    MAIL_PASSWORD = 'irsr gxzz vquh bejg',
+    MAIL_USERNAME = email,
+    MAIL_PASSWORD = password,
 ))
 
 mail = Mail(app)
@@ -86,7 +73,7 @@ def verify_recaptcha(token):
     api_url = 'https://www.google.com/recaptcha/api/siteverify'
     
     response = requests.post(api_url, {
-        'secret': "6LctPhkpAAAAAOqyWBd3GhSZj9wQ56m6qg5DFluc",
+        'secret': key,
         'response': token
     })
 

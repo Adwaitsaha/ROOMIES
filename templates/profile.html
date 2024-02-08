@@ -162,30 +162,6 @@ Path:
                 xhr.send(JSON.stringify(updatedPreferences));
             }
         </script>
-        <!-- <script>
-            function editPreference(field) {
-            
-                var value = document.getElementById(field).innerText;
-            
-                var newValue = prompt('Enter new value:', value);
-                if (newValue !== null) {
-               
-                    document.getElementById(field).innerText = newValue;
-                
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('POST', '/update_preference', true);
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                        
-                            console.log(xhr.responseText);
-                        }
-                    };
-                    xhr.send('field=' + encodeURIComponent(field) + '&newValue=' + encodeURIComponent(newValue));
-                }
-            }
-        </script> -->
-
-
+        
 	</body>
 </html>
