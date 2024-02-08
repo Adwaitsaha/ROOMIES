@@ -160,4 +160,7 @@ cython_debug/
 #.idea/
 
 # Ignore all JSON files in the "common" folder
-/common/*.json
+common/firebase.py
+common/captchaKey.py
+common/email_creds.py
+common/roomies-166f5-firebase-adminsdk-h1537-a0ab5ed914.json
