@@ -1,3 +1,4 @@
+import datetime
 from common.firebase import db, bucket, firebase_web_config
 from common.email_creds import email, password
 from common.captchaKey import key
@@ -79,6 +80,21 @@ def verify_recaptcha(token):
 
     result = response.json()
     return result['success']
+
+def get_profile_picture_url(profile_picture_path):
+    try:
+        # Get the blob (file) from Firestore Storage
+        blob = bucket.blob(profile_picture_path)
+        blob.make_public()
+        # Check if the blob exists
+        if not blob.exists():
+            return None
+        
+        return blob.public_url
+
+    except Exception as e:
+        print("Error fetching profile picture URL:", e)
+        return None
 
 
 @app.route('/')
@@ -352,11 +368,15 @@ def profile():
 
     if user_info:
         user_email = user_info.get('email')
-        print(user_info)
+        user_username = user_info.get('username')
     
+    profile_picture_path = f"Profile Photo/dpimage_{user_username}.jpg"
+
+    profile_picture_url = get_profile_picture_url(profile_picture_path)
+
     user_preferences = get_user_preferences(user_email)  
 
-    return render_template('profile.html', user_preferences = user_preferences)    
+    return render_template('profile.html', user_preferences = user_preferences, profile_picture_url=profile_picture_url)    
 
 @app.route('/update_preferences', methods=['POST'])
 def update_preferences():
