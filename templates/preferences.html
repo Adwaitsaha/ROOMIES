@@ -13,22 +13,24 @@
 <body>
     <form action="" method="post">
         <section class="text-center my-4 preference" id="userview" style="margin-right: 10%;">
-            <p class="h2 text-center">Enter your preferences here</p>
+            <p class="h2 text-center">Tell us a little about yourself</p>
             <hr class="d-md-none d-block w-75 my-0">
                 <p class="text-danger text-center small m-0 p-0">This information will be shown to other matches</p>
                 <label class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <p class="m-0 p-0">First Name</p>
+                    <span class="col-md col-12 mb-0 py-2 text-center">
+                        <p class="m-0 p-0">Name: {{fname}} {{lname}}</p>
                     </span>
-                    <input class="col mx-4 mx-sm-0 form-control d-inline" type="text" name="fname" required>
                 </label>
                 <label class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <p class="m-0 p-0">Last Name</p>
+                    <span class="col-md col-12 mb-0 py-2 text-center">
+                        <p class="m-0 p-0">Age: {{age}}</p>
                     </span>
-                    <input class="col mx-4 mx-sm-0 form-control d-inline" type="text" name="lname" required>
                 </label>
-                <hr class="d-md-none d-block w-50 my-0">
+                <label class="row custom-form-row">
+                    <span class="col-md col-12 mb-0 py-2 text-center">
+                        <p class="m-0 p-0">Gender: {{gender}}</p>
+                    </span>
+                </label>
                 <label class="row custom-form-row">
                     <span class="col-md col-12 mb-1 py-2 text-center">
                         <p class="m-0 p-0">User Bio</p>
@@ -36,47 +38,17 @@
                     <textarea class="col mx-4 mx-sm-0 w-0 form-control d-inline" id="bioText"  name="bio" ></textarea>
                 </label>
             <p class="h4 text-center mt-4 mb-1">Basic Demographics</p>
+            
             <label class="row custom-form-row">
                 <span class="col-md col-12 mb-1 py-2 text-center">
-                    <p class="m-0 p-0">Location</p>
+                    <p class="m-0 p-0">Accomodation Location</p>
                 </span>
                 <select class="col mx-4 mx-sm-0 form-control"  name="location" required>
                     <option  selected value> -- select -- </option>
                     <option value="Mumbai">Mumbai</option>
+                    <option value="Pune">Pune</option>
+                    <option value="Bengaluru">Bengaluru</option>
                  </select>
-            </label>
-            <hr class="d-md-none d-block w-50 my-0">
-            <label class="row custom-form-row">
-                <span class="col-md col-12 mb-1 py-2 text-center">
-                    <p class="m-0 p-0">Age</p>
-                </span>
-                <input class="col mx-4 mx-sm-0 form-control d-inline" type="number" name="age" required>
-            </label>
-            <hr class="d-md-none d-block w-50 my-0">
-            <label class="row custom-form-row">
-                <span class="col-md col-12 mb-1 py-2 text-center">
-                    <p class="m-0 p-0">Gender</p>
-                </span>
-                <span class="col-md col-12 mb-1 py-2 text-center">
-                    <div class="form-check-inline">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="radio"  name="Gender" value="Male">
-                            Male
-                        </label>
-                    </div>
-                    <div class="form-check-inline">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="Gender" value="Female">
-                            Female
-                        </label>
-                    </div>
-                    <div class="form-check-inline">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="Gender" value="Others">
-                            Others
-                        </label>
-                    </div>
-                </span>
             </label>
             <hr class="d-md-none d-block w-50 my-0">
             <label class="row custom-form-row">
@@ -92,8 +64,20 @@
                     </div>
                     <div class="form-check-inline">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="radio"  name="habits" value="Smoker/Drinker">
-                            Smoker/Drinker
+                            <input class="form-check-input" type="radio"  name="habits" value="Smoker">
+                            Smoker
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio"  name="habits" value="Drinker">
+                            Drinker
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio"  name="habits" value="Both">
+                            Both
                         </label>
                     </div>
                    
@@ -106,6 +90,7 @@
                 </span>
                 <select class="col mx-4 mx-sm-0 form-control"  name="food" required>
                     <option  selected value> -- select -- </option>
+                    <option value="Jain Food">Jain food</option>
                     <option value="Vegetarian">Vegetarian</option>
                     <option value="Non Vegetarian">Non Vegetarian</option>
                  </select>
@@ -188,8 +173,28 @@
                     </div>
                 </span>
             </label>
+            <hr class="d-md-none d-block w-50 my-0">
+            <label class="row custom-form-row">
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    Pet Friendliness at Residence
+                </span>
+                <span class="col-md col-12 mb-1 py-2 text-center">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio"  name="pet" value="Friendly">
+                            Friendly
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio"  name="pet" value="Not So Much">
+                            Not So Much
+                        </label>
+                    </div>
+                </span>
+            </label>
             <div class="row custom-form-row">
-                <button class="btn btn-purple mx-auto" type="submit">Submit Preferences</button>
+                <button class="btn btn-purple mx-auto" type="submit">Next</button>
             </div>
         </section>
     </form>

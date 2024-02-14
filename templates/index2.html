@@ -12,29 +12,32 @@
 
     
 </head>
-<body style="background-color: #141618;">
+<body style="background-image: linear-gradient(rgba(0, 0, 0, 0.7),
+rgba(0, 0, 0, 0.7)), url('static/assets/splash.png');">
+    
     <div class="container">
-        <h2 style="text-align: center;">Login</h2>
+        <h2 style="text-align: center;margin-top: 10%; ">LOGIN</h2>
+        <br><br>
         <form method="post" action="/welcome">
             <div class="form-group">
             <label for="username" class="row custom-form-row">
-                <span class="col-md col-12 mb-1 py-2 text-center">
+                <span class="col-md-5 col-12 mb-1 py-2 text-center">
                     <p class="m-0 p-0">Email</p>
                 </span>
-                <input class="col mx-4 mx-sm-0 form-control d-inline" required type="email" id="mail" name="mail" maxlength="50">
+                <input class="col-4 mx-4 mx-sm-0 form-control d-inline" required type="email" id="mail" name="mail" maxlength="50">
             </label>
             </div>
             <div class="form-group">
                 <label for="password" class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
+                    <span class="col-md-5 col-12 mb-1 py-2 text-center">
                         <p class="m-0 p-0">Password</p>
                     </span>
-                    <input class="col mx-4 mx-sm-0 form-control d-inline" required type="password" id="password" name="password">
+                    <input class="col-4 mx-4 mx-sm-0 form-control d-inline" required type="password" id="password" name="password">
                 </label>
             </div>
             
             <br>
-            <button type="submit" class="btn btn-purple w-100 mt-3">Log In</button>
+            <button type="submit" class="btn btn-purple w-20 mt-3" style="margin-left: 47%;">Log In</button>
         </form>
         
         {% if error %}
