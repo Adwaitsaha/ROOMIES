@@ -70,6 +70,7 @@ def upload_image_to_firebase(image, name):
     _, image_data = cv2.imencode('.jpg', image)
     blob.upload_from_string(image_data.tobytes(), content_type='image/jpeg')
 
+
 def verify_recaptcha(token):
     api_url = 'https://www.google.com/recaptcha/api/siteverify'
     
@@ -211,7 +212,9 @@ def verify_email():
         else:
             return render_template('verify_email.html', error='Incorrect OTP. Please try again.')
 
+
     return render_template('verify_email.html')
+
 
 @app.route('/facedetect', methods=['GET','POST'])
 def facedetect():
@@ -250,6 +253,7 @@ def facedetect():
         else:
             return "No human user detected. Make sure your face is clearly visible and you are in a well lit place. \nPlease capture another image."
     return render_template('facedetect1.html')
+
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
@@ -348,6 +352,7 @@ def preferences():
 
     return render_template('preferences.html', gender = gender, lname = lname, fname = fname, age = age, fname_login = fname_login, lname_login = lname_login, age_login=age_login, gender_login=gender_login )
 
+
 @app.route('/preferences2', methods=['GET', 'POST'])
 def preferences2():
     if request.method == 'POST':
@@ -441,6 +446,7 @@ def preferences2():
     return render_template('preferences2.html')
 
 
+
 @app.route('/welcome', methods=['GET', 'POST'])
 def welcome():
     if request.method == 'POST':
@@ -515,6 +521,7 @@ def dashboard():
 @app.route('/profile')
 @login_required
 def profile():
+
     user_info = session.get('user')
 
     if user_info:
@@ -559,6 +566,7 @@ def delete_account():
         db.collection('Users').document(username).delete()
         db.collection('RoommatePreferences').document(username).delete()
         auth.delete_user_account(id_token)
+
 
         session.pop('user', None)
         return redirect(url_for('index'))
