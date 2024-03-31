@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Akronim&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+.heading {
+  margin-top: 20px;
+  margin-left: 650px;
+}
+
+.heading h1 {
+  font-size: 57px;
+  font-family: 'Akronim', cursive;
+  background: -webkit-linear-gradient(#FF385C, #FF385C); /* Airbnb pink */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.footer-area {
+  margin-top: 20px;
+  padding: 30px 0; /* Adjusted padding */
+  background-image: linear-gradient(
+    to bottom,
+    #FF385C, /* Airbnb pink */
+    #FF385C, /* Airbnb pink */
+    #FF385C /* Airbnb pink */
+  );
+  color: #FFFFFF; /* White */
+  position: relative;
+}
+
+.main {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.single-footer {
+  width: 230px;
+  padding: 0;
+}
+
+.single-footer:first-child {
+  width: 400px;
+  padding: 0;
+}
+
+.single-footer h4 {
+  text-transform: capitalize;
+  font-family: "Oswald", sans-serif;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.footer-social a {
+  color: #FFFFFF; /* White */
+  border: 1px solid #FFFFFF; /* White */
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.footer-social {
+  margin-top: 20px;
+}
+
+.footer-social .color:hover {
+  background-image: linear-gradient(
+    to right top,
+    #FF385C, /* Airbnb pink */
+    #FF5A5F, /* Airbnb pink light */
+    #FF7D63, /* Airbnb orange */
+    #FFA067, /* Airbnb orange light */
+    #FFC36B /* Airbnb yellow */
+  );
+}
+
+.single-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.single-footer ul li {
+  margin-bottom: 10px;
+  position: relative;
+  text-align: left;
+}
+
+.single-footer ul li a {
+  color: #FFFFFF; /* White */
+  text-decoration: none;
+}
+
+.single-footer ul li a i {
+  position: absolute;
+  left: 0;
+  top: 5px;
+}
+
+.copy {
+  text-align: center;
+  text-transform: capitalize;
+  margin-top: 50px;
+}

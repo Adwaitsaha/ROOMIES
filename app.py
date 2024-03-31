@@ -96,7 +96,9 @@ def get_profile_picture_url(profile_picture_path):
     except Exception as e:
         print("Error fetching profile picture URL:", e)
         return None
-
+    
+def is_user_logged_in():
+    return 'user' in session
 
 @app.route('/')
 def index():
@@ -104,7 +106,8 @@ def index():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    logged_in = is_user_logged_in()
+    return render_template('about.html', logged_in=logged_in)
 
 @app.route('/terms')
 def terms():
@@ -112,7 +115,8 @@ def terms():
 
 @app.route('/whyroommatefinder')
 def whyroommatefinder():
-    return render_template('about.html')
+    logged_in = is_user_logged_in()
+    return render_template('about.html', logged_in=logged_in)
 
 @app.route('/signup')
 def signup():
@@ -121,6 +125,11 @@ def signup():
 @app.route('/login')
 def login():
     return render_template('index2.html')
+
+@app.route('/chat')
+def chat():
+    return render_template('chat.html')
+
 
 
 @app.route('/check_username', methods=['POST'])
@@ -614,7 +623,8 @@ def support():
         return redirect(url_for('support'))
 
     # Perform actions specific to the support page for GET requests
-    return render_template('support.html')
+    logged_in = is_user_logged_in()
+    return render_template('support.html', logged_in=logged_in)
 
 
 if __name__ == '__main__':

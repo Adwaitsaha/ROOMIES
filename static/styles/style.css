@@ -4,30 +4,6 @@
     padding: 0.25em 0;
 }
 
-footer {
-    background-color: #FF385C;
-    color: #fff;
-    text-align: center;
-    padding: 15px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.contact-info {
-    text-align: left;
-}
-
-.location {
-    text-align: right;
-}
-
-#map {
-    width: 150px;
-    height: 150px;
-}
 
 .btn-purple {
     color: #fff;
