@@ -58,17 +58,27 @@ rgba(0, 0, 0, 0.7)), url('static/assets/splash.png');">
                     <span class="col-md col-12 mb-1 py-2 text-center">
                         <p class="m-0 p-0">Email <span style="color: red;">*</span></p>
                     </span>
-                    <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="email" id="mail" name="mail" maxlength="50" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Enter a valid email address">
+                    <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="email" id="mail" name="mail" maxlength="50" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Enter a valid email address" oninput="checkEmailAvailability()">
                 </label>
+                <span id="emailAvailabilityMessage" style="margin-left: 50%;"></span>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="phoneNo" class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
                             <p class="m-0 p-0">Age <span style="color: red;">*</span></p>
                         </span>
                         <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="number" id="age" name="age" min="18" max="120" title="Enter your age">
                     </label>
+                </div> -->
+                <div class="form-group">
+                    <label for="birthdate" class="row custom-form-row">
+                        <span class="col-md col-12 mb-1 py-2 text-center">
+                            <p class="m-0 p-0">Birthdate <span style="color: red;">*</span></p>
+                        </span>
+                        <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="date" id="birthdate" name="birthdate" title="Enter your birthdate">
+                    </label>
                 </div>
+                
                 <div class="form-group">
                     <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
@@ -147,6 +157,28 @@ rgba(0, 0, 0, 0.7)), url('static/assets/splash.png');">
                 }
             };
             xhr.send(JSON.stringify({ username: username }));
+        }
+    </script>
+    <script>
+        function checkEmailAvailability() {
+            var email = document.getElementById('mail').value;
+            var emailAvailabilityMessage = document.getElementById('emailAvailabilityMessage');
+    
+            // Send an AJAX request to check username availability
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/check_email', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.available) {
+                        emailAvailabilityMessage.textContent = 'Email available';
+                    } else {
+                        emailAvailabilityMessage.textContent = 'Email already exists';
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({ email: email }));
         }
     </script>
     <script>
