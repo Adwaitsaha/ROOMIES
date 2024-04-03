@@ -74,12 +74,7 @@ Path:
             >
               Why Roomies?
             </a>
-            <!-- <a class="nav-item nav-link mx-1" href="/templates/profile.html">
-              Profile
-            </a> -->
-            <!-- <a class="nav-item nav-link mx-1" href="/templates/dashboard.html">
-              Dashboard
-            </a> -->
+        
             <a class="nav-item nav-link mx-1" href="/support"> Support </a>
             <a
               class="nav-item nav-link mx-1"
@@ -88,16 +83,20 @@ Path:
             >
               Contact Us
             </a>
-            <!-- <a
-              class="mx-1 btn btn-outline-danger auth-only d-none"
-              id="logoutBtn"
-              href="#"
-            >
+            {% if session.get('user') %}
+            <a class="nav-item nav-link mx-1" href="/dashboard">
+              Dashboard
+          </a>
+            <a class="mx-1 btn btn-outline-danger auth-only" id="logoutBtn" href="/logout">
               Log Out
-            </a>-->
-            <a class="mx-1 btn btn-outline-purple no-auth" href="/#login">
+          </a>
+          {% endif %}
+
+            {% if not session.get('user') %}
+            <button class="mx-1 btn btn-outline-purple no-auth login-btn" id='log-in' href="/login">
               Log In
-            </a> 
+          </button>
+            {% endif %}
 
           </div>
         </div>
@@ -221,5 +220,10 @@ Path:
       var footer = document.querySelector("footer");
       footer.scrollIntoView({ behavior: "smooth" });
     }
+  </script>
+  <script>
+    document.getElementById('log-in').addEventListener('click', function() {
+        window.location.href = '/login';  
+    });
   </script>
 </html>

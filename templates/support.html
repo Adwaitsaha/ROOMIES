@@ -40,6 +40,20 @@
                         <a class="nav-item nav-link mx-1" href="/support" onclick="scrollToFooter()">
                             Contact Us
                         </a>
+                        {% if session.get('user') %}
+                        <a class="nav-item nav-link mx-1" href="/dashboard">
+                          Dashboard
+                      </a>
+                        <a class="mx-1 btn btn-outline-danger auth-only" id="logoutBtn" href="/logout">
+                          Log Out
+                      </a>
+                      {% endif %}
+            
+                        {% if not session.get('user') %}
+                        <button class="mx-1 btn btn-outline-purple no-auth login-btn" id='log-in' href="/login">
+                          Log In
+                      </button>
+                        {% endif %}
                     </div>
                 </div>
             </div>

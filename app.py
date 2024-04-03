@@ -12,7 +12,10 @@ import random
 import cv2
 import base64
 import numpy as np
+import pandas as pd
 import time
+from datetime import datetime
+from algorithm.getRecommendations import get_recommendations
 
 
 app = Flask(__name__)
@@ -34,11 +37,25 @@ app.config.update(dict(
 mail = Mail(app)
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
+def get_docs():
+    docs = db.collection('RoommatePreferences').get()
+    data_list = []
+    for doc in docs:
+        data_list.append(doc.to_dict())
+    df = pd.DataFrame(data_list)
+    return df
+
 def username_exists(username):
     print("triggered")
     user_ref = db.collection('Users').document(username)
     user_doc = user_ref.get()
     return user_doc.exists
+
+def email_exists(email):
+    print("triggered")
+    user_ref = db.collection('Users').where('Email', '==', email)
+    user_doc = user_ref.get()
+    return len(user_doc) > 0
 
 def get_user_preferences(email):
     user_preferences = {}
@@ -139,6 +156,14 @@ def check_username():
         return jsonify({'available': False})
     else:
         return jsonify({'available': True})
+    
+@app.route('/check_email', methods=['POST'])
+def check_email():
+    email = request.json.get('email')
+    if email_exists(email):
+        return jsonify({'available': False})
+    else:
+        return jsonify({'available': True})
 
 @app.route('/signup1', methods=['GET', 'POST'])
 def signup1():
@@ -148,9 +173,16 @@ def signup1():
     email = request.form.get('mail')
     password = request.form.get('password')
     phone_number = request.form.get('phone')
-    age = request.form.get('age')
+    # age = request.form.get('age')
+    birthdate_str = request.form.get('birthdate')
     gender = request.form.get('Gender')
+
     try:
+        birthdate = datetime.strptime(birthdate_str, '%Y-%m-%d')
+        # Calculate age
+        today = datetime.today()
+        age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+
         user = auth.create_user_with_email_and_password(
             email=email,
             password=password
@@ -320,6 +352,9 @@ def preferences():
                 'SleepSchedule': user_info['sleep_schedule'],
                 'CleanlinessHabits': user_info['cleanliness_habits'],
                 'PetFriendliness': user_info['pet_friendly'],
+                'Age': int(user_info['age']),
+                'Gender': user_info['gender'],
+                'Listed': 0,
                 })
 
         else:
@@ -355,6 +390,9 @@ def preferences():
                 'SleepSchedule': user_info_login['sleep_schedule'],
                 'CleanlinessHabits': user_info_login['cleanliness_habits'],
                 'PetFriendliness': user_info_login['pet_friendly'],
+                'Age': int(user_info_login['age']),
+                'Gender': user_info_login['gender'],
+                'Listed': 0,
                 })
 
         return redirect(url_for('preferences2'))
@@ -398,7 +436,7 @@ def preferences2():
                 })
 
             db.collection('RoommatePreferences').document(user_info['username']).update({
-                'Adventurous': user_info['pet_friendly'],
+                'Adventurous': user_info['activity'],
                 'Organized': user_info['organized'],
                 'Social': user_info['social'],
                 'Compromise': user_info['conflict'],
@@ -435,7 +473,7 @@ def preferences2():
                 })
 
             db.collection('RoommatePreferences').document(user_info_login['username']).update({
-                'Adventurous': user_info_login['pet_friendly'],
+                'Adventurous': user_info_login['activity'],
                 'Organized': user_info_login['organized'],
                 'Social': user_info_login['social'],
                 'Compromise': user_info_login['conflict'],
@@ -523,7 +561,53 @@ def dashboard():
         user_info = session.get('user')
         if user_info:
             user_email = user_info.get('email')
-        return render_template('dashboard.html', user_email=user_email)
+            user_gender = user_info.get('gender')
+            user_age = user_info.get('age')
+            
+            user_ref = db.collection('RoommatePreferences')
+            doc_ref = user_ref.where(filter=FieldFilter('Email','==',user_email)).limit(1).stream()
+            for doc in doc_ref:
+                Habits = doc.get('Habits')
+                FoodPreference = doc.get('FoodPreference')
+                Profession = doc.get('Profession')
+                Religion = doc.get('Religion')
+                SleepSchedule = doc.get('SleepSchedule')
+                CleanlinessHabits = doc.get('CleanlinessHabits')
+                PetFriendliness = doc.get('PetFriendliness')
+                Adventurous = doc.get('Adventurous')
+                Organized = doc.get('Organized')
+                Social = doc.get('Social')
+                Compromise = doc.get('Compromise')
+                Stress = doc.get('Stress')
+                Exploring = doc.get('Exploring')
+                Proactive = doc.get('Proactive')
+                Seekout = doc.get('Seekout')
+                Patient = doc.get('Patient')
+                Emotional = doc.get('Emotional')
+                Location = doc.get('Location')
+            
+            user_profile = f"Location: {Location} Gender: {user_gender} Age: {user_age} Habits: {Habits} FoodPreference: {FoodPreference} Profession: {Profession} Religion: {Religion} SleepSchedule: {SleepSchedule} CleanlinessHabits: {CleanlinessHabits} PetFriendliness: {PetFriendliness} Adventurous: {Adventurous} Organized: {Organized} Social: {Social} Compromise: {Compromise} Stress: {Stress} Exploring: {Exploring} Proactive: {Proactive} Seekout: {Seekout} Patient: {Patient} Emotional: {Emotional}"
+            df = get_docs()
+            
+            top_n = 20
+            
+            recommendations = get_recommendations(df, user_profile, top_n)
+
+            recommendations_dashboard = recommendations.to_dict(orient='records')
+
+            profile_picture_urls = []
+
+            for recommendation in recommendations_dashboard:
+                username = recommendation['Username']
+                profile_picture_path = f"Profile Photo/dpimage_{username}.jpg"
+                profile_picture_url = get_profile_picture_url(profile_picture_path)
+                if profile_picture_url is None:
+                    profile_picture_url = "https://firebasestorage.googleapis.com/v0/b/roomies-166f5.appspot.com/o/Profile%20Photo%2Favatar.jpg?alt=media&token=bf819735-cee1-400a-ad30-0d7063d473ab"
+                profile_picture_urls.append(profile_picture_url)
+            print(profile_picture_urls)
+
+
+        return render_template('dashboard.html', user_email=user_email, recommendations_dashboard=recommendations_dashboard, profile_picture_urls=profile_picture_urls)
     else:
         return redirect(url_for('index'))
     
@@ -546,7 +630,64 @@ def profile():
 
     user_preferences = get_user_preferences(user_email)  
 
-    return render_template('profile.html', user_preferences = user_preferences, profile_picture_url=profile_picture_url)    
+    return render_template('profile.html', user_preferences = user_preferences, profile_picture_url=profile_picture_url)  
+
+@app.route('/profiles/<username>')
+@login_required
+def profiles(username):
+    doc_ref = db.collection('RoommatePreferences').document(username)
+    doc_ref1 = db.collection('Users').document(username)
+    # Get the document snapshot
+    doc_snapshot = doc_ref.get()
+    doc_snapshot1 = doc_ref1.get()
+    # Check if the document exists
+    if doc_snapshot.exists:
+        # Extract data from the document snapshot
+        user_data = doc_snapshot.to_dict()
+        user_data1 = doc_snapshot1.to_dict()
+
+        return render_template('user_profile.html', user_data=user_data, user_data1=user_data1)
+    else:
+        return "User profile not found", 404
+
+@app.route('/like', methods=['POST'])
+def like_person():
+    data = request.get_json()
+    username = data['username']
+    user_info = session.get('user')
+    user_username = user_info.get('username')
+    # Update Firestore database to store liked username
+    db.collection('RoommatePreferences').document(user_username).update({'Liked': firestore.ArrayUnion([username])})
+    return '', 204  # Return empty response with status code 204
+
+@app.route('/unlike', methods=['POST' , 'DELETE'])
+def unlike_person():
+    data = request.get_json()
+    username = data['username']
+    user_info = session.get('user')
+    user_username = user_info.get('username')
+
+    # Remove the username from the liked list
+    db.collection('RoommatePreferences').document(user_username).update({'Liked': firestore.ArrayRemove([username])})
+    
+    return '', 204  
+
+@app.route('/liked_users')
+def get_liked_users():
+    # Get the currently logged-in user's username
+    user_info = session.get('user')
+    user_username = user_info.get('username')
+
+    # Retrieve the document snapshot for the user
+    user_ref = db.collection('RoommatePreferences').document(user_username)
+    user_snapshot = user_ref.get()
+
+    # Extract the 'Liked' field from the document snapshot
+    liked_users = user_snapshot.to_dict().get('Liked', [])
+
+    return jsonify({'liked_users': liked_users})
+
+
 
 @app.route('/update_preferences', methods=['POST'])
 def update_preferences():
