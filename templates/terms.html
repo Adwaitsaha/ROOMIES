@@ -4,40 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        h4{
-            margin-bottom: 0;
-        }
-    </style>
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='/assets/icon.png') }}"
+      type="image/x-icon"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/about.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/footer.css') }}"
+    />
 </head>
-<body>
-    <h2 style="text-align: center;">Terms and Conditions (T&C):</h2>
-    <h4>1. Acceptance of Terms:</h4>
-    <p>By using ROOMIES, you agree to comply with and be bound by the following Terms and Conditions. If you do not agree to these terms, please refrain from using our services.</p>
+<body style="text-align: center;">
+    <div style="max-width: 800px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; text-align: justify;">
+        <h2 style="text-align: center;">Terms and Conditions (T&C):</h2>
+        <h4>1. Acceptance of Terms:</h4>
+        <p>By using ROOMIES, you agree to comply with and be bound by the following Terms and Conditions. If you do not agree to these terms, please refrain from using our services.</p>
 
-    <h4>2. Eligibility:</h4>
-    <p>You must be 18 years or older to use our services. By using the website, you confirm that you meet this age requirement.</p>
-    
-    <h4>3. User Accounts:</h4>
-    <p>a. You are responsible for maintaining the confidentiality of your account information.  <br>
-    b. You agree to provide accurate and current information during the registration process. <br>
-    c. You are solely responsible for all activities that occur under your account. 
+        <h4>2. Eligibility:</h4>
+        <p>You must be 18 years or older to use our services. By using the website, you confirm that you meet this age requirement.</p>
+        
+        <h4>3. User Accounts:</h4>
+        <p>a. You are responsible for maintaining the confidentiality of your account information.  <br>
+        b. You agree to provide accurate and current information during the registration process. <br>
+        c. You are solely responsible for all activities that occur under your account. 
 
-    <h4>4. User Content:</h4>
-    <p>a. You retain ownership of the information you submit on the website. <br>
-    b. By submitting information, you grant us the right to use, display, and share the information to provide our services.
+        <h4>4. User Content:</h4>
+        <p>a. You retain ownership of the information you submit on the website. <br>
+        b. By submitting information, you grant us the right to use, display, and share the information to provide our services.
 
-    <h4>5. Code of Conduct:</h4>
-    <p>a. You agree not to use the website for any illegal or unauthorized purpose. <br>
-    b. Harassment, threats, or any form of abusive behavior towards other users will not be tolerated.
+        <h4>5. Code of Conduct:</h4>
+        <p>a. You agree not to use the website for any illegal or unauthorized purpose. <br>
+        b. Harassment, threats, or any form of abusive behavior towards other users will not be tolerated.
 
-    <h4>6. Privacy:</h4>
-    <p>Our Privacy Policy governs the collection and use of your information. Please review it to understand how we handle your data.
+        <h4>6. Privacy:</h4>
+        <p>Our Privacy Policy governs the collection and use of your information. Please review it to understand how we handle your data.
 
-    <h4>7. Modification of Terms:</h4>
-    <p>We reserve the right to update or modify these Terms and Conditions at any time. Continued use of the website constitutes acceptance of the modified terms.
+        <h4>7. Modification of Terms:</h4>
+        <p>We reserve the right to update or modify these Terms and Conditions at any time. Continued use of the website constitutes acceptance of the modified terms.
 
-    <h4>8. Termination:</h4>
-    <p>We may terminate or suspend your account if you violate these Terms and Conditions.
+        <h4>8. Termination:</h4>
+        <p>We may terminate or suspend your account if you violate these Terms and Conditions.
+    </div>
 </body>
 </html>
+
+
