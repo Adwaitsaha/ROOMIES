@@ -108,7 +108,7 @@
   text-decoration: none;
 }
 
-.single-footer ul li a {
+.single-footer ul li a i {
   position: absolute;
   left: 0;
   top: 5px;
