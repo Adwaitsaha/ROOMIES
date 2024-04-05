@@ -41,12 +41,12 @@ Path:
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar spnav navbar-expand-lg navbar-light">
       <a class="navbar-brand" href="/">
         <img
           src="{{ url_for('static', filename='/assets/icon.png') }}"
           src="site logo"
-          height="80"
+          height="100"
         />
       </a>
       <button
@@ -63,13 +63,20 @@ Path:
       <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
         <div class="ml-auto navbar-nav nav">
           <div class="ml-auto navbar-nav nav">
-            <a class="nav-item nav-link mx-1" href="/"> Home </a>
+            {% if not session.get('user') %}
+                  <a class="nav-item nav-link mx-1" href="/">
+                            Home
+                  </a> 
+            {% endif %}
             <a
               class="nav-item nav-link mx-lg-2 mx-1 active"
               href="/whyroommatefinder"
             >
               Why Roomies?
             </a>
+            {% if session.get('user') %}
+                  <a class="nav-item nav-link mx-1" href="/profile"> Profile </a>
+            {% endif %}
         
             <a class="nav-item nav-link mx-1" href="/support"> Support </a>
             <a
@@ -79,6 +86,13 @@ Path:
             >
               Contact Us
             </a>
+            {% if session.get('user') %}
+                            {% if session['user']['username'] in admin_users %}
+                                <a class="nav-item nav-link mx-1" href="/admin">
+                                    Admin
+                                </a>
+                            {% endif %}
+                        {% endif %}
             {% if session.get('user') %}
             <a class="nav-item nav-link mx-1" href="/dashboard">
               Dashboard

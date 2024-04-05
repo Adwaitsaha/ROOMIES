@@ -3,7 +3,7 @@
 	<head>
 		<meta name="robots" content="noindex">
 
-		<title>Support</title>
+		<title>Report</title>
 		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 		<link rel="icon" href="{{ url_for('static', filename='/assets/icon.png') }}" type="image/x-icon">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,9 +17,9 @@
 	</head>
 
 	<body>
-        <nav class="navbar navbar-expand-lg navbar-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/">
-                <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="100">
+                <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="50">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavItems" aria-controls="mainNavItems" aria-label="Toggle main menu" aria-expanded="false" >
                 <i class="fa fa-bars"></i>
@@ -27,18 +27,13 @@
             <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
                 <div class="ml-auto navbar-nav nav">
                     <div class="ml-auto navbar-nav nav">
-                        {% if not session.get('user') %}
                         <a class="nav-item nav-link mx-1" href="/">
                             Home
                         </a> 
-                        {% endif %}
                         <a class="nav-item nav-link mx-lg-2 mx-1" href="/whyroommatefinder">
                             Why Roomies?
                         </a>
-                        {% if session.get('user') %}
-                        <a class="nav-item nav-link mx-1" href="/profile"> Profile </a>
-                        {% endif %}
-                        <a class="nav-item nav-link mx-1 active" href="/support">
+                        <a class="nav-item nav-link mx-1" href="/support">
                             Support
                         </a>
                         <a class="nav-item nav-link mx-1" href="/support" onclick="scrollToFooter()">
@@ -72,66 +67,57 @@
 
         <main class="container">
             
-            <p class="h1 text-center">Roomies - Support</p>
+            <p class="h1 text-center">Roomies - Report</p>
 
 			<section class="text-center my-4" id="about">
-                Where We Turn Roommate Hurdles into Home Sweet Home Solutions!
+                Report users here!
 			</section>
             <hr class="w-75">
             <section class="mt-3 mb-5" id="form">
                 <p class="text-center">
                     <span id="resMsg"></span>
                 </p>
-                <form name="support" method="POST" enctype="multipart/form-data" id="supportForm">
+                <form name="report" method="POST" enctype="multipart/form-data" id="reportForm">
                     <p class="h4 text-center mt-4 mb-1">Questions</p>
                     <p class="text-danger text-center small m-0 p-0">Your responses will be private and only be shared with the creators of the website.</p>
+                    <br>
                     <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Your Name:</p>
+                            <p class="m-0 p-0">Username:</p>
                         </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="name" maxlength="128" pattern="[A-Za-z\s]+" title="Only letters and spaces are allowed">
+                        <input class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="name" maxlength="128"  title="Only letters and spaces are allowed" placeholder="Enter your username">
                     </label>
                     <hr class="d-md-none d-block w-50 my-0">
                     <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">How can we reach you?</p>
-                            <p class="text-info text-center small m-0 p-0">Email Address</p>
+                            <p class="m-0 p-0">Reported User:</p>
                         </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" required type="email" name="reach" maxlength="50" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-                        title="Enter a valid email address">
+                        <input class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="reported" maxlength="128"  title="Only letters and spaces are allowed" placeholder="Enter name of the user getting reported ">
                     </label>
                     <hr class="d-md-none d-block w-50 my-0">
                     <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Query Title:</p>
+                            <p class="m-0 p-0">Description:</p>
                         </span>
-                        <textarea class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="bug" maxlength="128"></textarea>
-                    </label>
-                    <hr class="d-md-none d-block w-50 my-0">
-                    <label class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Query Details:</p>
-                        </span>
-                        <textarea class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="detail" maxlength="500"></textarea>
+                        <textarea class="col mx-4 mx-sm-0 form-control d-inline" required type="text" name="description" maxlength="500" placeholder="Describe your report here in detail"></textarea>
                     </label>
                     <hr class="d-md-none d-block w-50 my-0">
                     <label class="row custom-form-row">
                         <span class="col-md col-12 mb-1 py-2 text-center">
                             <p class="m-0 p-0">Attach a Screenshot:</p>
                         </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" style="border: none;" type="file" id="image" name="image" accept="image/*"></input>
+                        <input class="col mx-4 mx-sm-0 form-control d-inline" style="border: none;" type="file" id="image" name="image" accept="image/*" required></input>
                     </label>
-		    <label class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center" data-netlify-recaptcha="true">
-                        </span>
-                    </label>                    
-                    
-                    
+                    <div>
+                        <span class="col-md col-12 mb-1 py-2 text-center" data-netlify-recaptcha="true"></span>
+                     </div>
+
                     <br>
                     <div class="g-recaptcha" data-sitekey="6LctPhkpAAAAAHF093wlvupE7hgyXQRtdKCfeJqd"></div>
                     <br>
                     <hr class="d-sm-none d-block w-75 my-2">
-                    <div style="text-align: center;"><button class="btn btn-outline-success w-20 mt-3">Submit Response!</button></div>
+                    <div style="text-align: center;"><button class="btn btn-outline-success w-20 mt-3">Submit Report</button></div>
+                    
                     <p class="mt-3 text-center w-100"><span id="resSub"></span></p>
                 </form>
             </section>
@@ -167,21 +153,17 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-  
+    <!-- <script src="C:\roomies\ROOMIES\public\static\scripts\bootstrap.min.js"></script> -->
+
     <script>
         function scrollToFooter() {
             var footer = document.querySelector('footer');
             footer.scrollIntoView({ behavior: 'smooth' });
         }
+
     </script>
     <script>
-        document.getElementById('log-in').addEventListener('click', function() {
-            window.location.href = '/login';  
-        });
-      </script>
-
-    <script>
-        document.getElementById('supportForm').addEventListener('submit', function(event) {
+        document.getElementById('reportForm').addEventListener('submit', function(event) {
             var response = grecaptcha.getResponse();
     
             if (response.length === 0) {

@@ -25,7 +25,7 @@ Path:
 	</head>
 
 	<body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="/">
                 <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="80">
             </a>
@@ -41,11 +41,22 @@ Path:
                     <a class="nav-item nav-link mx-1 active" href="/profile">
                         Profile
                     </a>
-                    <a class="nav-item nav-link mx-1" href="/dashboard">
-                        Dashboard
-                    </a>
+                    
                     <a class="nav-item nav-link mx-1" href="/support">
                         Support
+                    </a>
+                    <a class="nav-item nav-link mx-1" href="/support" onclick="scrollToFooter()">
+                        Contact Us
+                    </a>
+                    {% if session.get('user') %}
+                            {% if session['user']['username'] in admin_users %}
+                                <a class="nav-item nav-link mx-1" href="/admin">
+                                    Admin
+                                </a>
+                            {% endif %}
+                    {% endif %}
+                    <a class="nav-item nav-link mx-1" href="/dashboard">
+                        Dashboard
                     </a>
                     <a class="mx-1 btn btn-outline-danger auth-only" id="logoutBtn" href="/logout">
                         Log Out
@@ -111,7 +122,15 @@ Path:
             </ul>
             
             </div>
+            <div style="flex: 1;">
+                <img src="{{ profile_picture_url }}" alt="Profile Picture" style="height: 28rem;width: 28rem;border-radius: 50%;">
             </div>
+            </div>
+            <div><button class="btn btn-outline-danger"><a href="/report" style="color: inherit; text-decoration: none;">Report User</a></button></div>
+            
+                
+            
+            
 
 		</main>
         

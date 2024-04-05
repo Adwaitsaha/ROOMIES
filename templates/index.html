@@ -22,13 +22,9 @@
             <img src="{{ url_for('static', filename='/assets/splash.png') }}" class="img splash" alt="main background image"></img>
 
             <section class="txt splash">
-                <p class="title" href="/">
-                    <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="150">
-                </p>
                 <p class="title" style="color: white;">Roomies - RoommateFinder</p>
                 <p class="subtitle" style="color: white;">Welcome to the roommate finding program</p>
             </section>
-
             <section class="scroll splash">
                 <p class="mb-2 no-auth" style="color: white;">Login or Sign Up to get started</p>
                 <p class="mb-3 auth-only" style="color: white;">Get your matches quickly!</p>
@@ -41,14 +37,14 @@
                             Sign Up
                         </button>
                     </span>
-                    <span class="auth-only d-none">
+                    <!-- <span class="auth-only d-none">
                         <a class="btn btn-lg btn-purple px-5 mx-2 mb-2" >
                             Dashboard
                         </a>
                         <button class="btn btn-lg btn-danger px-5 mx-2 logout-btn mb-2">
                             Log Out
                         </button>
-                    </span>
+                    </span> -->
                 </span>
                 <p class="d-none text-danger" id="warnMsg"></p>
             </section>
