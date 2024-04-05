@@ -118,9 +118,10 @@ def get_profile_picture_url(profile_picture_path):
 def index():
     return render_template('index.html')
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
+# @app.route('/about')
+# def about():
+#     admin_users = get_admin_users()
+#     return render_template('about.html',admin_users=admin_users)
 
 @app.route('/terms')
 def terms():
@@ -128,7 +129,8 @@ def terms():
 
 @app.route('/whyroommatefinder')
 def whyroommatefinder():
-    return render_template('about.html')
+    admin_users = get_admin_users()
+    return render_template('about.html',admin_users=admin_users)
 
 @app.route('/signup')
 def signup():
@@ -529,7 +531,6 @@ def welcome():
             print('Error fetching user data or invalid credentials:', e)
             return render_template('index2.html', error='Invalid credentials')
 
-        
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -537,6 +538,56 @@ def login_required(f):
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user' not in session:
+            return redirect(url_for('login')) 
+        user_id = session['user']['username']
+        admin_users = get_admin_users()
+        if user_id not in admin_users:
+            return render_template('admin_access_denied.html')
+        return f(*args, **kwargs)
+    return decorated_function
+
+def get_admin_users():
+    admin_users = []
+    users_ref = db.collection('Users').stream()
+    for doc in users_ref:
+        user_data = doc.to_dict()
+        if 'Admin' in user_data and user_data['Admin']:
+            admin_users.append(doc.id)
+    return admin_users
+
+@app.route('/admin')
+@admin_required
+def admin():
+    preferences_ref = db.collection('RoommatePreferences')
+    users_ref = db.collection('Users')
+    queries_ref = db.collection('UserQueries')
+    reports_ref = db.collection('Reports')
+
+    preferences_count = len(preferences_ref.get())
+    users_count = len(users_ref.get())
+    queries_count = len(queries_ref.get())
+    reports_count = len(reports_ref.get())
+
+    queries_data = []
+    queries = queries_ref.get()
+    for query in queries:
+        query_data = query.to_dict()
+        queries_data.append(query_data)
+    
+    reports_data=[]
+    reports = reports_ref.get()
+    for report in reports:
+        report_data = report.to_dict()
+        reports_data.append(report_data)
+
+    admin_users = get_admin_users()
+
+    return render_template('admin_dashboard.html', preferences_count=preferences_count,users_count=users_count,queries_count=queries_count,reports_count=reports_count,queries_data=queries_data,reports_data=reports_data,admin_users=admin_users)
 
 @app.route('/dashboard')
 @login_required
@@ -588,10 +639,10 @@ def dashboard():
                 if profile_picture_url is None:
                     profile_picture_url = "https://firebasestorage.googleapis.com/v0/b/roomies-166f5.appspot.com/o/Profile%20Photo%2Favatar.jpg?alt=media&token=bf819735-cee1-400a-ad30-0d7063d473ab"
                 profile_picture_urls.append(profile_picture_url)
-            print(profile_picture_urls)
 
+        admin_users = get_admin_users()
 
-        return render_template('dashboard.html', user_email=user_email, recommendations_dashboard=recommendations_dashboard, profile_picture_urls=profile_picture_urls)
+        return render_template('dashboard.html', user_email=user_email, recommendations_dashboard=recommendations_dashboard, profile_picture_urls=profile_picture_urls,admin_users=admin_users)
     else:
         return redirect(url_for('index'))
     
@@ -613,37 +664,55 @@ def profile():
 
     user_preferences = get_user_preferences(user_email)  
 
-    return render_template('profile.html', user_preferences = user_preferences, profile_picture_url=profile_picture_url)  
+    admin_users = get_admin_users()
+
+    return render_template('profile.html', user_preferences = user_preferences, profile_picture_url=profile_picture_url,admin_users=admin_users)  
 
 @app.route('/profiles/<username>')
 @login_required
 def profiles(username):
     doc_ref = db.collection('RoommatePreferences').document(username)
     doc_ref1 = db.collection('Users').document(username)
-    # Get the document snapshot
+    
     doc_snapshot = doc_ref.get()
     doc_snapshot1 = doc_ref1.get()
-    # Check if the document exists
+
     if doc_snapshot.exists:
-        # Extract data from the document snapshot
         user_data = doc_snapshot.to_dict()
         user_data1 = doc_snapshot1.to_dict()
+    
+        profile_picture_path = f"Profile Photo/dpimage_{username}.jpg"
 
-        return render_template('user_profile.html', user_data=user_data, user_data1=user_data1)
+        profile_picture_url = get_profile_picture_url(profile_picture_path)
+
+        if profile_picture_url:
+            profile_picture_url += f"?t={int(time.time())}"
+        
+        admin_users = get_admin_users()
+
+        return render_template('user_profile.html', user_data=user_data, user_data1=user_data1,profile_picture_url=profile_picture_url,admin_users=admin_users)
     else:
         return "User profile not found", 404
+    
+@app.route('/update_listed_status', methods=['POST'])
+def update_listed_status():
+    user_id = session['user']['username']
+    listed_status = request.json.get('listed', 0)
+    db.collection('RoommatePreferences').document(user_id).update({'Listed': listed_status})
+    return jsonify({'success': True}), 200
 
 @app.route('/like', methods=['POST'])
+@login_required
 def like_person():
     data = request.get_json()
     username = data['username']
     user_info = session.get('user')
     user_username = user_info.get('username')
-    # Update Firestore database to store liked username
     db.collection('RoommatePreferences').document(user_username).update({'Liked': firestore.ArrayUnion([username])})
     return '', 204  # Return empty response with status code 204
 
 @app.route('/unlike', methods=['POST' , 'DELETE'])
+@login_required
 def unlike_person():
     data = request.get_json()
     username = data['username']
@@ -656,6 +725,7 @@ def unlike_person():
     return '', 204  
 
 @app.route('/liked_users')
+@login_required
 def get_liked_users():
     # Get the currently logged-in user's username
     user_info = session.get('user')
@@ -670,9 +740,8 @@ def get_liked_users():
 
     return jsonify({'liked_users': liked_users})
 
-
-
 @app.route('/update_preferences', methods=['POST'])
+@login_required
 def update_preferences():
     updated_preferences = request.json
     user_info = session.get('user')
@@ -687,6 +756,7 @@ def update_preferences():
         return jsonify({'error': str(e)}), 500
 
 @app.route('/delete_account', methods=['POST'])
+@login_required
 def delete_account():
     try:
         user_info = session.get('user')  
@@ -744,10 +814,45 @@ def support():
 
         # Redirect to the same page
         return redirect(url_for('support'))
-
+    
+    admin_users = get_admin_users()
     # Perform actions specific to the support page for GET requests
-    return render_template('support.html')
+    return render_template('support.html',admin_users=admin_users)
 
+@app.route('/report', methods=['GET', 'POST'])
+@login_required
+def report():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        reported = request.form.get('reported')
+        description = request.form.get('description')
+        image = request.files['image'] if 'image' in request.files else None
+
+        if image:
+            image_blob = bucket.blob('ReportImages/' + image.filename)
+            image_blob.upload_from_string(
+                image.read(),
+                content_type=image.content_type
+            )
+
+            # Get the download URL of the uploaded image
+            image_url = image_blob.public_url
+        else:
+            image_url = None
+
+        db.collection('Reports').add({
+            'Username': name,
+            'ReportedUser': reported,
+            'Description': description,
+            'Image': image_url,
+            'timestamp': firestore.SERVER_TIMESTAMP
+        })
+
+        # Redirect to the same page
+        return redirect(url_for('report'))
+    admin_users = get_admin_users()
+    # Perform actions specific to the support page for GET requests
+    return render_template('report.html',admin_users=admin_users)
 
 if __name__ == '__main__':
     app.run(debug=True)

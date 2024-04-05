@@ -25,7 +25,7 @@ Path:
 	</head>
 
 	<body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="/">
                 <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="80">
             </a>
@@ -41,11 +41,22 @@ Path:
                     <a class="nav-item nav-link mx-1 active" href="/profile">
                         Profile
                     </a>
-                    <a class="nav-item nav-link mx-1" href="/dashboard">
-                        Dashboard
-                    </a>
+                    
                     <a class="nav-item nav-link mx-1" href="/support">
                         Support
+                    </a>
+                    <a class="nav-item nav-link mx-1" href="/support" onclick="scrollToFooter()">
+                        Contact Us
+                    </a>
+                    {% if session.get('user') %}
+                            {% if session['user']['username'] in admin_users %}
+                                <a class="nav-item nav-link mx-1" href="/admin">
+                                    Admin
+                                </a>
+                            {% endif %}
+                    {% endif %}
+                    <a class="nav-item nav-link mx-1" href="/dashboard">
+                        Dashboard
                     </a>
                     <a class="mx-1 btn btn-outline-danger auth-only" id="logoutBtn" href="/logout">
                         Log Out
@@ -60,7 +71,11 @@ Path:
             <p class="h1 text-center">Roomies - Profile</p>
             <hr class="w-75">
             <section class="mt-3 mb-5" id="form">
-
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="listYourselfCheckbox" {% if user_preferences['Listed'] == 1 %} checked {% endif %}>
+                <span class="custom-control-label">List Yourself</span>
+            </label>
+                
             <h2>User Preferences:</h2>
             <div style="display: flex;">
             <div style="flex: 1;">
@@ -115,7 +130,7 @@ Path:
             <p>*To edit your personality preference, please reach out to us via <a href="/support">support</a>.</p>
             </div>
             <div style="flex: 1;">
-                <img src="{{ profile_picture_url }}" alt="Profile Picture" style="height: 10cm;width: 15cm;">
+                <img src="{{ profile_picture_url }}" alt="Profile Picture" style="height: 28rem;width: 28rem;border-radius: 50%;">
             </div>
             </div>
                 <br><br><br>
@@ -127,6 +142,21 @@ Path:
             </form>
 
 		</main>
+        <script>
+            document.getElementById('listYourselfCheckbox').addEventListener('change', function () {
+            var checked = this.checked;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/update_listed_status', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    console.log('Listed status updated successfully.');
+                }
+            };
+            xhr.send(JSON.stringify({ listed: checked ? 1 : 0 }));
+        });
+
+        </script>
         <script>
             document.getElementById('deleteBtn').addEventListener('click', function () {
                 if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {

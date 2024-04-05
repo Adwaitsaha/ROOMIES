@@ -22,7 +22,7 @@ def get_recommendations(df, user_profile, top_n):
     filtered_df = df[df['Location'] == location]
     # filtered_df = df[df['Age'].astype(int) == age]
     filtered_df = filtered_df[(df['Age'].astype(int) >= (age - 4)) & (df['Age'].astype(int) <= (age + 4))]
-    filtered_df = filtered_df[filtered_df['Listed'] == 0]
+    filtered_df = filtered_df[filtered_df['Listed'] == 1]
     
     if filtered_df.empty:
         return "No profiles found for the provided location."

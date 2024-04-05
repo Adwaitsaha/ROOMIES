@@ -1,211 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta name="robots" content="noindex">
+  <head>
+    <meta name="robots" content="noindex" />
 
-		<title>Roomies - Roommate Finding Program</title>
-		<!--Links/includes-->
-		<link rel="icon" href="{{ url_for('static', filename='/assets/icon.png') }}" type="image/x-icon">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta charset="UTF-8">
+    <title>Roomies - Roommate Finding Program</title>
+    <!--Links/includes-->
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='/assets/icon.png') }}"
+      type="image/x-icon"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
 
-		<link rel="stylesheet" href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-		<link rel="stylesheet" href="{{ url_for('static', filename='/styles/dashboard.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='/styles/style.css') }}">
-	</head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/dashboard.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/style.css') }}"
+    />
+  </head>
 
-	<body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">
-                <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="80">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavItems" aria-controls="mainNavItems" aria-label="Toggle main menu" aria-expanded="false" >
-                <i class="fa fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
-                <div class="ml-auto navbar-nav nav">
-                    
-                    <a class="nav-item nav-link mx-lg-2 mx-1" id="finder" href="/whyroommatefinder">
-                        Why Roomies?
-                    </a>
-                    <a class="nav-item nav-link mx-1" href="/profile">
-                        Profile
-                    </a>
-                    
-                    <a class="nav-item nav-link mx-1" id="support-btn" href="/support">
-                        Support
-                    </a>
-                    <a class="nav-item nav-link mx-1 active" href="/dashboard">
-                        Dashboard
-                    </a>
-                    <a class="mx-1 btn btn-outline-danger auth-only" id="logoutBtn" href="/logout">
-                        Log Out
-                    </a>
-                
-                </div>
-            </div>
-        </nav>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="/">
+        <img
+          src="{{ url_for('static', filename='/assets/icon.png') }}"
+          src="site logo"
+          height="80"
+        />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#mainNavItems"
+        aria-controls="mainNavItems"
+        aria-label="Toggle main menu"
+        aria-expanded="false"
+      >
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
+        <div class="ml-auto navbar-nav nav">
+          <a
+            class="nav-item nav-link mx-lg-2 mx-1"
+            id="finder"
+            href="/whyroommatefinder"
+          >
+            Why Roomies?
+          </a>
+          <a class="nav-item nav-link mx-1" href="/profile"> Profile </a>
 
-		
-		<main class="container">
-		
+          <a class="nav-item nav-link mx-1" id="support-btn" href="/support">
+            Support
+          </a>
+          <a
+            class="nav-item nav-link mx-1"
+            href="/support"
+            onclick="scrollToFooter()"
+          >
+            Contact Us
+          </a>
+          {% if session.get('user') %} {% if session['user']['username'] in
+          admin_users %}
+          <a class="nav-item nav-link mx-1" href="/admin"> Admin </a>
+          {% endif %} {% endif %}
+          <a class="nav-item nav-link mx-1 active" href="/dashboard">
+            Dashboard
+          </a>
+          <a
+            class="mx-1 btn btn-outline-danger auth-only"
+            id="logoutBtn"
+            href="/logout"
+          >
+            Log Out
+          </a>
+        </div>
+      </div>
+    </nav>
 
-            <section class="txt splash">
-                <p class="h1 text-center">RoommateFinder - Dashboard</p>
+    <main class="container">
+      <section class="txt splash">
+        <p class="h1 text-center">RoommateFinder - Dashboard</p>
 
-                <!-- <p class="text-center"><i class="fa fa-info-circle mr-2"></i><span class="text-info" id="mainMsg">No new notifications</span></p> -->
+        <!-- <p class="text-center"><i class="fa fa-info-circle mr-2"></i><span class="text-info" id="mainMsg">No new notifications</span></p> -->
 
-                <p class="text-center">If your <a href="/profile">profile</a> is complete and you have logged out and logged back in since last updating it, you'll see all of your matches listed below.</p>
-                
-            
-	        </section>
-		    
-            <section class="text-center my-4" id="matches">
-                <p class="h2 text-center">Matches</p>
-                <p class="text-center small text-info">If you see someone who looks like a good match, reach out to them using the chat button.</p>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Profile Photo
-                            </th>
-                            <th>
-                                Username
-                            </th>
-                            <th>
-                                Age
-                            </th>
-                            <th>
-                                Gender
-                            </th>
-                            <th>
-                                Profile
-                            </th>
-                            <th>
-                                Match Score
-                            </th>
-                            <th>
-                                Chat
-                            </th>
-                            <th>
-                                Like
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="matchTable">
-                        {% if recommendations_dashboard %}
-                            {% for i in range(recommendations_dashboard|length) %}
-                                {% set recommendation = recommendations_dashboard[i] %}
-                                {% set profile_picture_url = profile_picture_urls[i] %}
-                                {% set liked = recommendation['Username'] in liked_users %}
-                                <tr>
-                                    <td><img src="{{ profile_picture_url }}" alt="Profile Photo" width="50" style="border-radius: 60%;"></td>
-                                    <td>{{ recommendation['Username'] }}</td>
-                                    <td>{{ recommendation['Age'] }}</td>
-                                    <td>{{ recommendation['Gender'] }}</td>
-                                    <td><a href="{{ url_for('profiles', username=recommendation['Username']) }}">View Profile</a></td>
-                                    <td>{{ recommendation['MatchPercentage'] }}</td>
-                                    <td>Chat</td>
-                                    <td>
-                                        {% if liked %}
-                                            <button class="like-btn liked mx-1 btn btn-outline-danger" data-username="{{ recommendation['Username'] }}">Unlike</button>
-                                        {% else %}
-                                            <button class="like-btn mx-1 btn btn-outline-danger" data-username="{{ recommendation['Username'] }}">Like</button>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        {% else %}
-                            <tr>
-                                <td colspan="5">No matches found for you.</td>
-                            </tr>
-                        {% endif %}
-                    </tbody>              
-                    
-                </table>
-			</section>
-            
-		</main>
-        <script>
-        document.getElementById('finder').addEventListener('click', function() {
-            window.location.href = '/whyroommatefinder'; 
-        });
+        <p class="text-center">
+          If your <a href="/profile">profile</a> is complete and you have logged
+          out and logged back in since last updating it, you'll see all of your
+          matches listed below.
+        </p>
+      </section>
 
-        document.getElementById('support-btn').addEventListener('click', function() {
-            window.location.href = '/support'; 
+      <section class="text-center my-4" id="matches">
+        <p class="h2 text-center">Matches</p>
+        <p class="text-center small text-info">
+          If you see someone who looks like a good match, reach out to them
+          using the chat button.
+        </p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Profile Photo</th>
+              <th>Username</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Profile</th>
+              <th>Match Score</th>
+              <th>Chat</th>
+              <th>Like</th>
+            </tr>
+          </thead>
+          <tbody id="matchTable">
+            {% if recommendations_dashboard %} {% for i in
+            range(recommendations_dashboard|length) %} {% set recommendation =
+            recommendations_dashboard[i] %} {% set profile_picture_url =
+            profile_picture_urls[i] %} {% set liked = recommendation['Username']
+            in liked_users %}
+            <tr>
+              <td>
+                <img
+                  src="{{ profile_picture_url }}"
+                  alt="Profile Photo"
+                  width="50"
+                  style="border-radius: 60%"
+                />
+              </td>
+              <td>{{ recommendation['Username'] }}</td>
+              <td>{{ recommendation['Age'] }}</td>
+              <td>{{ recommendation['Gender'] }}</td>
+              <td>
+                <a
+                  href="{{ url_for('profiles', username=recommendation['Username']) }}"
+                  >View Profile</a
+                >
+              </td>
+              <td>{{ recommendation['MatchPercentage'] }}</td>
+              <td>Chat</td>
+              <td>
+                {% if liked %}
+                <button
+                  class="like-btn liked mx-1 btn btn-outline-danger"
+                  data-username="{{ recommendation['Username'] }}"
+                >
+                  Unlike
+                </button>
+                {% else %}
+                <button
+                  class="like-btn mx-1 btn btn-outline-danger"
+                  data-username="{{ recommendation['Username'] }}"
+                >
+                  Like
+                </button>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %} {% else %}
+            <tr>
+              <td colspan="5">No matches found for you.</td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <script>
+      document.getElementById("finder").addEventListener("click", function () {
+        window.location.href = "/whyroommatefinder";
+      });
+
+      document
+        .getElementById("support-btn")
+        .addEventListener("click", function () {
+          window.location.href = "/support";
         });
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Check if liked users are already stored in local storage
-            var likedUsers = localStorage.getItem('likedUsers');
-            if (likedUsers) {
-                // If yes, parse and store them in the window object
-                window.likedUsers = JSON.parse(likedUsers);
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check if liked users are already stored in local storage
+        var likedUsers = localStorage.getItem("likedUsers");
+        if (likedUsers) {
+          // If yes, parse and store them in the window object
+          window.likedUsers = JSON.parse(likedUsers);
+        }
+
+        // Fetch liked users from the server
+        fetch("/liked_users")
+          .then(function (response) {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error("Failed to fetch liked users");
             }
-    
-            // Fetch liked users from the server
-            fetch('/liked_users')
-                .then(function(response) {
+          })
+          .then(function (data) {
+            // Store the liked users in local storage
+            localStorage.setItem(
+              "likedUsers",
+              JSON.stringify(data.liked_users)
+            );
+
+            // Store the liked users in the window object
+            window.likedUsers = data.liked_users;
+
+            // Add event listeners to like/unlike buttons
+            document.querySelectorAll(".like-btn").forEach(function (button) {
+              var username = button.dataset.username;
+              if (window.likedUsers.includes(username)) {
+                button.textContent = "Unlike";
+                button.classList.add("liked");
+              } else {
+                button.textContent = "Like";
+                button.classList.remove("liked");
+              }
+              button.addEventListener("click", function () {
+                var liked = this.classList.contains("liked");
+                var method = liked ? "DELETE" : "POST";
+                var url = liked ? "/unlike" : "/like";
+
+                // Send AJAX request to Flask backend to like/unlike user
+                fetch(url, {
+                  method: method,
+                  body: JSON.stringify({ username: username }),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                })
+                  .then(function (response) {
                     if (response.ok) {
-                        return response.json();
+                      // Toggle between like and unlike buttons
+                      if (liked) {
+                        button.textContent = "Like";
+                        button.classList.remove("liked");
+                      } else {
+                        button.textContent = "Unlike";
+                        button.classList.add("liked");
+                      }
                     } else {
-                        throw new Error('Failed to fetch liked users');
+                      console.error("Error:", response.status);
                     }
-                })
-                .then(function(data) {
-                    // Store the liked users in local storage
-                    localStorage.setItem('likedUsers', JSON.stringify(data.liked_users));
-                    
-                    // Store the liked users in the window object
-                    window.likedUsers = data.liked_users;
-                    
-                    // Add event listeners to like/unlike buttons
-                    document.querySelectorAll('.like-btn').forEach(function(button) {
-                        var username = button.dataset.username;
-                        if (window.likedUsers.includes(username)) {
-                            button.textContent = 'Unlike';
-                            button.classList.add('liked');
-                        } else {
-                            button.textContent = 'Like';
-                            button.classList.remove('liked');
-                        }
-                        button.addEventListener('click', function() {
-                            var liked = this.classList.contains('liked');
-                            var method = liked ? 'DELETE' : 'POST';
-                            var url = liked ? '/unlike' : '/like';
-                        
-                            // Send AJAX request to Flask backend to like/unlike user
-                            fetch(url, {
-                                method: method,
-                                body: JSON.stringify({ username: username }),
-                                headers:{
-                                    'Content-Type': 'application/json'
-                                }
-                            }).then(function(response) {
-                                if (response.ok) {
-                                    // Toggle between like and unlike buttons
-                                    if (liked) {
-                                        button.textContent = 'Like';
-                                        button.classList.remove('liked');
-                                    } else {
-                                        button.textContent = 'Unlike';
-                                        button.classList.add('liked');
-                                    }
-                                } else {
-                                    console.error('Error:', response.status);
-                                }
-                            }).catch(function(error) {
-                                console.error('Error:', error);
-                            });
-                        });
-                    });
-                })
-                .catch(function(error) {
-                    console.error('Error:', error);
-                });
-        });
-    </script>	
-	</body>
+                  })
+                  .catch(function (error) {
+                    console.error("Error:", error);
+                  });
+              });
+            });
+          })
+          .catch(function (error) {
+            console.error("Error:", error);
+          });
+      });
+    </script>
+  </body>
 </html>
