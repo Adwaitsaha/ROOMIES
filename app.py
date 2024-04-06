@@ -646,6 +646,14 @@ def dashboard():
     else:
         return redirect(url_for('index'))
     
+@app.route('/chat', methods=['GET'])
+def chatroom():
+    username = request.args.get('user')
+    current_username = session["user"]["username"]  # Get the username from the query parameter
+    # Now you can render your chatroom template with the username
+    return render_template('chatroom.html', username=username,current_username=current_username)
+
+    
 @app.route('/profile')
 @login_required
 def profile():
