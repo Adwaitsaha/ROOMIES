@@ -1,0 +1,138 @@
+<!--
+Page:
+	Home
+Path:
+	/profile.html
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="robots" content="noindex">
+
+		<title>Roomies - Roommate Finding Program</title>
+		<!--Links/includes-->
+		<link rel="icon" href="{{ url_for('static', filename='/assets/icon.png') }}" type="image/x-icon">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+
+		<link rel="stylesheet" href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+		<link rel="stylesheet" href="{{ url_for('static', filename='/styles/profile.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='/styles/style.css') }}">
+        
+	</head>
+
+	<body>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/">
+                <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="80">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavItems" aria-controls="mainNavItems" aria-label="Toggle main menu" aria-expanded="false" >
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
+                <div class="ml-auto navbar-nav nav">
+                  
+                    <a class="nav-item nav-link mx-lg-2 mx-1" href="/whyroommatefinder">
+                        Why Roomies?
+                    </a>
+                    <a class="nav-item nav-link mx-1 active" href="/profile">
+                        Profile
+                    </a>
+                    
+                    <a class="nav-item nav-link mx-1" href="/support">
+                        Support
+                    </a>
+                    <a class="nav-item nav-link mx-1" href="/support" onclick="scrollToFooter()">
+                        Contact Us
+                    </a>
+                    {% if session.get('user') %}
+                            {% if session['user']['username'] in admin_users %}
+                                <a class="nav-item nav-link mx-1" href="/admin">
+                                    Admin
+                                </a>
+                            {% endif %}
+                    {% endif %}
+                    <a class="nav-item nav-link mx-1" href="/dashboard">
+                        Dashboard
+                    </a>
+                    <a class="mx-1 btn btn-outline-danger auth-only" id="logoutBtn" href="/logout">
+                        Log Out
+                    </a>
+                
+                </div>
+            </div>
+        </nav>
+<br>
+        <main class="container">
+
+            <p class="h1 text-center">Profile</p>
+            <hr class="w-75">
+            <section class="mt-3 mb-5" id="form">
+
+            <h2>{{user_data1['FirstName']}} {{user_data1['LastName']}}'s Preferences:</h2>
+            <div style="display: flex;">
+            <div style="flex: 1;">
+            <ul style="text-align: justify;">
+                <li>
+                    <div style="display: flex;">
+                        <p class="text-danger">Username:</p>&nbsp;<span id="Username" contenteditable="false">{{ user_data['Username'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex;">
+                        <p class="text-danger">Age:</p>&nbsp; <span id="Age" contenteditable="false">{{ user_data['Age'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;">
+                        <p class="text-danger">Bio:</p>&nbsp;<span id="Bio" contenteditable="false">{{ user_data['Bio'] }}</span>
+                    </div>
+                </li>                
+                <li>
+                    <div style="display: flex;"><p class="text-danger">Gender:</p>&nbsp;<span id="Gender" contenteditable="false">{{ user_data['Gender'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;"><p class="text-danger">Profession:</p>&nbsp;<span id="Profession" contenteditable="false">{{ user_data['Profession'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;"><p class="text-danger">Religion:</p>&nbsp;<span id="Religion" contenteditable="false">{{ user_data['Religion'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;"><p class="text-danger">Habits:</p>&nbsp;<span id="Habits" contenteditable="false">{{ user_data['Habits'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;"><p class="text-danger">Food Preference:</p>&nbsp;<span id="FoodPreference" contenteditable="false">{{ user_data['FoodPreference'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;"><p class="text-danger">Sleep Schedule:</p>&nbsp;<span id="SleepSchedule" contenteditable="false">{{ user_data['SleepSchedule'] }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div style="display: flex; align-items: flex-start;"><p class="text-danger">Pet Friendliness:</p>&nbsp;<span id="PetFriendliness" contenteditable="false">{{ user_data['PetFriendliness'] }}</span>
+                    </div>
+                </li>
+            </ul>
+            
+            </div>
+            <div style="flex: 1;">
+                <img src="{{ profile_picture_url }}" alt="Profile Picture" style="height: 28rem;width: 28rem;border-radius: 50%;">
+            </div>
+            </div>
+            <div><button class="btn btn-outline-danger"><a href="/report" style="color: inherit; text-decoration: none;">Report User</a></button></div>
+            
+                
+            
+            
+
+		</main>
+        
+	</body>
+</html>

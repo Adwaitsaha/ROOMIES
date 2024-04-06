@@ -38,19 +38,15 @@ Path:
       rel="stylesheet"
       href="{{ url_for('static', filename='/styles/about.css') }}"
     />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='/styles/footer.css') }}"
-    />
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar spnav navbar-expand-lg navbar-light">
       <a class="navbar-brand" href="/">
         <img
           src="{{ url_for('static', filename='/assets/icon.png') }}"
           src="site logo"
-          height="80"
+          height="100"
         />
       </a>
       <button
@@ -67,19 +63,21 @@ Path:
       <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
         <div class="ml-auto navbar-nav nav">
           <div class="ml-auto navbar-nav nav">
-            <a class="nav-item nav-link mx-1" href="/"> Home </a>
+            {% if not session.get('user') %}
+                  <a class="nav-item nav-link mx-1" href="/">
+                            Home
+                  </a> 
+            {% endif %}
             <a
               class="nav-item nav-link mx-lg-2 mx-1 active"
               href="/whyroommatefinder"
             >
-              Why RoommateFinder?
+              Why Roomies?
             </a>
-            <!-- <a class="nav-item nav-link mx-1" href="/templates/profile.html">
-              Profile
-            </a> -->
-            <!-- <a class="nav-item nav-link mx-1" href="/templates/dashboard.html">
-              Dashboard
-            </a> -->
+            {% if session.get('user') %}
+                  <a class="nav-item nav-link mx-1" href="/profile"> Profile </a>
+            {% endif %}
+        
             <a class="nav-item nav-link mx-1" href="/support"> Support </a>
             <a
               class="nav-item nav-link mx-1"
@@ -88,16 +86,27 @@ Path:
             >
               Contact Us
             </a>
-            <!-- <a
-              class="mx-1 btn btn-outline-danger auth-only d-none"
-              id="logoutBtn"
-              href="#"
-            >
+            {% if session.get('user') %}
+                            {% if session['user']['username'] in admin_users %}
+                                <a class="nav-item nav-link mx-1" href="/admin">
+                                    Admin
+                                </a>
+                            {% endif %}
+                        {% endif %}
+            {% if session.get('user') %}
+            <a class="nav-item nav-link mx-1" href="/dashboard">
+              Dashboard
+          </a>
+            <a class="mx-1 btn btn-outline-danger auth-only" id="logoutBtn" href="/logout">
               Log Out
-            </a>-->
-            <a class="mx-1 btn btn-outline-purple no-auth" href="/#login">
+          </a>
+          {% endif %}
+
+            {% if not session.get('user') %}
+            <button class="mx-1 btn btn-outline-purple no-auth login-btn" id='log-in' href="/login">
               Log In
-            </a> 
+          </button>
+            {% endif %}
 
           </div>
         </div>
@@ -197,107 +206,25 @@ Path:
       </section>
     </main>
   </body>
-
-      <!-- Footer -->
-      <footer class="footer-area">
-        <div class="footer-wave-box">
-            <div class="footer-wave footer-animation"></div>
-        </div>
-        <div class="main">
-            <div class="footer" id="footer-content">
-                <!-- Content will be dynamically inserted here -->
-            </div>
-            <div class="copy">
-                <p>&copy; Roomies | All rights reserved | 2024 </p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript includes -->
-    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js" integrity="sha384-GLhlTQ8iKHEo7RY/RykD/xTk9SJ0Dl/6ZI99VF5ceEAAbFpi6Rv4r+7L3UqFvuci" crossorigin="anonymous"></script>
-    <!-- Add your own scripts here -->
-    <script>
-        // Function to dynamically set footer content based on whether the user is logged in or not
-        function setFooterContent(logged_in) {
-            var footerContent = document.getElementById("footer-content");
-            if (logged_in) {
-                // For logged in users
-                footerContent.innerHTML = `
-                <div class="footer" id="logged-in-footer">
-                <div class="single-footer">
-                    <h4>Menu</h4>
-                    <ul style="list-style: none; padding-left: 0;">
-                        <li><a href=""><i class="fas fa-angle-right"></i> Dashboard</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Profile</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Chat</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Liked Profiles</a></li>
-                    </ul>
-                </div>
-                <div class="single-footer">
-                    <h4>Links</h4>
-                    <ul style="list-style: none; padding-left: 0;">
-                        <li><a href=""><i class="fas fa-angle-right"></i> Home</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Why Roomies</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Support</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Contact Us</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Privacy Policy</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Terms & Conditions</a></li>
-                    </ul>
-                </div>
-                <div class="single-footer">
-                    <h4>Contact Us</h4>
-                    <ul style="list-style: none; padding-left: 0;">
-                        <li><a href=""><i class="fas fa-map-marker-alt"></i> KJ Somaiya College Of Engineering, Vidyanagar, Vidyavihar 400605</a></li>
-                        <li><a href=""><i class="fas fa-mobile-alt"></i> +91 7977199113</a></li>
-                        <li><a href=""><i class="fas fa-envelope"></i> contact@roomies.com</a></li>
-                        <li><a href=""><i class="fas fa-globe"></i> www.roomies.com</a></li>
-                    </ul>
-                </div>
-            </div>
-                `;
-            } else {
-                // For not logged in users
-                footerContent.innerHTML += `
-                <div class="footer" id="not-logged-in-footer">
-                <div class="single-footer">
-                    <h4>Menu</h4>
-                    <ul style="list-style: none; padding-left: 0;">
-                        <li><a href=""><i class="fas fa-angle-right"></i> Home</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Why Roomies</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Support</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="single-footer">
-                    <h4>Links</h4>
-                    <ul style="list-style: none; padding-left: 0;">
-                        <li><a href=""><i class="fas fa-angle-right"></i> Contact Us</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Privacy Policy</a></li>
-                        <li><a href=""><i class="fas fa-angle-right"></i> Terms & Conditions</a></li>
-                    </ul>
-                </div>
-                <div class="single-footer">
-                    <h4>Contact Us</h4>
-                    <ul style="list-style: none; padding-left: 0;">
-                        <li><a href=""><i class="fas fa-map-marker-alt"></i> KJ Somaiya College Of Engineering, Vidyanagar, Vidyavihar 400605</a></li>
-                        <li><a href=""><i class="fas fa-mobile-alt"></i> +91 9397165725</a></li>
-                        <li><a href=""><i class="fas fa-envelope"></i> contact@roomies.com</a></li>
-                        <li><a href=""><i class="fas fa-globe"></i> www.roomies.com</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-                `;
-            }
-        }
-
-        // Call the function to set footer content based on whether the user is logged in or not
-        // Replace 'loggedIn' with the actual variable that indicates whether the user is logged in or not
-        var logged_in = true; // Example: Change this value based on actual login status
-        setFooterContent(logged_in);
-    </script>
-
-
+  <footer>
+    <div class="contact-info">
+      <p>Contact Us:</p>
+      <p>Contact No:+91 7977199113</p>
+      <p>Email: shreeraj.rane@somaiya.edu</p>
+    </div>
+    <div class="location">
+      <p>𖡡 KJ Somaiya College Of Engineering</p>
+      <iframe
+        width="70%"
+        height="150"
+        frameborder="0"
+        scrolling="no"
+        marginheight="0"
+        marginwidth="0"
+        src="https://maps.google.com/maps?q=19.0729122,72.897333&z=15&output=embed"
+      ></iframe>
+    </div>
+  </footer>
   <script
     src="https://code.jquery.com/jquery-3.6.4.slim.min.js"
     integrity="sha384-GLhlTQ8iKHEo7RY/RykD/xTk9SJ0Dl/6ZI99VF5ceEAAbFpi6Rv4r+7L3UqFvuci"
@@ -315,5 +242,10 @@ Path:
       var footer = document.querySelector("footer");
       footer.scrollIntoView({ behavior: "smooth" });
     }
+  </script>
+  <script>
+    document.getElementById('log-in').addEventListener('click', function() {
+        window.location.href = '/login';  
+    });
   </script>
 </html>

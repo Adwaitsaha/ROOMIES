@@ -1,95 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta name="robots" content="noindex">
+  <head>
+    <meta name="robots" content="noindex" />
 
-		<title>Roomies - Roommate Finding Program</title>
-		<!--Links/includes-->
-		<link rel="icon" href="{{ url_for('static', filename='/assets/icon.png') }}" type="image/x-icon">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta charset="UTF-8">
+    <title>Roomies - Roommate Finding Program</title>
+    <!--Links/includes-->
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='/assets/icon.png') }}"
+      type="image/x-icon"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
 
-		<link rel="stylesheet" href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-		<link rel="stylesheet" href="{{ url_for('static', filename='/styles/dashboard.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='/styles/style.css') }}">
-	</head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/dashboard.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/style.css') }}"
+    />
+  </head>
 
-	<body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">
-                <img src="{{ url_for('static', filename='/assets/icon.png') }}" src="site logo" height="80">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavItems" aria-controls="mainNavItems" aria-label="Toggle main menu" aria-expanded="false" >
-                <i class="fa fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
-                <div class="ml-auto navbar-nav nav">
-                    
-                    <a class="nav-item nav-link mx-lg-2 mx-1" id="finder" href="/whyroommatefinder">
-                        Why RoommateFinder?
-                    </a>
-                    <a class="nav-item nav-link mx-1" href="/profile">
-                        Profile
-                    </a>
-                    <a class="nav-item nav-link mx-1 active" href="/dashboard">
-                        Dashboard
-                    </a>
-                    <a class="nav-item nav-link mx-1" id="support-btn" href="/support">
-                        Support
-                    </a>
-                    <a class="mx-1 btn btn-outline-danger auth-only" id="logoutBtn" href="/logout">
-                        Log Out
-                    </a>
-                
-                </div>
-            </div>
-        </nav>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="/">
+        <img
+          src="{{ url_for('static', filename='/assets/icon.png') }}"
+          src="site logo"
+          height="80"
+        />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#mainNavItems"
+        aria-controls="mainNavItems"
+        aria-label="Toggle main menu"
+        aria-expanded="false"
+      >
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
+        <div class="ml-auto navbar-nav nav">
+          <a
+            class="nav-item nav-link mx-lg-2 mx-1"
+            id="finder"
+            href="/whyroommatefinder"
+          >
+            Why Roomies?
+          </a>
+          <a class="nav-item nav-link mx-1" href="/profile"> Profile </a>
 
-		
-        <main class="container">
+          <a class="nav-item nav-link mx-1" id="support-btn" href="/support">
+            Support
+          </a>
+          <a
+            class="nav-item nav-link mx-1"
+            href="/support"
+            onclick="scrollToFooter()"
+          >
+            Contact Us
+          </a>
+          {% if session.get('user') %} {% if session['user']['username'] in
+          admin_users %}
+          <a class="nav-item nav-link mx-1" href="/admin"> Admin </a>
+          {% endif %} {% endif %}
+          <a class="nav-item nav-link mx-1 active" href="/dashboard">
+            Dashboard
+          </a>
+          <a
+            class="mx-1 btn btn-outline-danger auth-only"
+            id="logoutBtn"
+            href="/logout"
+          >
+            Log Out
+          </a>
+        </div>
+      </div>
+    </nav>
 
-            <section class="txt splash">
-                <p class="h1 text-center">RoommateFinder - Dashboard</p>
-                <p class="text-center"><i class="fa fa-info-circle mr-2"></i><span class="text-info" id="mainMsg">No new notifications</span></p>
-                <p class="text-center">If your <a href="/profile">profile</a> is complete and you have logged out and logged back in since last updating it, you'll see all of your matches listed below.</p>
-            </section>
-        
-            <section class="text-center my-4" id="matches">
-                <p class="h2 text-center">Matches</p>
-                <p class="text-center small text-info">If you see someone who looks like a good match, reach out to them using the contact information they listed.</p>
-                <div class="card-container">
-                    <!-- Adding a new match named "Adwait" -->
-                    <div class="card">
-                        <div class="card-body">
-                            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAHBhAPEBAQDg8QEw8OFQ8ODg8OExcSFxUXFhUdFRUYKCggGBolHRUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OFQ8PGCsdHxkrKy0rLS0rKy0rLS0rKystLS0rLysrLSstMC03LTc3NysrLSstKysrKysrNysrKysrK//AABEIALABHwMBIgACEQEDEQH/xAAbAAEAAwADAQAAAAAAAAAAAAAABAUGAQIDB//EADYQAQACAAMFBAkCBgMAAAAAAAABAgMEEQUSITFRQWGRsRMiNHGBgqHB4VJyMkJisvDxFCMk/8QAGAEBAQEBAQAAAAAAAAAAAAAAAAIBAwT/xAAcEQEBAQEBAQADAAAAAAAAAAAAAQIRMSEDEhP/2gAMAwEAAhEDEQA/APogD0uYAAAAAAAAAAAADmtZvbSImZnsjjIOHCxwNk3xONpikdOcp2FsrCpzibT3z9oRdxvKoXpXL3typefllpcPArhfw1ivuiIcZm84eBaaxvWiNYhP9G/qzF6Th20tE1npMaOHbFxJxbzNpmZnq6ukSANAAAAAAAAAAAAAAAAAAAAAAAAAHbBw5xsWKxzmdGD2yeUtmr8OFY52/wA7V9lsrTLV0rHvmec/F3y+DGBhRWvKHo4611cgAloACDntn1zMax6t+vX3qLFw5wbzW0aTDVom0MnGawv645T9pXnXPibGdCY0kdkgAAAAAAAAAAAAAAAAAAAAAAACdsWuud91bT5QgrDYntk/tnzhOvK2er0BwWAAAAAAze067uevp1ifGImUZL2t7fb5f7YRHoz5EUAawAAAAAAAAAAAAAAAAAAAAAAWOw4/9Vv2z5wrljsL2q37fvCd+Nnq8AcFgAAAAAM7tb2+3y+UIiXtb2+3y+UIjvnyIoApgAAAAAAAAAAAAAAAAAAAAADhfbIy1aYMYka71omJ48Of4UTQbHtrka902j6ue/G5TQHJYAAAAACm21lorPpNeNpiunw/CrXG3p/6qR3zP0/KndseIvoAtgAAAAAAAAAAAAAAAAAAAAAAtth48aWw55670fdUvTK4noszS3SY8OUp1OxsakBwWAAAAA6Y1/RYVrdImfAFJtrG9JmYrH8kafGef2QCZ1nX4j0ScjmANAAAAAAAAAAAAAAAAAAAAAAAAGmyWP8A8jLVt26aT7+17s9srMWwczFY4xeYiY7+rQuGpyrlAEtAAFdtrH3Mtu9t5+kc/ssZZnPY042atM9kzWI7olWJ2steADugAAAAAAAAAAAAAAAAAAAAAAAAABJ2ZGufp75n6S0ip2ZkLYWJGJaY5T6vbxWzhu9q4AJaAA4ZXGnXGt+63m1bOZ/KWy19ZmJi0zOsL/HfqdIoDskAAAAAAAAAAAAAAAAAAAAAABwDl3wMOcbGrWOczo9cvksTH5V0jrbhC2yGzoyt96Z3raactIhGtSNkT4AcVgAAACBtjC9Jk9Y/lne+HKfNPcWrvV0nlPBsvBkxZ4+x7V/gtvd1uE+KvxcG2DbS1ZrPe7TUrnx0AUAAAAAAAAAAAAAAAAAERvTpHGekAERrOkcZ6Qsctsm2JxvO5HTnb8LXL5WmXj1a6T15z4ou5G8U+X2XfF429SO/jPgtMvs/DwOOm9PW3H/SWOd1aqQAS0AAAAAAAAdb0i9dJiJjpMauwCuzGyaX41ncnpzjwVmYyOJl+cax+qvGPw0gqbsZxkhoszs/Dx+Om7b9VeHj1VWZ2ZiYPGPXr1jn4Ok3KniEAtgAAAAAAAAAAAD2ymVtmsTSOERzmeUL/KZOmWrwjj22nm5yeXjL4EVj3z3z2vdw1rq5ABLQAAAAAAAAAAAAAAAAAEPOZCuZiZ03b/qj79VBjYU4OJNbRpMNWrds5ffwN+OdfJeNc+JsUgDskAAAB//Z" alt="Profile Picture" class="profile-picture">
-                            <h5 class="card-title">Adwait</h5>
-                            <p class="card-text">Location: </p>
-                            <p class="card-text">Gender: Male</p>
-                            <p class="card-text">Age: 25</p>
-                            <p class="card-text">A friendly and responsible individual looking for a compatible roommate.</p>
-                            <p class="card-text">Match Score: 90%</p>
-                            <div class="btn-group" role="group">
-                                <a href="/chat" class="btn btn-primary">Chat</a>
-                                <button type="button" class="btn btn-secondary">View Profile</button>
-                                <button type="button" class="btn btn-success">Like</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Add more cards for other matches if needed -->
-                </div>
-            </section>
-        
-        </main>
-        <script>
-        document.getElementById('finder').addEventListener('click', function() {
-            window.location.href = '/whyroommatefinder'; 
-        });
+    <main class="container">
+      <section class="txt splash">
+        <p class="h1 text-center">RoommateFinder - Dashboard</p>
 
-        document.getElementById('support-btn').addEventListener('click', function() {
-            window.location.href = '/support'; 
+        <!-- <p class="text-center"><i class="fa fa-info-circle mr-2"></i><span class="text-info" id="mainMsg">No new notifications</span></p> -->
+
+        <p class="text-center">
+          If your <a href="/profile">profile</a> is complete and you have logged
+          out and logged back in since last updating it, you'll see all of your
+          matches listed below.
+        </p>
+      </section>
+
+      <section class="text-center my-4" id="matches">
+        <p class="h2 text-center">Matches</p>
+        <p class="text-center small text-info">
+          If you see someone who looks like a good match, reach out to them
+          using the chat button.
+        </p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Profile Photo</th>
+              <th>Username</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Profile</th>
+              <th>Match Score</th>
+              <th>Chat</th>
+              <th>Like</th>
+            </tr>
+          </thead>
+          <tbody id="matchTable">
+            {% if recommendations_dashboard %} {% for i in
+            range(recommendations_dashboard|length) %} {% set recommendation =
+            recommendations_dashboard[i] %} {% set profile_picture_url =
+            profile_picture_urls[i] %} {% set liked = recommendation['Username']
+            in liked_users %}
+            <tr>
+              <td>
+                <img
+                  src="{{ profile_picture_url }}"
+                  alt="Profile Photo"
+                  width="50"
+                  style="border-radius: 60%"
+                />
+              </td>
+              <td>{{ recommendation['Username'] }}</td>
+              <td>{{ recommendation['Age'] }}</td>
+              <td>{{ recommendation['Gender'] }}</td>
+              <td>
+                <a
+                  href="{{ url_for('profiles', username=recommendation['Username']) }}"
+                  >View Profile</a
+                >
+              </td>
+              <td>{{ recommendation['MatchPercentage'] }}</td>
+              <td>Chat</td>
+              <td>
+                {% if liked %}
+                <button
+                  class="like-btn liked mx-1 btn btn-outline-danger"
+                  data-username="{{ recommendation['Username'] }}"
+                >
+                  Unlike
+                </button>
+                {% else %}
+                <button
+                  class="like-btn mx-1 btn btn-outline-danger"
+                  data-username="{{ recommendation['Username'] }}"
+                >
+                  Like
+                </button>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %} {% else %}
+            <tr>
+              <td colspan="5">No matches found for you.</td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <script>
+      document.getElementById("finder").addEventListener("click", function () {
+        window.location.href = "/whyroommatefinder";
+      });
+
+      document
+        .getElementById("support-btn")
+        .addEventListener("click", function () {
+          window.location.href = "/support";
         });
     </script>
-		
-	</body>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check if liked users are already stored in local storage
+        var likedUsers = localStorage.getItem("likedUsers");
+        if (likedUsers) {
+          // If yes, parse and store them in the window object
+          window.likedUsers = JSON.parse(likedUsers);
+        }
+
+        // Fetch liked users from the server
+        fetch("/liked_users")
+          .then(function (response) {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error("Failed to fetch liked users");
+            }
+          })
+          .then(function (data) {
+            // Store the liked users in local storage
+            localStorage.setItem(
+              "likedUsers",
+              JSON.stringify(data.liked_users)
+            );
+
+            // Store the liked users in the window object
+            window.likedUsers = data.liked_users;
+
+            // Add event listeners to like/unlike buttons
+            document.querySelectorAll(".like-btn").forEach(function (button) {
+              var username = button.dataset.username;
+              if (window.likedUsers.includes(username)) {
+                button.textContent = "Unlike";
+                button.classList.add("liked");
+              } else {
+                button.textContent = "Like";
+                button.classList.remove("liked");
+              }
+              button.addEventListener("click", function () {
+                var liked = this.classList.contains("liked");
+                var method = liked ? "DELETE" : "POST";
+                var url = liked ? "/unlike" : "/like";
+
+                // Send AJAX request to Flask backend to like/unlike user
+                fetch(url, {
+                  method: method,
+                  body: JSON.stringify({ username: username }),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                })
+                  .then(function (response) {
+                    if (response.ok) {
+                      // Toggle between like and unlike buttons
+                      if (liked) {
+                        button.textContent = "Like";
+                        button.classList.remove("liked");
+                      } else {
+                        button.textContent = "Unlike";
+                        button.classList.add("liked");
+                      }
+                    } else {
+                      console.error("Error:", response.status);
+                    }
+                  })
+                  .catch(function (error) {
+                    console.error("Error:", error);
+                  });
+              });
+            });
+          })
+          .catch(function (error) {
+            console.error("Error:", error);
+          });
+      });
+    </script>
+  </body>
 </html>
