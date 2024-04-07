@@ -119,10 +119,10 @@ def get_profile_picture_url(profile_picture_path):
 def index():
     return render_template('index.html')
 
-# @app.route('/about')
-# def about():
-#     admin_users = get_admin_users()
-#     return render_template('about.html',admin_users=admin_users)
+@app.route('/about')
+def about():
+    admin_users = get_admin_users()
+    return render_template('about.html',admin_users=admin_users)
 
 @app.route('/terms')
 def terms():
