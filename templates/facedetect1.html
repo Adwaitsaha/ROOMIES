@@ -11,8 +11,8 @@
 </head>
 <body style="background-image: linear-gradient(rgba(0, 0, 0, 0.7),
 rgba(0, 0, 0, 0.7)), url('static/assets/splash.png'); display: flex; justify-content: center; align-items: center;">
-    <h2>Please sit in a well lit area, as this image will be saved as your profile image.</h2>
     <div style="text-align: center;">
+        <h2>Please sit in a well lit area, as this image will be saved as your profile image.</h2>
         <video id="video" width="640" height="480" autoplay></video>
         <button id="capture-btn" style="display: block; margin: 0 auto;">Capture Image</button>
         <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
@@ -20,6 +20,8 @@ rgba(0, 0, 0, 0.7)), url('static/assets/splash.png'); display: flex; justify-con
             <button id="nextBtn" disabled style="margin: 0 auto;">Next</button>
         </form>
     </div>
+        
+    
     
     <script>
         let nextBtn = document.getElementById('nextBtn');
