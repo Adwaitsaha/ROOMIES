@@ -38,6 +38,10 @@ Path:
       rel="stylesheet"
       href="{{ url_for('static', filename='/styles/about.css') }}"
     />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/footer.css') }}"
+    />
   </head>
 
   <body>
@@ -206,25 +210,93 @@ Path:
       </section>
     </main>
   </body>
-  <footer>
-    <div class="contact-info">
-      <p>Contact Us:</p>
-      <p>Contact No:+91 7977199113</p>
-      <p>Email: shreeraj.rane@somaiya.edu</p>
+  <footer class="footer-area">
+    <div class="footer-wave-box">
+        <div class="footer-wave footer-animation"></div>
     </div>
-    <div class="location">
-      <p>𖡡 KJ Somaiya College Of Engineering</p>
-      <iframe
-        width="70%"
-        height="150"
-        frameborder="0"
-        scrolling="no"
-        marginheight="0"
-        marginwidth="0"
-        src="https://maps.google.com/maps?q=19.0729122,72.897333&z=15&output=embed"
-      ></iframe>
+    <div class="main">
+        {% if session.get('user') %}
+        <div class="footer" id="logged-in-footer">
+            <div class="single-footer">
+                <h4>Menu</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li><a href="/dashboard"><i class="fas fa-angle-right"></i> Dashboard</a></li>
+                    <li><a href="/profile"><i class="fas fa-angle-right"></i> Profile</a></li>
+                    <li><a href="/dashboard"><i class="fas fa-angle-right"></i> Chat</a></li>
+                    <li><a href="/dashboard"><i class="fas fa-angle-right"></i> Liked Profiles</a></li>
+                </ul>
+            </div>
+            <div class="single-footer">
+                <h4>Links</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li><a href="/home"><i class="fas fa-angle-right"></i> Home</a></li>
+                    <li><a href="/about"><i class="fas fa-angle-right"></i> Why Roomies</a></li>
+                    <li><a href="/support"><i class="fas fa-angle-right"></i> Support</a></li>
+                    <li><a href="/about"><i class="fas fa-angle-right"></i> Contact Us</a></li>
+                    <li><a href="/terms"><i class="fas fa-angle-right"></i> Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="single-footer">
+                <h4>Contact Us</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li><a href=""><i class="fas fa-map-marker-alt"></i> KJ Somaiya College Of Engineering, Vidyanagar, Vidyavihar 400605</a></li>
+                    <li><a href=""><i class="fas fa-mobile-alt"></i> +91 7977199113</a></li>
+                    <li><a href=""><i class="fas fa-envelope"></i> contact@roomies.com</a></li>
+                    <li><a href=""><i class="fas fa-globe"></i> www.roomies.com</a></li>
+                </ul>
+            </div>
+            <div class="single-footer">
+                <h4>Maps</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="text-align: right;">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.7927659956576!2d72.8973512749772!3d19.072846982131143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c627a20bcaa9%3A0xb2fd3bcfeac0052a!2sK.%20J.%20Somaiya%20College%20of%20Engineering!5e0!3m2!1sen!2sin!4v1712038182335!5m2!1sen!2sin" width="300" height="155" style="border: 20;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% else %}
+        <!-- For Not Logged In Users -->
+        <div class="footer" id="not-logged-in-footer">
+            <div class="single-footer">
+                <h4>Menu</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li><a href="/home"><i class="fas fa-angle-right"></i> Home</a></li>
+                    <li><a href="/about"><i class="fas fa-angle-right"></i> Why Roomies</a></li>
+                    <li><a href="/support"><i class="fas fa-angle-right"></i> Support</a></li>
+                    <li><a href="/about"><i class="fas fa-angle-right"></i> Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="single-footer">
+                <h4>Links</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li><a href="/about"><i class="fas fa-angle-right"></i> Contact Us</a></li>
+                    <li><a href="/terms"><i class="fas fa-angle-right"></i> Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="single-footer">
+                <h4>Contact Us</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li><a href=""><i class="fas fa-map-marker-alt"></i> KJ Somaiya College Of Engineering, Vidyanagar, Vidyavihar 400605</a></li>
+                    <li><a href=""><i class="fas fa-mobile-alt"></i> +91 9397165725</a></li>
+                    <li><a href=""><i class="fas fa-envelope"></i> contact@roomies.com</a></li>
+                    <li><a href=""><i class="fas fa-globe"></i> www.roomies.com</a></li>
+                </ul>
+            </div>
+            <div class="single-footer">
+                <h4>Maps</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="text-align: right;">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.7927659956576!2d72.8973512749772!3d19.072846982131143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c627a20bcaa9%3A0xb2fd3bcfeac0052a!2sK.%20J.%20Somaiya%20College%20of%20Engineering!5e0!3m2!1sen!2sin!4v1712038182335!5m2!1sen!2sin" width="300" height="155" style="border: 20;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        <div class="copy">
+            <p>&copy; Roomies | All rights reserved | 2024 </p>
+        </div>
     </div>
-  </footer>
+</footer>
   <script
     src="https://code.jquery.com/jquery-3.6.4.slim.min.js"
     integrity="sha384-GLhlTQ8iKHEo7RY/RykD/xTk9SJ0Dl/6ZI99VF5ceEAAbFpi6Rv4r+7L3UqFvuci"
