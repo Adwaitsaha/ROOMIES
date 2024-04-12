@@ -12,17 +12,24 @@
       href="{{ url_for('static', filename='/styles/style.css') }}"
     />
 </head>
-<body style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('static/assets/splash.png');">
-    <div class="container">
-        <h2 style="text-align: center; margin-top: 10%;">OTP Verification</h2>
-        <p style="text-align: center;">Please enter the OTP you received in your email:</p>
-        <form action="/verify_email" method="POST" style="text-align: center;">
-            <div class="form-group">
-                <label for="otp">OTP:</label>
-                <input type="text" id="otp" name="otp" required>
-            </div>
-            <button type="submit" style="background-color: purple; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Verify OTP</button>
-        </form>
-    </div>
+<style>
+    body{
+        background-color: #141618;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+          "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+          "Noto Color Emoji";
+        font-size: 1rem;
+        color: #c3bfbb;
+    }
+</style>
+<body>
+    <h1>OTP Verification</h1>
+    <p>Please enter the OTP you received in your email:</p>
+    <form action="/verify_email" method="POST">
+        <label for="otp">OTP:</label>
+        <input type="text" id="otp" name="otp" required>
+        <button class="btn mx-1 btn btn-outline-danger" type="submit">Verify OTP</button>
+    </form>
 </body>
 </html>
