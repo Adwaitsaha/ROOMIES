@@ -33,7 +33,6 @@ app.config.update(dict(
     MAIL_USERNAME = email,
     MAIL_PASSWORD = password,
 ))
-
 mail = Mail(app)
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
