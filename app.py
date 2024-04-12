@@ -15,6 +15,7 @@ import numpy as np
 import pandas as pd
 import time
 from datetime import datetime
+import pytz
 from algorithm.getRecommendations import get_recommendations
 
 
@@ -536,6 +537,7 @@ def welcome():
         except Exception as e:
             print('Error fetching user data or invalid credentials:', e)
             return render_template('index2.html', error='Invalid credentials')
+ 
 
 def login_required(f):
     @wraps(f)
@@ -713,8 +715,15 @@ def profiles(username):
 def update_listed_status():
     user_id = session['user']['username']
     listed_status = request.json.get('listed', 0)
+    local_timezone = pytz.timezone('Asia/Kolkata')
+    local_time = datetime.now(local_timezone)
     db.collection('RoommatePreferences').document(user_id).update({'Listed': listed_status})
+    if listed_status == 1:
+        db.collection('RoommatePreferences').document(user_id).update({'ListedTimestamp': local_time})
+    else:
+        db.collection('RoommatePreferences').document(user_id).update({'ListedTimestamp': None})
     return jsonify({'success': True}), 200
+
 
 @app.route('/like', methods=['POST'])
 @login_required
