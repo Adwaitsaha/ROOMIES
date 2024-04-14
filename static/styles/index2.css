@@ -17,6 +17,10 @@ body {
     background-color: #fff2f1;
     border-radius: 20px;
 }
+.c2 {
+    background-color: #fbfbfb;
+    border-radius: 20px;
+}
 
 a {
     margin: 0px;
@@ -50,7 +54,7 @@ button {
     padding: 8px 17px;
     font-size: 13px;
     border: 1px solid #f5f0ef;
-    color: #dccece;
+    color: #000000;
     text-decoration: none;
 }
 

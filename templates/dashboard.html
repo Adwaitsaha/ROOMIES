@@ -66,13 +66,6 @@
           <a class="nav-item nav-link mx-1" id="support-btn" href="/support">
             Support
           </a>
-          <a
-            class="nav-item nav-link mx-1"
-            href="/support"
-            onclick="scrollToFooter()"
-          >
-            Contact Us
-          </a>
           {% if session.get('user') %} {% if session['user']['username'] in
           admin_users %}
           <a class="nav-item nav-link mx-1" href="/admin"> Admin </a>
