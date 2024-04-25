@@ -43,6 +43,7 @@
       table {
         width: 100%;
         border-collapse: collapse;
+
       }
 
       th,
@@ -53,7 +54,7 @@
       }
 
       th {
-        background-color: #141618;
+        background-color: #FF385C;
       }
       h1 {
         text-align: center;
@@ -119,74 +120,72 @@
         </div>
       </nav>
     <div style="margin: 1cm 2cm 2cm 2cm;">
-    <h1>Admin Dashboard</h1>
-    <div>
-      <p>Total Users: {{users_count}}</p>
-      <p>Total Preferences submitted: {{preferences_count}}</p>
-      <p>Total Reports submitted: {{reports_count}}</p>
-      <p>Total Queries submitted: {{queries_count}}</p>
-    </div>
-
-    <hr />
-
-    <h3>Queries</h3>
-    <table border="1cm">
-      <thead>
-        <tr>
-          <th>Sr No</th>
-          <th>Name</th>
-          <th>Email/Phone</th>
-          <th>Bug Title</th>
-          <th>Detail</th>
-          <th>Image</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for query in queries_data %}
-        <tr>
-          <td>{{loop.index}}</td>
-          <td>{{ query.Name }}</td>
-          <td>{{ query.get('Email/Phone') }}</td>
-          <td>{{ query.get('Bug Title') }}</td>
-          <td>{{ query.Detail }}</td>
-          <td>
-            {% if query.Image %}
-            <a href="{{ query.Image }}" target="_blank">{{ query.Image }}</a>
-            {% else %} N/A {% endif %}
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <br />
-    <hr />
-    <h3>Reports</h3>
-    <table border="1cm">
-      <thead>
-        <tr>
-          <th>Sr No</th>
-          <th>Userame</th>
-          <th>Reported User</th>
-          <th>Detail</th>
-          <th>Proof</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for report in reports_data %}
-        <tr>
-          <td>{{loop.index}}</td>
-          <td>{{ report.Username }}</td>
-          <td>{{ report.get('ReportedUser') }}</td>
-          <td>{{ report.get('Description') }}</td>
-          <td>
-            {% if report.Image %}
-            <a href="{{ report.Image }}" target="_blank">{{ report.Image }}</a>
-            {% else %} N/A {% endif %}
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-</div>
+    <div class="container">
+      <h1>Admin Dashboard</h1>
+      <div>
+          <p>Total Users: {{users_count}}</p>
+          <p>Total Preferences submitted: {{preferences_count}}</p>
+          <p>Total Reports submitted: {{reports_count}}</p>
+          <p>Total Queries submitted: {{queries_count}}</p>
+      </div>
+      <hr>
+      <h3>Queries</h3>
+      <table>
+          <thead>
+              <tr>
+                  <th>Sr No</th>
+                  <th>Name</th>
+                  <th>Email/Phone</th>
+                  <th>Bug Title</th>
+                  <th>Detail</th>
+                  <th>Image</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for query in queries_data %}
+              <tr>
+                  <td>{{loop.index}}</td>
+                  <td>{{ query.Name }}</td>
+                  <td>{{ query.get('Email/Phone') }}</td>
+                  <td>{{ query.get('Bug Title') }}</td>
+                  <td>{{ query.Detail }}</td>
+                  <td>
+                      {% if query.Image %}
+                      <a href="{{ query.Image }}" target="_blank">{{ query.Image }}</a>
+                      {% else %} N/A {% endif %}
+                  </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+      <hr>
+      <h3>Reports</h3>
+      <table>
+          <thead>
+              <tr>
+                  <th>Sr No</th>
+                  <th>Username</th>
+                  <th>Reported User</th>
+                  <th>Detail</th>
+                  <th>Proof</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for report in reports_data %}
+              <tr>
+                  <td>{{loop.index}}</td>
+                  <td>{{ report.Username }}</td>
+                  <td>{{ report.get('ReportedUser') }}</td>
+                  <td>{{ report.get('Description') }}</td>
+                  <td>
+                      {% if report.Image %}
+                      <a href="{{ report.Image }}" target="_blank">{{ report.Image }}</a>
+                      {% else %} N/A {% endif %}
+                  </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>
   </body>
 </html>

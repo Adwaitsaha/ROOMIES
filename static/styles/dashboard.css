@@ -1,4 +1,56 @@
+/* Limit the height of the bio section and enable scrolling if needed */
 .bio {
     max-height: 200px;
     overflow-y: scroll;
+}
+
+/* Set up grid layout for card containers */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 20px;
+    justify-content: center;
+}
+
+/* Styling for individual cards */
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Padding for card body */
+.card-body {
+    padding: 20px;
+}
+
+/* Styling for card title */
+.card-title {
+    font-size: 1.25rem; /* Increase title font size */
+    margin-bottom: 10px;
+}
+
+/* Styling for card text */
+.card-text {
+    margin-bottom: 10px;
+}
+
+/* Styling for button group */
+.btn-group {
+    margin-top: 10px;
+}
+
+/* Margin between buttons in the button group */
+.btn {
+    margin-right: 10px;
+}
+
+/* Styling for profile pictures */
+.profile-picture {
+    width: 100px; /* Adjust size as needed */
+    height: 100px; /* Adjust size as needed */
+    border-radius: 50%;
+    margin-bottom: 15px;
 }

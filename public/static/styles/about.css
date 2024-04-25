@@ -1,0 +1,120 @@
+
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+section {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+.feature-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.feature-image {
+    flex: 1;
+    max-width: 200px;
+    margin-right: 20px;
+}
+
+.feature-content {
+    flex: 2;
+}
+
+
+/*Main Content*/
+
+.custom-form-row {
+    padding: 0.25em 0;
+}
+
+footer {
+    background-color: #FF385C;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.contact-info {
+    text-align: left;
+}
+
+.location {
+    text-align: right;
+}
+
+#map {
+    width: 150px;
+    height: 150px;
+}
+
+.btn-purple {
+    color: #fff;
+    background-color: #FF385C;
+}
+
+.btn-purple:hover {
+    background-color: #FF385C;
+}
+
+.btn-outline-purple {
+    color: #fff;
+    border-color: #FF385C;
+    border-width: 2.5px;
+}
+
+.btn-outline-purple:hover {
+    background-color: #FF385C;
+}
+
+.navbar {
+    font-family: 'Titillium Web', sans-serif !important;
+}
+
+/*Bootstrap color overrides form dark mode*/
+@media (prefers-color-scheme: dark) {
+    .text-danger {
+        color: #fa6776 !important;
+    }
+
+    .text-success {
+        color: #63e181 !important;
+    }
+
+    .text-info {
+        color: #39d2e9 !important;
+    }
+
+    .btn-outline-success {
+        color: #c3bfbb !important;
+    }
+
+    body, .btn, .splash-nav-item a {
+        color:  #d9d5d0 !important;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    @supports (-webkit-touch-callout: none) {
+        select {
+            color: black  !important;
+        }
+    }
+}

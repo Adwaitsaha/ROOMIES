@@ -34,7 +34,6 @@ app.config.update(dict(
     MAIL_USERNAME = email,
     MAIL_PASSWORD = password,
 ))
-
 mail = Mail(app)
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
@@ -120,10 +119,10 @@ def get_profile_picture_url(profile_picture_path):
 def index():
     return render_template('index.html')
 
-# @app.route('/about')
-# def about():
-#     admin_users = get_admin_users()
-#     return render_template('about.html',admin_users=admin_users)
+@app.route('/about')
+def about():
+    admin_users = get_admin_users()
+    return render_template('about.html',admin_users=admin_users)
 
 @app.route('/terms')
 def terms():
@@ -752,7 +751,7 @@ def compare():
     user_preferences1 = get_user_preferences(user_email)
     user_preferences2 = get_user_preferences(compare_email)
 
-    attributes_to_compare = ['Age', 'Gender', 'Profession', 'Religion', 'Habits','Food Preference', 'Sleep Schedule', 'Pet Friendliness']
+    attributes_to_compare = ['Age', 'Gender', 'Profession', 'Religion', 'Habits', 'FoodPreference', 'SleepSchedule', 'PetFriendliness']
 
     comparison_results = {}
 
