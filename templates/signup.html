@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='/styles/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/index2.css') }}">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     
@@ -15,120 +16,148 @@
 <body style="background-image: linear-gradient(rgba(0, 0, 0, 0.7),
 rgba(0, 0, 0, 0.7)), url('static/assets/splash.png');">
     <div class="container">
-        <br>
-        <h2 style="text-align: center;">SIGNUP</h2>
-        <br>
-        <form method="post" action="/signup1" id="signupForm">
-            <div class="form-group">
-                <label for="username" class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <p class="m-0 p-0">Username <span style="color: red;">*</span></p>
-                     </span>
-                    <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="text" id="username" name="username" maxlength="25" oninput="checkUsernameAvailability()">
-                </label>
-                <span id="usernameAvailabilityMessage" style="margin-left: 50%;"></span>
-                </div>
-                <div class="form-group">
-                    <label for="username" class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">First Name <span style="color: red;">*</span></p>
-                         </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" type="text" id="fname" name="fname" maxlength="25" pattern="[A-Za-z\s]+" title="Only letters are allowed" >
-                    </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="username" class="row custom-form-row">
-                            <span class="col-md col-12 mb-1 py-2 text-center">
-                                <p class="m-0 p-0">Last Name <span style="color: red;">*</span></p>
-                             </span>
-                            <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;"required type="text" id="lname" name="lname" maxlength="25" pattern="[A-Za-z\s]+" title="Only letters are allowed" >
-                        </label>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-12 col-lg-11 col-xl-10">
+                    <div class="card d-flex mx-auto my-5">
+                        <div class="row">
+                            <div class="col-md-5 col-sm-12 col-xs-12 c1 p-5">
+                                <!-- Card section 1: Welcome to Roomies -->
+                                <div class="row mb-5 m-3"> 
+                                    <img src="{{ url_for('static', filename='/assets/icon.png') }}" width="70vw" height="72vh" alt=""> 
+                                </div> 
+                                <img src="{{ url_for('static', filename='/assets/signup.png') }}" width="220vw" height="220vh" class="mx-auto d-flex" alt="Teacher">
+                                <div class="row justify-content-center">
+                                    <div class="w-75 mx-md-5 mx-1 mx-sm-2 mb-5 mt-4 px-sm-5 px-md-2 px-xl-1 px-2">
+                                        <h1 class="wlcm">Welcome to Roomies</h1> 
+                                        <span class="sp1"> 
+                                            <span class="px-3 bg-danger rounded-pill"></span> 
+                                            <span class="ml-2 px-1 rounded-circle"></span> 
+                                            <span class="ml-2 px-1 rounded-circle"></span> 
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 col-sm-12 col-xs-12 c2 px-5 pt-5" >
+                                <!-- Card section 2: Signup Form -->
+                                <div class="row">
+                                    <nav class="nav font-weight-500 mb-1 mb-sm-2 mb-lg-5 px-sm-2 px-lg-5"> 
+                                        <a class="nav-link" href="/">Home</a> 
+                                        <a class="nav-link ac" href="/about">Roomies?</a> 
+                                        <a class="nav-link" href="/support">Support</a> 
+                                    </nav>
+                                </div>
+                             
+                                <h2 style="text-align: center;">Sign Up</h2>
+                            
+                                <form method="post" action="/signup1" id="signupForm" class="px-5 pb-5">
+                                    <div class="form-group">
+                                        <label for="username" class="row custom-form-row">
+                                            <span class="col-md col-12 mb-1 py-2 text-center">
+                                                <p class="m-0 p-0">Username <span style="color: red;">*</span></p>
+                                            </span>
+                                            <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="text" id="username" name="username" maxlength="25" oninput="checkUsernameAvailability()">
+                                        </label>
+                                        <span id="usernameAvailabilityMessage" style="margin-left: 50%;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fname" class="row custom-form-row">
+                                            <span class="col-md col-12 mb-1 py-2 text-center">
+                                                <p class="m-0 p-0">First Name <span style="color: red;">*</span></p>
+                                            </span>
+                                            <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="text" id="fname" name="fname" maxlength="25" pattern="[A-Za-z\s]+" title="Only letters are allowed">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lname" class="row custom-form-row">
+                                            <span class="col-md col-12 mb-1 py-2 text-center">
+                                                <p class="m-0 p-0">Last Name <span style="color: red;">*</span></p>
+                                            </span>
+                                            <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="text" id="lname" name="lname" maxlength="25" pattern="[A-Za-z\s]+" title="Only letters are allowed">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone" class="row custom-form-row">
+                                            <span class="col-md col-12 mb-1 py-2 text-center">
+                                                <p class="m-0 p-0">Phone Number <span style="color: red;">*</span></p>
+                                            </span>
+                                            <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="tel" id="phone" name="phone" maxlength="10" pattern="[0-9]{10}" title="Enter a valid phone number">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mail" class="row custom-form-row">
+                                            <span class="col-md col-12 mb-1 py-2 text-center">
+                                                <p class="m-0 p-0">Email <span style="color: red;">*</span></p>
+                                            </span>
+                                            <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="email" id="mail" name="mail" maxlength="50" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Enter a valid email address" oninput="checkEmailAvailability()">
+                                        </label>
+                                        <span id="emailAvailabilityMessage" style="margin-left: 50%;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthdate" class="row custom-form-row">
+                                            <span class="col-md col-12 mb-1 py-2 text-center">
+                                                <p class="m-0 p-0">Birthdate <span style="color: red;">*</span></p>
+                                            </span>
+                                            <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="date" id="birthdate" name="birthdate" title="Enter your birthdate">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="row custom-form-row">
+                                            <span class="col-md col-12 mb-1 py-2 text-center">
+                                                <p class="m-0 p-0">Gender <span style="color: red;">*</span></p>
+                                            </span>
+                                            <span class="col-md col-12 mb-1 py-2 text-center">
+                                                <div class="form-check-inline">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="gender" value="Male">
+                                                        Male
+                                                    </label>
+                                                </div>
+                                                <div class="form-check-inline">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="gender" value="Female">
+                                                        Female
+                                                    </label>
+                                                </div>
+                                                <div class="form-check-inline">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="gender" value="Others">
+                                                        Others
+                                                    </label>
+                                                </div>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="row custom-form-row">
+                                            <span class="col-md col-12 mb-1 py-2 text-center">
+                                                <p class="m-0 p-0">Password <span style="color: red;">*</span></p>
+                                            </span>
+                                            <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Password must contain at least one number, one uppercase and lowercase letter, and at least 8 or more characters">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirmPassword" class="row custom-form-row">
+                                            <span class="col-md col-12 mb-1 py-2 text-center">
+                                                <p class="m-0 p-0">Confirm Password <span style="color: red;">*</span></p>
+                                            </span>
+                                            <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="password" id="confirmPassword" name="confirmPassword">
+                                        </label>
+                                    </div>
+                                    <div class="g-recaptcha" data-sitekey="6LctPhkpAAAAAHF093wlvupE7hgyXQRtdKCfeJqd"></div>
+                                    <div class="form-group form-check" style="text-align: center;">
+                                        <input type="checkbox" class="form-check-input" id="agreeCheckbox" required>
+                                        <label class="form-check-label" for="agreeCheckbox">I agree to the<br><a href="/terms">terms and conditions</a></label>
+                                    </div>
+                                    <button type="submit" class="btn btn-purple w-20 mt-1 mb-4 mx-auto" id="signupButton" disabled>Sign Up </button>
+                                </form>
+                            </div>
                         </div>
-                <div class="form-group">
-                    <label for="phoneNo" class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Phone Number <span style="color: red;">*</span></p>
-                        </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline"style="background-color: white;" required type="tel" id="phone" name="phone" maxlength="10" pattern="[0-9]{10}" title="Enter a valid phone number">
-                    </label>
+                    </div>
                 </div>
-            <div class="form-group">
-                <label for="email" class="row custom-form-row">
-                    <span class="col-md col-12 mb-1 py-2 text-center">
-                        <p class="m-0 p-0">Email <span style="color: red;">*</span></p>
-                    </span>
-                    <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="email" id="mail" name="mail" maxlength="50" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Enter a valid email address" oninput="checkEmailAvailability()">
-                </label>
-                <span id="emailAvailabilityMessage" style="margin-left: 50%;"></span>
-                </div>
-                <!-- <div class="form-group">
-                    <label for="phoneNo" class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Age <span style="color: red;">*</span></p>
-                        </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="number" id="age" name="age" min="18" max="120" title="Enter your age">
-                    </label>
-                </div> -->
-                <div class="form-group">
-                    <label for="birthdate" class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Birthdate <span style="color: red;">*</span></p>
-                        </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="date" id="birthdate" name="birthdate" title="Enter your birthdate">
-                    </label>
-                </div>
-                
-                <div class="form-group">
-                    <label class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Gender <span style="color: red;">*</span></p>
-                        </span>
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <div class="form-check-inline">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="radio"  name="Gender" value="Male">
-                                    Male
-                                </label>
-                            </div>
-                            <div class="form-check-inline">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="Gender" value="Female">
-                                    Female
-                                </label>
-                            </div>
-                            <div class="form-check-inline">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="Gender" value="Others">
-                                    Others
-                                </label>
-                            </div>
-                        </span>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Password <span style="color: red;">*</span></p>
-                        </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" >
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="confirmPassword" class="row custom-form-row">
-                        <span class="col-md col-12 mb-1 py-2 text-center">
-                            <p class="m-0 p-0">Confirm Password <span style="color: red;">*</span></p>
-                        </span>
-                        <input class="col mx-4 mx-sm-0 form-control d-inline" style="background-color: white;" required type="password" id="confirmPassword" name="confirmPassword">
-                    </label>
-                </div>
-                <div class="g-recaptcha" data-sitekey="6LctPhkpAAAAAHF093wlvupE7hgyXQRtdKCfeJqd"></div>
-                <div class="form-group form-check" style="text-align: center;">
-                    <input type="checkbox" class="form-check-input" id="agreeCheckbox">
-                    <label class="form-check-label" for="agreeCheckbox">I agree to the <a href="/terms">terms and conditions</a></label>
-                </div>
-            <br>
-            <button type="submit" class="btn btn-purple w-20 mt-1 mb-4" style="margin-left: 47%;" id="signupButton" disabled>Sign Up </button>
-        </form>
+            </div>
+        </div>
+    
         
         {% if error %}
         <div class="alert alert-danger mt">

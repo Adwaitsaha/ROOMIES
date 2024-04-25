@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Akronim&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+.heading {
+  margin-top: 20px;
+  text-align: center; /* Center align the heading */
+}
+
+
+.heading h1 {
+  font-size: 57px;
+  font-family: 'Akronim', cursive;
+  background: -webkit-linear-gradient(#FF385C, #FF385C); /* Airbnb pink */
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.footer-area {
+  padding: 30px 0;
+  background-image: linear-gradient(
+    to bottom,
+    #FF385C,
+    #FF385C,
+    #FF385C
+  );
+  color: #FFFFFF;
+  position: relative;
+}
+
+.main {
+  max-width: 1200px; /* Changed width to max-width */
+  margin: 0 auto;
+  padding: 0 ; /* Added padding to provide space on the sides */
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.single-footer {
+  flex: 1;
+  max-width: calc(25% - 20px); /* Set max-width to occupy 25% of the container minus margin */
+  margin-right: 20px;
+  margin-bottom: 20px; /* Added margin-bottom for spacing */
+}
+
+.single-footer:first-child {
+  max-width: 100%; /* Set max-width to 100% for the first footer */
+  margin-right: 0; /* Remove margin-right for the first footer */
+}
+
+.single-footer h4 {
+  text-transform: capitalize;
+  font-family: "Oswald", sans-serif;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.footer-social a {
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.footer-social {
+  margin-top: 20px;
+}
+
+.footer-social .color:hover {
+  background-image: linear-gradient(
+    to right top,
+    #FF385C,
+    #FF5A5F,
+    #FF7D63,
+    #FFA067,
+    #FFC36B
+  );
+}
+
+.single-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.single-footer ul li {
+  list-style: none;
+  margin-bottom: 10px;
+  position: relative;
+  text-align: left;
+}
+
+.single-footer ul li a {
+  list-style: none;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.single-footer ul li a i {
+  list-style: none;
+  position: absolute;
+  left: 0;
+  top: 5px;
+}
+
+.copy {
+  text-align: center;
+  text-transform: capitalize;
+  margin-top: 25px;
+}

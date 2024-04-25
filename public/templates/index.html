@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="Description" content="Welcome roommate finding program! Find a dorm roommate out of other registered UW students through a set of profile questions.">
+
+		<title>Roomies - Roommate Finding Program</title>
+
+		<link rel="icon" href="C:\roomies\ROOMIES\public\static\assets\icon.png" type="image/x-icon">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+
+		<link rel="stylesheet" href="C:\roomies\ROOMIES\public\static\styles\bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="C:\roomies\ROOMIES\public\static\styles\index.css">
+        <link rel="stylesheet" href="C:\roomies\ROOMIES\public\static\styles\style.css">
+
+	</head>
+
+	<body>
+		<main class="" id="main">
+            <img src="C:\roomies\ROOMIES\public\static\assets\splash.png" class="img splash" alt="main background image"></img>
+
+            <section class="txt splash">
+                <p class="title" href="/">
+                    <img src="C:\roomies\ROOMIES\public\static\assets\icon.png" src="site logo" height="100">
+                </p>
+                <p class="title">Roomies - RoommateFinder</p>
+                <p class="subtitle">Discover Your Perfect Roomie Match with Roomies: Where Finding Your Ideal Roommate Feels Like Coming Home!</p>
+            </section>
+
+            <section class="scroll splash">
+                <p class="mb-2 no-auth">Login or sign up to get started</p>
+                <p class="mb-3 auth-only d-none">Go to your Dashboard to update your profile or see current matches</p>
+                <span>
+                    <span class="no-auth">
+                        <button class="btn btn-lg btn-purple px-5 mx-2 mb-2 login-btn" id="login-btn">
+                            Log In
+                        </button>
+                        <button class="btn btn-lg btn-purple px-5 mx-2 mb-2" id="signupBtn">
+                            Sign Up
+                        </button>
+                    </span>
+                    <span class="auth-only d-none">
+                        <a class="btn btn-lg btn-purple px-5 mx-2 mb-2" href="/templates/dashboard">
+                            Dashboard
+                        </a>
+                        <button class="btn btn-lg btn-danger px-5 mx-2 logout-btn mb-2">
+                            Log Out
+                        </button>
+                    </span>
+                </span>
+                <p class="d-none text-danger" id="warnMsg"></p>
+            </section>
+
+            <nav class="navbar spnav navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="C:\roomies\ROOMIES\public\templates\index.html">
+                    <img src="C:\roomies\ROOMIES\public\static\assets\icon.png" src="site logo" id="siteLogo" height="100">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavItems" aria-controls="mainNavItems" aria-label="Show or hide main menu" aria-expanded="false" >
+                    <i class="fa fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
+                    <div class="ml-auto navbar-nav nav">
+                        <div class="ml-auto navbar-nav nav">
+                            <a class="nav-item nav-link mx-1 active" href="C:\roomies\ROOMIES\public\templates\index.html">
+                                Home
+                            </a> 
+                            <a class="nav-item nav-link mx-lg-2 mx-1" href="C:\roomies\ROOMIES\public\templates\about.html">
+                                Why Roomies?
+                            </a>
+                            <a class="nav-item nav-link mx-1" href="C:\roomies\ROOMIES\public\templates\support.html">
+                                Support
+                            </a>
+                            <a class="nav-item nav-link mx-1" href="./contactus.html">
+                                Contact Us
+                            </a>
+                            <button class="mx-1 btn btn-outline-danger auth-only d-none logout-btn">
+                                Log Out
+                            </button>
+                            <button class="mx-1 btn btn-purple no-auth login-btn" href="#">
+                                Log In
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <footer class="footer pt-3 pb-1 px-3 my-0">
+                <p>
+                    Copyright (c) 2023.
+                </p>		
+            </footer>
+        </main>
+        <!-- Add these script tags at the end of the body section in index.html -->
+<script>
+    document.getElementById('login-btn').addEventListener('click', function() {
+        window.location.href = '/index2';  // Redirect to index2.html on login button click
+    });
+
+    document.getElementById('signup-btn').addEventListener('click', function() {
+        window.location.href = '/index2';  // Redirect to index2.html on signup button click
+    });
+</script>
+
+        
+    </body>
+    
+</html>

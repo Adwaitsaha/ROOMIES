@@ -34,7 +34,6 @@ app.config.update(dict(
     MAIL_USERNAME = email,
     MAIL_PASSWORD = password,
 ))
-
 mail = Mail(app)
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
@@ -88,6 +87,7 @@ def upload_image_to_firebase(image, name):
     _, image_data = cv2.imencode('.jpg', image)
     blob.upload_from_string(image_data.tobytes(), content_type='image/jpeg')
 
+
 def verify_recaptcha(token):
     api_url = 'https://www.google.com/recaptcha/api/siteverify'
     
@@ -119,10 +119,10 @@ def get_profile_picture_url(profile_picture_path):
 def index():
     return render_template('index.html')
 
-# @app.route('/about')
-# def about():
-#     admin_users = get_admin_users()
-#     return render_template('about.html',admin_users=admin_users)
+@app.route('/about')
+def about():
+    admin_users = get_admin_users()
+    return render_template('about.html',admin_users=admin_users)
 
 @app.route('/terms')
 def terms():
@@ -245,7 +245,9 @@ def verify_email():
         else:
             return render_template('verify_email.html', error='Incorrect OTP. Please try again.')
 
+
     return render_template('verify_email.html')
+
 
 @app.route('/facedetect', methods=['GET','POST'])
 def facedetect():
@@ -284,6 +286,7 @@ def facedetect():
         else:
             return "No human user detected. Make sure your face is clearly visible and you are in a well lit place. \nPlease capture another image."
     return render_template('facedetect1.html')
+
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
@@ -388,6 +391,7 @@ def preferences():
 
     return render_template('preferences.html', gender = gender, lname = lname, fname = fname, age = age, fname_login = fname_login, lname_login = lname_login, age_login=age_login, gender_login=gender_login )
 
+
 @app.route('/preferences2', methods=['GET', 'POST'])
 def preferences2():
     if request.method == 'POST':
@@ -479,6 +483,7 @@ def preferences2():
         return redirect(url_for('dashboard'))
     
     return render_template('preferences2.html')
+
 
 
 @app.route('/welcome', methods=['GET', 'POST'])
@@ -659,6 +664,7 @@ def chatroom():
 @app.route('/profile')
 @login_required
 def profile():
+
     user_info = session.get('user')
 
     if user_info:
@@ -745,7 +751,7 @@ def compare():
     user_preferences1 = get_user_preferences(user_email)
     user_preferences2 = get_user_preferences(compare_email)
 
-    attributes_to_compare = ['Age', 'Gender', 'Profession', 'Religion', 'Habits','Food Preference', 'Sleep Schedule', 'Pet Friendliness']
+    attributes_to_compare = ['Age', 'Gender', 'Profession', 'Religion', 'Habits', 'FoodPreference', 'SleepSchedule', 'PetFriendliness']
 
     comparison_results = {}
 
@@ -831,6 +837,7 @@ def delete_account():
         db.collection('Users').document(username).delete()
         db.collection('RoommatePreferences').document(username).delete()
         auth.delete_user_account(id_token)
+
 
         session.pop('user', None)
         return redirect(url_for('index'))
