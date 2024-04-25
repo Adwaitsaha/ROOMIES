@@ -2,61 +2,118 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Comparison</title>
+    <meta name="robots" content="noindex">
+    <title>Roomies - Roommate Finding Program</title>
+    <link rel="icon" href="{{ url_for('static', filename='/assets/icon.png') }}" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/style.css') }}">
     <style>
-        .comparison-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Applying border-radius to the table */
+        .rounded-table {
+            border-radius: 15px; /* Rounded corners */
+            overflow: hidden; /* Ensure content stays within the rounded edges */
+            border: 0.1px solid #8b8b8b; /* Optional border for visibility */
+        }
+
+        .rounded-table {
+            width: 100%; 
+            border-collapse: separate; /* Separate borders to allow rounding */
+            border-spacing: 0; /* Avoid extra spacing between cells */
+            box-sizing: border-box;
+        }
+
+        .rounded-table th, 
+        .rounded-table td {
+            padding: 9.5px; 
+            text-align: center;
             
         }
-    
-        .comparison-item {
-            display: inline-block;
-            width: 45%; /* Adjust the width as needed */
-            margin-right: 10px; /* Adjust the spacing between columns */
-            text-align: left;
-        }
-    
-        .attribute {
+
+        .rounded-table th {
+            background-color: #FF385C; 
             font-weight: bold;
         }
-    
-        .value {
-            margin-right: 5px;
-        }
-    
+
         .tick {
             color: green;
+            font-size: 1.5em;
         }
-    
+
         .cross {
-            color: red;
+            color: red; 
+            font-size: 1.5em;
         }
     </style>
-    <h1>Profile Comparison</h1>
-    <div>
-        <ul class="comparison-list">
-            {% for attribute, match in comparison_results.items() %}
-                <li class="comparison-item">
-                    <span class="attribute">{{ attribute }}:</span>
-                    <span class="value">{{ user_preferences1.get(attribute) }}</span>
-                </li>
-                
-                    {% if match %}
-                        <span class="tick">&#10004;</span>
-                    {% else %}
-                        <span class="cross">&#10008;</span>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="/">
+            <img src="{{ url_for('static', filename='/assets/icon.png') }}" height="80">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavItems" aria-controls="mainNavItems" aria-label="Toggle main menu" aria-expanded="false">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
+            <div class="ml-auto navbar-nav nav">
+                <a class="nav-item nav-link mx-lg-2 mx-1" href="/whyroommatefinder">Why Roomies?</a>
+                <a class="nav-item nav-link mx-1 active" href="/profile">Profile</a>
+                <a class="nav-item nav-link mx-1" href="/support">Support</a>
+                <a class="nav-item nav-link mx-1" href="/support" onclick="scrollToFooter()">Contact Us</a>
+                {% if session.get('user') %}
+                    {% if session['user']['username'] in admin_users %}
+                        <a class="nav-item nav-link mx-1" href="/admin">Admin</a>
                     {% endif %}
-                
-                <li class="comparison-item">
-                    <span class="attribute">{{ attribute }}:</span>
-                    <span class="value">{{ user_preferences2.get(attribute) }}</span>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-
+                {% endif %}
+                <a class="nav-item nav-link mx-1" href="/dashboard">Dashboard</a>
+                <a class="mx-1 btn btn-outline-danger auth-only" id="logoutBtn" href="/logout">Log Out</a>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <p class="h1 text-center">Roomies - Comparison</p>
+        <hr class="w-75">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                        <table class="rounded-table"> <!-- Table with rounded corners -->
+                            <thead>
+                                <tr>
+                                    <th>Attribute</th>
+                                    <th>User</th>
+                                    <th>Match?</th>
+                                    <th>Matched User</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for attribute, match in comparison_results.items() %}
+                                    <tr>
+                                        <td>{{ attribute }}</td>
+                                        <td>{{ user_preferences1.get(attribute) }}</td>
+                                        <td>
+                                            {% if match %}
+                                                <span class="tick">&#10004;</span>
+                                            {% else %}
+                                                <span class="cross">&#10008;</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ user_preferences2.get(attribute) }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
+
+
+

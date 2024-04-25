@@ -751,7 +751,7 @@ def compare():
     user_preferences1 = get_user_preferences(user_email)
     user_preferences2 = get_user_preferences(compare_email)
 
-    attributes_to_compare = ['Age', 'Gender', 'Profession', 'Religion', 'Habits','Food Preference', 'Sleep Schedule', 'Pet Friendliness']
+    attributes_to_compare = ['Age', 'Gender', 'Profession', 'Religion', 'Habits', 'FoodPreference', 'SleepSchedule', 'PetFriendliness']
 
     comparison_results = {}
 
