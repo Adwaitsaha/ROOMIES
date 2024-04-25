@@ -724,6 +724,51 @@ def update_listed_status():
         db.collection('RoommatePreferences').document(user_id).update({'ListedTimestamp': None})
     return jsonify({'success': True}), 200
 
+@app.route('/compare')
+def compare():
+    username = request.args.get('username')
+    user_info = session.get('user')
+
+    email_ref = db.collection('Users').document(username)
+    user_data = email_ref.get()
+    if user_data.exists:
+        compare_email = user_data.to_dict().get('Email')
+
+    if user_info:
+        user_email = user_info.get('email')
+        user_username = user_info.get('username')
+    
+    profile_picture_path1 = f"Profile Photo/dpimage_{user_username}.jpg"
+    profile_picture_path2 = f"Profile Photo/dpimage_{username}.jpg"
+
+    profile_picture_url1 = get_profile_picture_url(profile_picture_path1)
+    profile_picture_url2 = get_profile_picture_url(profile_picture_path2)
+
+    if profile_picture_url1 and profile_picture_url2:
+        profile_picture_url1 += f"?t={int(time.time())}"
+        profile_picture_url2 += f"?t={int(time.time())}"
+    
+
+    user_preferences1 = get_user_preferences(user_email)
+    user_preferences2 = get_user_preferences(compare_email)
+
+    attributes_to_compare = ['Age', 'Gender', 'Profession', 'Religion', 'Habits','Food Preference', 'Sleep Schedule', 'Pet Friendliness']
+
+    comparison_results = {}
+
+    for attribute in attributes_to_compare:
+        # Get attribute values for both users
+        user_value = user_preferences1.get(attribute)
+        compare_value = user_preferences2.get(attribute)
+
+        # Perform comparison
+        if user_value == compare_value:
+            comparison_results[attribute] = True  # Match
+        else:
+            comparison_results[attribute] = False
+
+    return render_template('compare.html', comparison_results=comparison_results,user_preferences1=user_preferences1,user_preferences2=user_preferences2)
+
 
 @app.route('/like', methods=['POST'])
 @login_required
