@@ -112,6 +112,7 @@
               <th>Profile</th>
               <th>Match Score</th>
               <th>Chat</th>
+              <th>Compare</th>
               <th>Like</th>
             </tr>
           </thead>
@@ -143,6 +144,9 @@
               <td>
                 <button class="btn chat-btn mx-1 btn btn-outline-danger" data-username="{{ recommendation['Username'] }}">Chat</button>
             </td>
+            <td>
+              <button class="btn compare-btn mx-1 btn btn-outline-danger" data-username="{{ recommendation['Username'] }}">Compare</button>
+            </td>            
               <td>
                 {% if liked %}
                 <button
@@ -184,6 +188,15 @@
           window.location.href = "/support";
         });
     </script>
+    <script>// Add event listener for compare button
+      document.querySelectorAll(".compare-btn").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var username = this.dataset.username;
+          // Redirect to the comparison page with the username as a query parameter
+          window.location.href = "/compare?username=" + encodeURIComponent(username);
+        });
+      });
+      </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Check if liked users are already stored in local storage

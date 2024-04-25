@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Comparison</title>
+    <style>
+        .comparison-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            
+        }
+    
+        .comparison-item {
+            display: inline-block;
+            width: 45%; /* Adjust the width as needed */
+            margin-right: 10px; /* Adjust the spacing between columns */
+            text-align: left;
+        }
+    
+        .attribute {
+            font-weight: bold;
+        }
+    
+        .value {
+            margin-right: 5px;
+        }
+    
+        .tick {
+            color: green;
+        }
+    
+        .cross {
+            color: red;
+        }
+    </style>
+    <h1>Profile Comparison</h1>
+    <div>
+        <ul class="comparison-list">
+            {% for attribute, match in comparison_results.items() %}
+                <li class="comparison-item">
+                    <span class="attribute">{{ attribute }}:</span>
+                    <span class="value">{{ user_preferences1.get(attribute) }}</span>
+                </li>
+                
+                    {% if match %}
+                        <span class="tick">&#10004;</span>
+                    {% else %}
+                        <span class="cross">&#10008;</span>
+                    {% endif %}
+                
+                <li class="comparison-item">
+                    <span class="attribute">{{ attribute }}:</span>
+                    <span class="value">{{ user_preferences2.get(attribute) }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>
