@@ -57,7 +57,8 @@ rgba(0, 0, 0, 0.7)), url('static/assets/splash.png'); display: flex; justify-con
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                    alert(xhr.responseText);
+                    alert("Face had been captured!");
+                    capture-btn.disabled == true
                 }
             };
             xhr.send('image_data=' + encodeURIComponent(imageDataURL));
