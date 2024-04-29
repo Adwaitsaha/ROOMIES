@@ -51,10 +51,12 @@
         padding: 8px;
         text-align: left;
         border-bottom: 1px solid #ddd;
+        
       }
 
       th {
         background-color: #FF385C;
+        color: black;
       }
       h1 {
         text-align: center;
@@ -104,9 +106,9 @@
             </a>
             {% if session.get('user') %} {% if session['user']['username'] in
             admin_users %}
-            <a class="nav-item nav-link mx-1" href="/admin"> Admin </a>
+            <a class="nav-item nav-link mx-1 active" href="/admin"> Admin </a>
             {% endif %} {% endif %}
-            <a class="nav-item nav-link mx-1 active" href="/dashboard">
+            <a class="nav-item nav-link mx-1" href="/dashboard">
               Dashboard
             </a>
             <a
@@ -131,61 +133,123 @@
       <hr>
       <h3>Queries</h3>
       <table>
-          <thead>
-              <tr>
-                  <th>Sr No</th>
-                  <th>Name</th>
-                  <th>Email/Phone</th>
-                  <th>Bug Title</th>
-                  <th>Detail</th>
-                  <th>Image</th>
-              </tr>
-          </thead>
-          <tbody>
-              {% for query in queries_data %}
-              <tr>
-                  <td>{{loop.index}}</td>
-                  <td>{{ query.Name }}</td>
-                  <td>{{ query.get('Email/Phone') }}</td>
-                  <td>{{ query.get('Bug Title') }}</td>
-                  <td>{{ query.Detail }}</td>
-                  <td>
-                      {% if query.Image %}
-                      <a href="{{ query.Image }}" target="_blank">{{ query.Image }}</a>
-                      {% else %} N/A {% endif %}
-                  </td>
-              </tr>
-              {% endfor %}
-          </tbody>
-      </table>
-      <hr>
-      <h3>Reports</h3>
-      <table>
-          <thead>
-              <tr>
-                  <th>Sr No</th>
-                  <th>Username</th>
-                  <th>Reported User</th>
-                  <th>Detail</th>
-                  <th>Proof</th>
-              </tr>
-          </thead>
-          <tbody>
-              {% for report in reports_data %}
-              <tr>
-                  <td>{{loop.index}}</td>
-                  <td>{{ report.Username }}</td>
-                  <td>{{ report.get('ReportedUser') }}</td>
-                  <td>{{ report.get('Description') }}</td>
-                  <td>
-                      {% if report.Image %}
-                      <a href="{{ report.Image }}" target="_blank">{{ report.Image }}</a>
-                      {% else %} N/A {% endif %}
-                  </td>
-              </tr>
-              {% endfor %}
-          </tbody>
-      </table>
+        <thead>
+            <tr>
+                <th>Sr No</th>
+                <th>Name</th>
+                <th>Email/Phone</th>
+                <th>Bug Title</th>
+                <th>Detail</th>
+                <th>Image</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for query in queries_data %}
+                {% if query.Resolved != 1 %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ query.Name }}</td>
+                        <td>{{ query.get('Email/Phone') }}</td>
+                        <td>{{ query.get('Bug Title') }}</td>
+                        <td>{{ query.Detail }}</td>
+                        <td>
+                            {% if query.Image %}
+                                <a href="{{ query.Image }}" target="_blank">{{ query.Image }}</a>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td><button onclick="resolveQuery('{{ query.Id}}')" id="queryResolve" class="mx-1 btn btn-outline-danger">Resolve</button></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    <h3>Reports</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Sr No</th>
+                <th>Username</th>
+                <th>Reported User</th>
+                <th>Detail</th>
+                <th>Proof</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in reports_data %}
+                {% if report.Resolved != 1 %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ report.Username }}</td>
+                        <td>{{ report.get('ReportedUser') }}</td>
+                        <td>{{ report.get('Description') }}</td>
+                        <td>
+                            {% if report.Image %}
+                                <a href="{{ report.Image }}" target="_blank">{{ report.Image }}</a>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td><button onclick="resolveReport('{{ report.Id }}')" id="reportResolve" class="mx-1 btn btn-outline-danger">Resolve</button></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    
   </div>
   </body>
+
+    <script>
+      // Function to resolve a query
+      function resolveQuery(queryId) {
+          // Send AJAX request to update the query document
+          fetch('/resolve_query', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ queryId: queryId }),
+          })
+          .then(response => {
+              if (response.ok) {
+                  console.log('Query resolved successfully');
+              } else {
+                  console.error('Failed to resolve query');
+              }
+          })
+          .catch(error => {
+              console.error('Error resolving query:', error);
+          });
+      }
+
+      // Function to resolve a report
+      function resolveReport(reportId) {
+          // Send AJAX request to update the report document
+          fetch('/resolve_report', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ reportId: reportId }),
+          })
+          .then(response => {
+              if (response.ok) {
+                  console.log('Report resolved successfully');
+                 
+              } else {
+                  console.error('Failed to resolve report');
+              }
+          })
+          .catch(error => {
+              console.error('Error resolving report:', error);
+          });
+      }
+  </script>
+
+
 </html>
