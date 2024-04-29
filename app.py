@@ -1,7 +1,6 @@
-from common.firebase import db, bucket, firebase_web_config
-from common.email_creds import email, password
-from common.captchaKey import key
+import firebase_admin
 from firebase_admin import auth, firestore
+from firebase_admin import credentials, firestore, storage
 from flask import Flask, jsonify, render_template, request, redirect, url_for,session
 import pyrebase
 import requests
@@ -17,22 +16,57 @@ import time
 from datetime import datetime
 import pytz
 from algorithm.getRecommendations import get_recommendations
+from dotenv import load_dotenv
+import os
+import json
+
+
+load_dotenv()
 
 
 app = Flask(__name__)
-app.secret_key = 'roomies' 
+
+app.secret_key = os.getenv('FLASK_SECRET_KEY')
+
+firebase_web_config = {
+    'apiKey': os.getenv('FIREBASE_API_KEY'),
+    'authDomain': os.getenv('FIREBASE_AUTH_DOMAIN'),
+    'projectId': os.getenv('FIREBASE_PROJECT_ID'),
+    'storageBucket': os.getenv('FIREBASE_STORAGE_BUCKET'),
+    'messagingSenderId': os.getenv('FIREBASE_MESSAGING_SENDER_ID'),
+    'appId': os.getenv('FIREBASE_APP_ID'),
+    'measurementId': os.getenv('FIREBASE_MEASUREMENT_ID'),
+    'databaseURL': os.getenv('FIREBASE_DATABASE_URL')
+}
+
+admin_cred_json = os.getenv("FIREBASE_ADMIN_CREDENTIALS_JSON")
+
+# Print the received JSON string (optional)
+
+# Parse the JSON string into a Python dictionary
+admin_cred_dict = json.loads(admin_cred_json)
+
+# Initialize Firebase Admin with the parsed credentials
+cred = credentials.Certificate(admin_cred_dict)
+firebase_admin.initialize_app(cred, {'storageBucket': 'roomies-166f5.appspot.com'})
+   
+
+db = firestore.client()  # Firestore client
+bucket = storage.bucket()  # Storage bucket
+auth = firebase_web_config  # Firebase Web authentication configuration
+
 firebase = pyrebase.initialize_app(firebase_web_config)
 storage = firebase.storage
-auth = firebase.auth()  
+auth = firebase.auth()
+
 
 app.config.update(dict(
-    DEBUG = True,
-    MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_PORT = 587,
-    MAIL_USE_TLS = True,
-    MAIL_USE_SSL = False,
-    MAIL_USERNAME = email,
-    MAIL_PASSWORD = password,
+    MAIL_SERVER=os.getenv('MAIL_SERVER'),
+    MAIL_PORT=int(os.getenv('MAIL_PORT')),
+    MAIL_USE_TLS=os.getenv('MAIL_USE_TLS') == 'True',  # Convert to boolean
+    MAIL_USE_SSL=os.getenv('MAIL_USE_SSL') == 'True',  # Convert to boolean
+    MAIL_USERNAME=os.getenv('MAIL_USERNAME'),
+    MAIL_PASSWORD=os.getenv('MAIL_PASSWORD'),
 ))
 mail = Mail(app)
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
@@ -92,7 +126,7 @@ def verify_recaptcha(token):
     api_url = 'https://www.google.com/recaptcha/api/siteverify'
     
     response = requests.post(api_url, {
-        'secret': key,
+        'secret': os.getenv('RECAPTCHA_SECRET_KEY'),
         'response': token
     })
 
