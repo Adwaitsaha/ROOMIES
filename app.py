@@ -16,7 +16,7 @@ import time
 from datetime import datetime
 import pytz
 from algorithm.getRecommendations import get_recommendations
-import logging
+import re
 from dotenv import load_dotenv
 import os
 import json
@@ -694,6 +694,8 @@ def dashboard():
 
             recommendations_dashboard = recommendations.to_dict(orient='records')
 
+            print(recommendations)
+
             profile_picture_urls = []
 
             for recommendation in recommendations_dashboard:
@@ -711,11 +713,34 @@ def dashboard():
         return redirect(url_for('index'))
     
 @app.route('/chat', methods=['GET'])
+@login_required
 def chatroom():
     username = request.args.get('user')
     current_username = session["user"]["username"]  # Get the username from the query parameter
     # Now you can render your chatroom template with the username
     return render_template('chatroom.html', username=username,current_username=current_username)
+
+@app.route('/search_users', methods=['GET','POST'])
+@login_required
+def search_users():
+
+    search_query = request.args.get('query')
+    # search_query_lower = search_query.lower()
+
+    pattern = re.compile(f'.*{re.escape(search_query)}.*')
+
+
+    users_ref = db.collection('RoommatePreferences')
+    query = users_ref.where(filter=FieldFilter('Username', '>=', search_query)).where(filter=FieldFilter('Username', '<=', search_query+ u'\uf8ff')).limit(10).stream()
+
+    # matching_users = []
+    # for doc in query:
+    #     matching_users.append(doc.to_dict().get('Username'))
+
+    matching_users = [doc.to_dict().get('Username') for doc in query if pattern.match(doc.to_dict().get('Username'))]
+    print(matching_users)
+    
+    return jsonify({'matching_users': matching_users})
 
     
 @app.route('/profile')
@@ -768,6 +793,7 @@ def profiles(username):
         return "User profile not found", 404
     
 @app.route('/update_listed_status', methods=['POST'])
+@login_required
 def update_listed_status():
     user_id = session['user']['username']
     listed_status = request.json.get('listed', 0)
@@ -781,6 +807,7 @@ def update_listed_status():
     return jsonify({'success': True}), 200
 
 @app.route('/compare')
+@login_required
 def compare():
     username = request.args.get('username')
     user_info = session.get('user')
@@ -806,9 +833,8 @@ def compare():
     
 
     user_preferences1 = get_user_preferences(user_email)
-    print("NUMBER 1",user_preferences1)
     user_preferences2 = compare_data
-    print("NUMBER 2",user_preferences2)
+
 
     attributes_to_compare = ['Age', 'Gender', 'Profession', 'Religion', 'Habits', 'FoodPreference', 'SleepSchedule', 'PetFriendliness']
 
@@ -867,6 +893,23 @@ def get_liked_users():
 
     return jsonify({'liked_users': liked_users})
 
+@app.route('/liked')
+@login_required
+def get_liked():
+    # Get the currently logged-in user's username
+    user_info = session.get('user')
+    user_username = user_info.get('username')
+
+    # Retrieve the document snapshot for the user
+    user_ref = db.collection('RoommatePreferences').document(user_username)
+    user_snapshot = user_ref.get()
+
+    # Extract the 'Liked' field from the document snapshot
+    liked_users = user_snapshot.to_dict().get('Liked', [])
+
+    # Render the liked_users.html template and pass the liked users to it
+    return render_template('liked.html', liked_users=liked_users)
+
 @app.route('/update_preferences', methods=['POST'])
 @login_required
 def update_preferences():
@@ -906,6 +949,7 @@ def delete_account():
         return redirect(url_for('profile'))
 
 @app.route('/logout')
+@login_required
 def logout():
     session.pop('user', None)
     return redirect(url_for('index'))
