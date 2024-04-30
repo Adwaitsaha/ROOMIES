@@ -176,7 +176,79 @@
           <p>Total Queries submitted: {{queries_count}}</p>
       </div>
       <hr>
-      <h3>Algorithm Comparison</h3>
+      <br>
+      <h3>Queries</h3>
+      <table>
+        <thead>
+            <tr>
+                <th>Sr No</th>
+                <th>Name</th>
+                <th>Email/Phone</th>
+                <th>Bug Title</th>
+                <th>Detail</th>
+                <th>Image</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for query in queries_data %}
+                {% if query.Resolved != 1 %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ query.Name }}</td>
+                        <td>{{ query.get('Email/Phone') }}</td>
+                        <td>{{ query.get('Bug Title') }}</td>
+                        <td>{{ query.Detail }}</td>
+                        <td>
+                            {% if query.Image %}
+                                <a href="{{ query.Image }}" target="_blank">{{ query.Image }}</a>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td><button onclick="resolveQuery('{{ query.Id}}')" id="queryResolve" class="mx-1 btn btn-outline-danger">Resolve</button></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <hr>
+    <h3>Reports</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Sr No</th>
+                <th>Username</th>
+                <th>Reported User</th>
+                <th>Detail</th>
+                <th>Proof</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in reports_data %}
+                {% if report.Resolved != 1 %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ report.Username }}</td>
+                        <td>{{ report.get('ReportedUser') }}</td>
+                        <td>{{ report.get('Description') }}</td>
+                        <td>
+                            {% if report.Image %}
+                                <a href="{{ report.Image }}" target="_blank">{{ report.Image }}</a>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td><button onclick="resolveReport('{{ report.Id }}')" id="reportResolve" class="mx-1 btn btn-outline-danger">Resolve</button></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    <h3>Algorithm Comparison</h3>
       <br>
       <div class="row justify-content-center">
         <div class="col-md-10">
@@ -228,77 +300,6 @@
             </table>
         </div>
     </div>
-    <br>
-      <hr>
-      <h3>Queries</h3>
-      <table>
-        <thead>
-            <tr>
-                <th>Sr No</th>
-                <th>Name</th>
-                <th>Email/Phone</th>
-                <th>Bug Title</th>
-                <th>Detail</th>
-                <th>Image</th>
-                <th>Result</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for query in queries_data %}
-                {% if query.Resolved != 1 %}
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>{{ query.Name }}</td>
-                        <td>{{ query.get('Email/Phone') }}</td>
-                        <td>{{ query.get('Bug Title') }}</td>
-                        <td>{{ query.Detail }}</td>
-                        <td>
-                            {% if query.Image %}
-                                <a href="{{ query.Image }}" target="_blank">{{ query.Image }}</a>
-                            {% else %}
-                                N/A
-                            {% endif %}
-                        </td>
-                        <td><button onclick="resolveQuery('{{ query.Id}}')" id="queryResolve" class="mx-1 btn btn-outline-danger">Resolve</button></td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
-    <hr>
-    <h3>Reports</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Sr No</th>
-                <th>Username</th>
-                <th>Reported User</th>
-                <th>Detail</th>
-                <th>Proof</th>
-                <th>Result</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for report in reports_data %}
-                {% if report.Resolved != 1 %}
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>{{ report.Username }}</td>
-                        <td>{{ report.get('ReportedUser') }}</td>
-                        <td>{{ report.get('Description') }}</td>
-                        <td>
-                            {% if report.Image %}
-                                <a href="{{ report.Image }}" target="_blank">{{ report.Image }}</a>
-                            {% else %}
-                                N/A
-                            {% endif %}
-                        </td>
-                        <td><button onclick="resolveReport('{{ report.Id }}')" id="reportResolve" class="mx-1 btn btn-outline-danger">Resolve</button></td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
     
   </div>
   </body>

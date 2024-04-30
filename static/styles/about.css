@@ -94,3 +94,92 @@ h2 {
         }
     }
 }
+
+/* Section - About */
+#scrollspyAbout {
+    background-color: #f0f8ff; /* Alice Blue background */
+    padding: 5rem 0; /* Default padding */
+  }
+  
+  @media (min-width: 1200px) {
+    #scrollspyAbout {
+      padding-top: 8rem; /* Increased top padding for larger screens */
+      padding-bottom: 8rem; /* Increased bottom padding for larger screens */
+    }
+  }
+  
+  #scrollspyAbout .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  #scrollspyAbout .row {
+    align-items: center;
+  }
+  
+  /* Image Styles */
+  #scrollspyAbout img {
+    border-radius: 0.5rem; /* Rounded corners */
+    max-width: 100%; /* Ensure responsive images */
+    height: auto;
+  }
+  
+  /* Heading Styles */
+  #scrollspyAbout h2 {
+    font-size: 3rem; /* Display 3 size */
+    font-weight: bold; /* Bold font */
+    margin-bottom: 1.5rem; /* Bottom margin */
+  }
+  
+  #scrollspyAbout mark {
+    background-color: #d3e9f7; /* Highlight color */
+    color: #007BFF; /* Accent color for the text */
+  }
+  
+  /* Text Styles */
+  #scrollspyAbout p {
+    font-size: 1.25rem; /* Font size for the text */
+    margin-bottom: 3rem; /* Bottom margin */
+  }
+  
+  /* Accordion Styles */
+  .accordion {
+    border: none; /* Remove default accordion border */
+  }
+  
+  .accordion-header {
+    background: none; /* No background for headers */
+  }
+  
+  .accordion-button {
+    background-color: transparent; /* Transparent background for buttons */
+    border: none; /* No border for buttons */
+    font-weight: bold; /* Bold font for buttons */
+    color: #007BFF; /* Accent color for buttons */
+  }
+  
+  .accordion-button:not(.collapsed) {
+    color: #0056b3; /* Darker blue for active state */
+  }
+  
+  .accordion-collapse {
+    border-top: 1px solid #ddd; /* Light border for accordion content */
+  }
+  
+  .accordion-body {
+    padding: 1rem 1.5rem; /* Padding for accordion body */
+    font-size: 1.1rem; /* Font size for accordion body */
+    color: #333; /* Text color for accordion body */
+  }
+  
+  /* Ensure proper spacing for larger screens */
+  @media (min-width: 992px) {
+    .row.gy-lg-0 {
+      row-gap: 0; /* Remove vertical gap for large screens */
+    }
+  
+    .row.gy-5 {
+      row-gap: 2rem; /* Custom vertical gap for smaller screens */
+    }
+  }
+  
