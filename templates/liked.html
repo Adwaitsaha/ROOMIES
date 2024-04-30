@@ -1,47 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liked Users</title>
-</head>
-<body>
-    <h1>Liked Users</h1>
-    <table class="table">
-        <thead>
-            <tr>
+  <head>
+    <meta name="robots" content="noindex" />
+
+    <title>Roomies - Roommate Finding Program</title>
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='/assets/icon.png') }}"
+      type="image/x-icon"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/dashboard.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles/style.css') }}"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="/">
+        <img
+          src="{{ url_for('static', filename='/assets/icon.png') }}"
+          src="site logo"
+          height="80"
+        />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#mainNavItems"
+        aria-controls="mainNavItems"
+        aria-label="Toggle main menu"
+        aria-expanded="false"
+      >
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
+        <div class="ml-auto navbar-nav nav">
+          <a
+            class="nav-item nav-link mx-lg-2 mx-1"
+            id="finder"
+            href="/whyroommatefinder"
+          >
+            Why Roomies?
+          </a>
+          <a class="nav-item nav-link mx-1" href="/profile"> Profile </a>
+
+          <a class="nav-item nav-link mx-1" id="support-btn" href="/support">
+            Support
+          </a>
+          {% if session.get('user') %} {% if session['user']['username'] in
+          admin_users %}
+          <a class="nav-item nav-link mx-1" href="/admin"> Admin </a>
+          {% endif %} {% endif %}
+          <a class="nav-item nav-link mx-1" href="/liked">
+            Liked
+          </a>
+          <a class="nav-item nav-link mx-1 active" href="/dashboard">
+            Dashboard
+          </a>
+          <a
+            class="mx-1 btn btn-outline-danger auth-only"
+            id="logoutBtn"
+            href="/logout"
+          >
+            Log Out
+          </a>
+        </div>
+      </div>
+    </nav>
+    <main class="container">
+        <section class="txt splash">
+          <p class="h1 text-center">RoommateFinder - Liked Users</p>
+          <br>
+          <p class="text-center">
+            Below is the list of users you have liked. If you'd like to know more about them, click on "View Profile" or use the "Compare" button to see your compatibility.
+          </p>
+        </section>
+      
+        <section class="text-center my-4" id="likedUsers">
+          <p class="h2 text-center">Liked Users</p>
+          <br>
+          <table class="table">
+            <thead>
+              <tr>
                 <th>Username</th>
                 <th>Age</th>
                 <th>Gender</th>
                 <th>Profile</th>
                 <th>Match Score</th>
                 <th>Compare</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if matched_recommendations %}
-            {% for recommendation in matched_recommendations %}
-            <tr>
-                <td>{{ recommendation['Username'] }}</td>
-                <td>{{ recommendation['Age'] }}</td>
-                <td>{{ recommendation['Gender'] }}</td>
-                <td>
-                    <a href="{{ url_for('profiles', username=recommendation['Username']) }}">View Profile</a>
-                </td>
-                <td>{{ recommendation['MatchPercentage'] }}</td>
-                <td>
-                    <button class="btn compare-btn mx-1 btn btn-outline-danger" data-username="{{ recommendation['Username'] }}">Compare</button>
-                </td>
-            </tr>
-            {% endfor %}
-            {% else %}
-            <tr>
-                <td colspan="7">No matched recommendations found.</td>
-            </tr>
-            {% endif %}
-        </tbody>
-    </table>
+              </tr>
+            </thead>
+            <tbody>
+              {% if matched_recommendations %}
+                {% for recommendation in matched_recommendations %}
+                  <tr>
+                    <td>{{ recommendation['Username'] }}</td>
+                    <td>{{ recommendation['Age'] }}</td>
+                    <td>{{ recommendation['Gender'] }}</td>
+                    <td>
+                      <a href="{{ url_for('profiles', username=recommendation['Username']) }}">View Profile</a>
+                    </td>
+                    <td>{{ recommendation['MatchPercentage'] }}</td>
+                    <td>
+                      <button class="btn compare-btn mx-1 btn btn-outline-danger" data-username="{{ recommendation['Username'] }}">Compare</button>
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="6">No liked users found.</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </section>
+      </main>
     
+   
     <script>
         document.querySelectorAll(".compare-btn").forEach(function (button) {
           button.addEventListener("click", function () {
@@ -51,5 +145,5 @@
           });
         });
         </script>
-</body>
+  </body>
 </html>
