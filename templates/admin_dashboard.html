@@ -58,12 +58,43 @@
         background-color: #FF385C;
         color: black;
       }
-      h1 {
-        text-align: center;
-      }
       h3{
         text-align: center;
       }
+      h1 {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Applying border-radius to the table */
+        .rounded-table {
+            border-radius: 15px; /* Rounded corners */
+            overflow: hidden; /* Ensure content stays within the rounded edges */
+            border: 0.1px solid #8b8b8b; /* Optional border for visibility */
+        }
+
+        .rounded-table {
+            width: 100%; 
+            border-collapse: separate; /* Separate borders to allow rounding */
+            border-spacing: 0; /* Avoid extra spacing between cells */
+            box-sizing: border-box;
+        }
+
+        .rounded-table th, 
+        .rounded-table td {
+            padding: 9.5px; 
+            text-align: center;
+            
+        }
+
+        .rounded-table th {
+            background-color: #FF385C; 
+            font-weight: bold;
+        }
+        th{
+            color: black;
+        }
     </style>
   </head>
   <body>
@@ -136,6 +167,7 @@
       <hr>
       <br>
       <h3>Queries</h3>
+      <br>
       <table>
         <thead>
             <tr>
@@ -173,6 +205,7 @@
     <br>
     <hr>
     <h3>Reports</h3>
+    <br>
     <table>
         <thead>
             <tr>
