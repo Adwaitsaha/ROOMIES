@@ -7,10 +7,49 @@
 </head>
 <body>
     <h1>Liked Users</h1>
-    <ul>
-        {% for liked_user in liked_users %}
-            <li>{{ liked_user }}</li>
-        {% endfor %}
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Profile</th>
+                <th>Match Score</th>
+                <th>Compare</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if matched_recommendations %}
+            {% for recommendation in matched_recommendations %}
+            <tr>
+                <td>{{ recommendation['Username'] }}</td>
+                <td>{{ recommendation['Age'] }}</td>
+                <td>{{ recommendation['Gender'] }}</td>
+                <td>
+                    <a href="{{ url_for('profiles', username=recommendation['Username']) }}">View Profile</a>
+                </td>
+                <td>{{ recommendation['MatchPercentage'] }}</td>
+                <td>
+                    <button class="btn compare-btn mx-1 btn btn-outline-danger" data-username="{{ recommendation['Username'] }}">Compare</button>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="7">No matched recommendations found.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    
+    <script>
+        document.querySelectorAll(".compare-btn").forEach(function (button) {
+          button.addEventListener("click", function () {
+            var username = this.dataset.username;
+            // Redirect to the comparison page with the username as a query parameter
+            window.location.href = "/compare?username=" + encodeURIComponent(username);
+          });
+        });
+        </script>
 </body>
 </html>

@@ -660,8 +660,6 @@ def dashboard():
 
             recommendations_dashboard = recommendations.to_dict(orient='records')
 
-            print(recommendations)
-
             profile_picture_urls = []
 
             for recommendation in recommendations_dashboard:
@@ -671,6 +669,14 @@ def dashboard():
                 if profile_picture_url is None:
                     profile_picture_url = "https://firebasestorage.googleapis.com/v0/b/roomies-166f5.appspot.com/o/Profile%20Photo%2Favatar.jpg?alt=media&token=bf819735-cee1-400a-ad30-0d7063d473ab"
                 profile_picture_urls.append(profile_picture_url)
+
+        user_info_login = session.get('user', {})
+        
+        user_info_login.update({
+        'recommendations_dashboard': recommendations_dashboard,
+        })
+        
+        session['user'] = user_info_login
 
         admin_users = get_admin_users()
 
@@ -859,6 +865,23 @@ def get_liked_users():
 
     return jsonify({'liked_users': liked_users})
 
+# @app.route('/liked')
+# @login_required
+# def get_liked():
+#     # Get the currently logged-in user's username
+#     user_info = session.get('user')
+#     user_username = user_info.get('username')
+
+#     # Retrieve the document snapshot for the user
+#     user_ref = db.collection('RoommatePreferences').document(user_username)
+#     user_snapshot = user_ref.get()
+
+#     # Extract the 'Liked' field from the document snapshot
+#     liked_users = user_snapshot.to_dict().get('Liked', [])
+
+#     # Render the liked_users.html template and pass the liked users to it
+#     return render_template('liked.html', liked_users=liked_users)
+
 @app.route('/liked')
 @login_required
 def get_liked():
@@ -873,8 +896,24 @@ def get_liked():
     # Extract the 'Liked' field from the document snapshot
     liked_users = user_snapshot.to_dict().get('Liked', [])
 
-    # Render the liked_users.html template and pass the liked users to it
-    return render_template('liked.html', liked_users=liked_users)
+
+    # Initialize a list to store matching recommendations_dashboard
+    matched_recommendations = []
+
+    # Retrieve recommendations_dashboard from session
+    recommendations_dashboard = user_info.get('recommendations_dashboard', [])
+
+
+    for liked_user in liked_users:
+        # Check if liked user exists in recommendations_dashboard
+        for recommendation in recommendations_dashboard:
+            if recommendation['Username'] == liked_user:
+                matched_recommendations.append(recommendation)
+                break 
+
+    # Render the liked_users.html template and pass the matched recommendations to it
+    return render_template('liked.html', matched_recommendations=matched_recommendations)
+
 
 @app.route('/update_preferences', methods=['POST'])
 @login_required
