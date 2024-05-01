@@ -580,7 +580,7 @@ def welcome():
 @app.route('/reset_password', methods=['GET','POST'])
 def reset_password():
     email = request.form.get('email')  
-    api_key = apiKey
+    api_key =os.getenv('FIREBASE_API_KEY')
 
     reset_url = f"https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={api_key}"
 
