@@ -78,13 +78,6 @@ Path:
             >
               Why Roomies?
             </a>
-            {% if session.get('user') %}
-                  <a class="nav-item nav-link mx-1" href="/profile"> Profile </a>
-            {% endif %}
-            {% if session.get('user') %}
-                  <a class="nav-item nav-link mx-1" href="/liked">Liked Profiles </a>
-            {% endif %}
-        
             <a class="nav-item nav-link mx-1" href="/support"> Support </a>
             <a
               class="nav-item nav-link mx-1"
@@ -101,6 +94,12 @@ Path:
                             {% endif %}
                         {% endif %}
             {% if session.get('user') %}
+            {% if session.get('user') %}
+                  <a class="nav-item nav-link mx-1" href="/profile"> Profile </a>
+            {% endif %}
+            {% if session.get('user') %}
+                  <a class="nav-item nav-link mx-1" href="/liked">Liked Profiles </a>
+            {% endif %}
             <a class="nav-item nav-link mx-1" href="/dashboard">
               Dashboard
           </a>

@@ -58,10 +58,10 @@ rgba(0, 0, 0, 0.7)), url('static/assets/splash.png');">
                                     <input type="text" name="mail" placeholder="Email"> 
                                     <input type="password" name="password" placeholder="Password"> 
                                     <button class="text-white text-weight-bold bt">Log in</button>
+                                    <div class="ac text-center">
+                                        <a href="{{ url_for('reset_password') }}" class="text-muted">Forgot Password?</a>
+                                    </div>
                                 </form>
-                                <div class="mt-3 text-center">
-                                    <a href="{{ url_for('reset_password') }}" class="btn btn-link">Forgot Password?</a>
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -4,30 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OTP Verification</title>
-    <link
-      rel="icon"
-      href="{{ url_for('static', filename='assets/icon.png') }}"
-      type="image/x-icon"
-    />
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles/style.css') }}"
-    />
+    <!-- Local CSS files (if required) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index2.css') }}">
 </head>
 <body style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('static/assets/splash.png');">
-    <div class="container">
-        <h2 style="text-align: center; margin-top: 10%;">OTP Verification</h2>
-        <p style="text-align: center;">Please enter the OTP you received in your email:</p>
-        <form action="/verify_email" method="POST" style="text-align: center;">
-            <div class="form-group">
-                <label for="otp">OTP:</label>
-                <input type="text" id="otp" name="otp" required>
+    <div class="container" style="text-align: center;">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 style="text-align: center;">OTP Verification</h2>
+                        <p style="text-align: center;">Please enter the OTP you received in your email:</p>
+                        <form action="/verify_email" method="POST">
+                            <div class="form-group">
+                                <label for="otp">OTP:</label>
+                                <input type="text" class="form-control" id="otp" name="otp" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="background-color: #fa6776; border: none; border-radius: 5px; cursor: pointer;">Verify OTP</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <button type="submit" style="background-color: purple; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Verify OTP</button>
-        </form>
+        </div>
     </div>
 </body>
 </html>

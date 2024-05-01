@@ -38,15 +38,20 @@ Path:
                     <a class="nav-item nav-link mx-lg-2 mx-1" href="/whyroommatefinder">
                         Why Roomies?
                     </a>
-                    <a class="nav-item nav-link mx-1 active" href="/profile">
-                        Profile
-                    </a>
-                    
                     <a class="nav-item nav-link mx-1" href="/support">
                         Support
                     </a>
                     <a class="nav-item nav-link mx-1" href="/support" onclick="scrollToFooter()">
                         Contact Us
+                    </a>
+                    <a class="nav-item nav-link mx-1 active" href="/profile">
+                        Profile
+                    </a>
+                    <a class="nav-item nav-link mx-1" href="/liked">
+                        Liked Profiles
+                      </a>
+                    <a class="nav-item nav-link mx-1" href="/dashboard">
+                        Dashboard
                     </a>
                     {% if session.get('user') %}
                             {% if session['user']['username'] in admin_users %}
@@ -55,12 +60,6 @@ Path:
                                 </a>
                             {% endif %}
                     {% endif %}
-                    <a class="nav-item nav-link mx-1" href="/liked">
-                        Liked Profiles
-                      </a>
-                    <a class="nav-item nav-link mx-1" href="/dashboard">
-                        Dashboard
-                    </a>
                     <a class="mx-1 btn btn-outline-danger auth-only" id="logoutBtn" href="/logout">
                         Log Out
                     </a>
@@ -70,8 +69,9 @@ Path:
         </nav>
         <main class="container">
             <p class="h1 text-center">Roomies - Profile</p>
-            <hr class="w-75">  
+            <hr class="w-75">
             <h2>User Preferences:</h2>
+            <br>
             <div style="display: flex;">
             <div style="flex: 1;">
             <ul style="text-align: justify;">
@@ -132,8 +132,8 @@ Path:
             <button id="saveChangesBtn" class="btn btn-outline-danger" onclick="saveChanges()" style="display: none;">Save Changes</button>
             <br>
             </div>
-            <div style="flex: 1;">
-                <img src="{{ profile_picture_url }}" alt="Profile Picture" style="height: 28rem;width: 28rem;border-radius: 50%;">
+            <div style="flex: 0.85;">
+                <img src="{{ profile_picture_url }}" alt="Profile Picture" style="height: 20rem; width: 20rem; border-radius: 10px;">
             </div>
             </div>
             <p style="text-align: center;">*To edit your personality preference, please reach out to us via <a href="/support">support</a>.</p>

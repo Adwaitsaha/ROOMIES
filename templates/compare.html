@@ -68,15 +68,14 @@
         <div class="collapse navbar-collapse ml-auto" id="mainNavItems">
             <div class="ml-auto navbar-nav nav">
                 <a class="nav-item nav-link mx-lg-2 mx-1" href="/whyroommatefinder">Why Roomies?</a>
+                <a class="nav-item nav-link mx-1" href="/support">Support</a>
                 <a class="nav-item nav-link mx-1" href="/profile">Profile</a>
                 <a class="nav-item nav-link mx-1" href="/liked">Liked Profiles</a>
-                <a class="nav-item nav-link mx-1" href="/support">Support</a>
-                <a class="nav-item nav-link mx-1" href="/support" onclick="scrollToFooter()">Contact Us</a>
+                <a class="nav-item nav-link mx-1 active" href="/dashboard">Dashboard</a>
                 {% if session.get('user') %} {% if session['user']['username'] in
           admin_users %}
           <a class="nav-item nav-link mx-1" href="/admin"> Admin </a>
           {% endif %} {% endif %}
-                <a class="nav-item nav-link mx-1 active" href="/dashboard">Dashboard</a>
                 <a class="mx-1 btn btn-outline-danger auth-only" id="logoutBtn" href="/logout">Log Out</a>
             </div>
         </div>
