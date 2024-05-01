@@ -8,27 +8,54 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- Local CSS files (if required) -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index2.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/password_reset.css') }}">
+    <style>
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('static/assets/splash.png');
+            background-size: cover;
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            margin: 0; /* Reset margin to avoid overflow */
+        }
+        .card {
+            border-radius: 15px; /* Rounded edges */
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            min-width: 400px; /* Larger card width */
+            min-height: 250px; /* Larger card height */
+            padding: 20px; /* Padding for better spacing */
+        }
+        .card-body {
+            padding: 20px; /* Padding inside the card */
+        }
+        .btn-custom {
+            background-color: #fa6776; /* Button color */
+            color: white; /* Text color */
+            padding: 10px 20px; /* Padding for a larger button */
+            border: none; /* No border */
+            border-radius: 5px; /* Rounded edges for the button */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+        .btn-custom:hover {
+            background-color: #e55f68; /* Hover effect */
+        }
+    </style>
 </head>
-<body style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('static/assets/splash.png');">
-    <div class="container" style="text-align: center;">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 style="text-align: center;">OTP Verification</h2>
-                        <p style="text-align: center;">Please enter the OTP you received in your email:</p>
-                        <form action="/verify_email" method="POST">
-                            <div class="form-group">
-                                <label for="otp">OTP:</label>
-                                <input type="text" class="form-control" id="otp" name="otp" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary" style="background-color: #fa6776; border: none; border-radius: 5px; cursor: pointer;">Verify OTP</button>
-                        </form>
-                    </div>
+<body>
+    <div class="card text-center"> <!-- Center the content -->
+        <div class="card-body">
+            <h2>OTP Verification</h2> <!-- Centralized title -->
+            <p>Please enter the OTP you received in your email:</p> <!-- Centralized text -->
+            <form action="/verify_email" method="POST">
+                <div class="form-group">
+                    <label for="otp">OTP:</label>
+                    <input type="text" class="form-control" id="otp" name="otp" required>
                 </div>
-            </div>
+                <button type="submit" class="btn-custom">Verify OTP</button> <!-- Custom button styling -->
+            </form>
         </div>
     </div>
 </body>
 </html>
+
