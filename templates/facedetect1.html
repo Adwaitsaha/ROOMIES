@@ -12,16 +12,15 @@
 <body style="background-image: linear-gradient(rgba(0, 0, 0, 0.7),
 rgba(0, 0, 0, 0.7)), url('static/assets/splash.png'); display: flex; justify-content: center; align-items: center;">
     <div style="text-align: center;">
-        <h2>Please sit in a well lit area, as this image will be saved as your profile image.</h2>
+        <h2 style="margin-top: 3%;">Please sit in a well lit area, as this image will be saved as your profile image which cannot be changed later.</h2>
         <video id="video" width="640" height="480" autoplay></video>
-        <button id="capture-btn" style="display: block; margin: 0 auto;">Capture Image</button>
+        <button id="capture-btn" class="btn btn-outline-danger"  style="display: block; margin: 0 auto;">Capture Image</button>
         <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
         <form action="/preferences" style="margin-top: 20px;">
-            <button id="nextBtn" disabled style="margin: 0 auto;">Next</button>
+            <button id="nextBtn" class="btn btn-outline-danger" disabled style="margin: 0 auto;">Next</button>
         </form>
     </div>
         
-    
     
     <script>
         let nextBtn = document.getElementById('nextBtn');
@@ -57,8 +56,7 @@ rgba(0, 0, 0, 0.7)), url('static/assets/splash.png'); display: flex; justify-con
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                    alert("Face had been captured!");
-                    capture-btn.disabled == true
+                    alert(xhr.responseText);
                 }
             };
             xhr.send('image_data=' + encodeURIComponent(imageDataURL));

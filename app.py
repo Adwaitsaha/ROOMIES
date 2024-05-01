@@ -1,4 +1,4 @@
-from common.firebase import db, bucket, firebase_web_config
+from common.firebase import db, bucket, firebase_web_config, apiKey
 from common.email_creds import email, password
 from common.captchaKey import key
 from firebase_admin import auth, firestore
@@ -140,7 +140,8 @@ def signup():
 
 @app.route('/login')
 def login():
-    return render_template('index2.html')
+    registered = request.args.get('registered')
+    return render_template('index2.html', registered=registered)
 
 @app.route('/check_username', methods=['POST'])
 def check_username():
@@ -175,6 +176,9 @@ def signup1():
         # Calculate age
         today = datetime.today()
         age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+        
+        if age < 18:
+            return render_template('signup.html', error='You must be 18 years old or above to register.')
 
         user = auth.create_user_with_email_and_password(
             email=email,
@@ -283,7 +287,7 @@ def facedetect():
                 db.collection('Users').document(user_info_login['username']).update({
                 'FaceDetection': 1,
                 })
-            return redirect(url_for('preferences'))
+            return redirect(url_for('preferences')) and "Face has been captured successfully!"
         else:
             return "No human user detected. Make sure your face is clearly visible and you are in a well lit place. \nPlease capture another image."
     return render_template('facedetect1.html')
@@ -481,7 +485,7 @@ def preferences2():
 
             session.pop('user', None)
 
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('login', registered=True))
     
     return render_template('preferences2.html')
 
@@ -492,7 +496,7 @@ def welcome():
     if request.method == 'POST':
         email = request.form.get('mail')
         password = request.form.get('password')
-
+       
         try:
             user = auth.sign_in_with_email_and_password(email,password)
             
@@ -515,6 +519,7 @@ def welcome():
                 face_detection = doc.get('FaceDetection')
                 preference1 = doc.get('Preference1')
                 preference2 = doc.get('Preference2')
+            
 
             if otp == 0:
                 otp = generate_otp()
@@ -537,6 +542,34 @@ def welcome():
         except Exception as e:
             print('Error fetching user data or invalid credentials:', e)
             return render_template('index2.html', error='Invalid credentials')
+        
+@app.route('/reset_password', methods=['GET','POST'])
+def reset_password():
+    email = request.form.get('email')  
+    api_key = apiKey
+
+    reset_url = f"https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={api_key}"
+
+    payload = {
+        "requestType": "PASSWORD_RESET",
+        "email": email
+    }
+
+    try:
+        response = requests.post(reset_url, json=payload)
+        data = response.json()
+
+        if "error" in data:
+            error_message = data["error"]["message"]
+            print('Error sending password reset email:', error_message)
+            return render_template('password_reset.html', error=error_message)
+        else:
+            return render_template('password_reset.html') and "Successfully sent! Please go to the login page"
+    except Exception as e:
+        # Handle other exceptions
+        print('Error sending password reset email:', e)
+        return render_template('password_reset.html', error=str(e))
+
  
 
 def login_required(f):
@@ -689,7 +722,6 @@ def dashboard():
 def chatroom():
     username = request.args.get('user')
     current_username = session["user"]["username"]  # Get the username from the query parameter
-    # Now you can render your chatroom template with the username
     return render_template('chatroom.html', username=username,current_username=current_username)
 
 @app.route('/search_users', methods=['GET','POST'])
@@ -697,17 +729,12 @@ def chatroom():
 def search_users():
 
     search_query = request.args.get('query')
-    # search_query_lower = search_query.lower()
 
     pattern = re.compile(f'.*{re.escape(search_query)}.*')
 
 
     users_ref = db.collection('RoommatePreferences')
     query = users_ref.where(filter=FieldFilter('Username', '>=', search_query)).where(filter=FieldFilter('Username', '<=', search_query+ u'\uf8ff')).limit(10).stream()
-
-    # matching_users = []
-    # for doc in query:
-    #     matching_users.append(doc.to_dict().get('Username'))
 
     matching_users = [doc.to_dict().get('Username') for doc in query if pattern.match(doc.to_dict().get('Username'))]
     print(matching_users)
@@ -865,23 +892,6 @@ def get_liked_users():
 
     return jsonify({'liked_users': liked_users})
 
-# @app.route('/liked')
-# @login_required
-# def get_liked():
-#     # Get the currently logged-in user's username
-#     user_info = session.get('user')
-#     user_username = user_info.get('username')
-
-#     # Retrieve the document snapshot for the user
-#     user_ref = db.collection('RoommatePreferences').document(user_username)
-#     user_snapshot = user_ref.get()
-
-#     # Extract the 'Liked' field from the document snapshot
-#     liked_users = user_snapshot.to_dict().get('Liked', [])
-
-#     # Render the liked_users.html template and pass the liked users to it
-#     return render_template('liked.html', liked_users=liked_users)
-
 @app.route('/liked')
 @login_required
 def get_liked():
@@ -945,14 +955,14 @@ def delete_account():
         db.collection('RoommatePreferences').document(username).delete()
         auth.delete_user_account(id_token)
 
-
         session.pop('user', None)
         return redirect(url_for('index'))
+
 
     except Exception as e:
         print('Error deleting user account:', e)
         return redirect(url_for('profile'))
-
+    
 @app.route('/logout')
 @login_required
 def logout():
